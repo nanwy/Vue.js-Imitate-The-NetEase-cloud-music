@@ -1,11 +1,9 @@
 <template>
-  <swiper class="find-swiper">
+  <swiper v-if="Object.keys(banners).length !==0" class="find-swiper">
     <swiper-item v-for="item in banners" class="find-swiper-item">
       <a href="#">
         <img :src="item.pic" alt="">
-        <span class="title" :style="{backgroundColor:item.titleColor}">{{item.typeTitle}}</span>
-        
-        
+        <span class="title" :style="{backgroundColor:item.titleColor}">{{item.typeTitle}}</span> 
       </a>
       
     </swiper-item>
