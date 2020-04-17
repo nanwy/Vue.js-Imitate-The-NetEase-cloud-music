@@ -35,7 +35,7 @@ export default {
      cur:'newsong',
      limit:10,
      newCDs:[],
-     arr:['l','j','h','o','t','y'],
+     
      type:[0,7,96,8,16],
      type1:0,
      newSongs:[],
@@ -49,9 +49,11 @@ export default {
  created(){
    getNewCDs(this.limit).then(res => {
     //  console.log(res);
-     this.newCDs = getRandomArray(res.data.albums,3)
+    if(res.data.code === 200){
+       this.newCDs = getRandomArray(res.data.albums,3)
     //  console.log(this.newCDs);
     this.loading = false
+    }
      
    })
    this.type1 = getRandomArray(this.type,1)
@@ -59,12 +61,13 @@ export default {
    
    getNewSongs(this.type1[0]).then(res => {
      console.log(res);
-     
-     this.newSongs.push(...res.data.data)
+     if(res.data.code === 200){
+       this.newSongs.push(...res.data.data)
      this.newSongs = getRandomArray(this.newSongs,3)
      this.loading = false
     //  this.newSongs = this.newSongs.artists
      console.log(this.newSongs);
+    }
      
    })
  }

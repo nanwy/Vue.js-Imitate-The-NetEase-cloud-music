@@ -19,8 +19,10 @@
       </div>
     </nav> -->
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" @click.native="getSong"/> -->
-    <main-tab-bar></main-tab-bar>
+    <main-tab-bar class="tab-bar"></main-tab-bar>
+    <keep-alive>
     <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
@@ -40,6 +42,9 @@ export default {
 </script>
 
 <style scoped>
-
+.tab-bar{
+  position: relative;
+  top: -1px;
+}
 
 </style>

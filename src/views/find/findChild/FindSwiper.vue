@@ -2,7 +2,7 @@
   <swiper v-if="Object.keys(banners).length !==0" class="find-swiper">
     <swiper-item v-for="item in banners" class="find-swiper-item">
       <a href="#">
-        <img :src="item.pic" alt="">
+        <img :src="item.pic" alt="" @load="loadImg">
         <span class="title" :style="{backgroundColor:item.titleColor}">{{item.typeTitle}}</span> 
       </a>
       
@@ -15,7 +15,8 @@ import {Swiper, SwiperItem} from 'components/common/swiper'
 export default {
   components:{
     Swiper, 
-    SwiperItem
+    SwiperItem,
+    isLoad:false
   },
   props:{
     banners:{
@@ -23,6 +24,15 @@ export default {
       default(){
         return []
       }
+    }
+  },
+  methods:{
+    loadImg(){
+      if(!this.isLoad){
+        this.$emit('loadImg')
+        this.isLoad = true
+      }
+      
     }
   }
 }

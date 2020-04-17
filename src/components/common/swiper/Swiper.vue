@@ -205,7 +205,10 @@
         // 3.添加定时器
         this.startTimer();
       }
-    }
+    },
+    destroyed() {
+      clearTimeout(this.playTimer)
+    },
 	}
 </script>
 

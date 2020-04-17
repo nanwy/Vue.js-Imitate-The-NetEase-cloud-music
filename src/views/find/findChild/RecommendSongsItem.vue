@@ -52,6 +52,7 @@ export default {
 .item-content{
  display: flex;
  flex-direction: column;
+ justify-content: center;
 }
 .recommend-item .item-content img{
   width: 94px;

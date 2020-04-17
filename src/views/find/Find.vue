@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <div id="find">
+     <scroll class="content" ref="scroll" @scroll='contentScroll'  :probe-type='3'>
     <page-loading style="height:5rem" v-show="loading"></page-loading>
-    <find-swiper :banners="banners"></find-swiper>
+    <find-swiper :banners="banners" @loadImg='swiperImgLoad'></find-swiper>
     <find-nav></find-nav>
     <recommend-songs></recommend-songs>
     <new-c-d></new-c-d>
+     </scroll>
   </div>
 </template>
 
@@ -15,6 +17,9 @@ import FindNav from './findChild/FindNav'
 import RecommendSongs from './findChild/RecommendSongs'
 import PageLoading from './findChild/pageLoading'
 import NewCD from './findChild/NewCD'
+
+import Scroll from 'components/common/scroll/Scroll'
+
 export default {
   data(){
     return {
@@ -28,7 +33,8 @@ export default {
     FindNav,
     RecommendSongs,
     PageLoading,
-    NewCD
+    NewCD,
+    Scroll
   },
   created(){
     this.type=1
@@ -40,10 +46,30 @@ export default {
       
       
     })
+  },
+  methods:{
+    contentScroll(){
+
+    },
+    swiperImgLoad(){
+      this.$refs.scroll.refresh()
+      console.log('kk');
+      
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
+#find{
+   height: 100vh;
+    position: relative;
+    z-index: 11;
+    background-color: #fff;
 
+}
+.content{
+  height: calc(100% - 40px);
+  background-color: #fff;
+}
 </style>
