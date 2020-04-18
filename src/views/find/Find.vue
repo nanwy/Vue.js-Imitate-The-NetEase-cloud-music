@@ -4,8 +4,8 @@
     <page-loading style="height:5rem" v-show="loading"></page-loading>
     <find-swiper :banners="banners" @loadImg='swiperImgLoad'></find-swiper>
     <find-nav></find-nav>
-    <recommend-songs></recommend-songs>
-    <new-c-d></new-c-d>
+    <recommend-songs :key="menuKey" @click.native="itclick"></recommend-songs>
+    <new-c-d :key="menuKey"></new-c-d>
      </scroll>
   </div>
 </template>
@@ -25,7 +25,9 @@ export default {
     return {
       type:0,
       banners:[],
-      loading:true
+      loading:true,
+       menuKey:1,
+    menuTree:[]
     }
   },
   components:{
@@ -46,6 +48,9 @@ export default {
       
       
     })
+    ++this.menuKey
+   
+    
   },
   methods:{
     contentScroll(){
@@ -55,8 +60,18 @@ export default {
       this.$refs.scroll.refresh()
       console.log('kk');
       
+    },
+    itclick(){
+      ++this.menuKey
+                 console.log(this.menuKey);
     }
-  }
+  },
+  watch:{
+             menuTree(){
+ 
+                
+            }
+       }
 }
 </script>
 

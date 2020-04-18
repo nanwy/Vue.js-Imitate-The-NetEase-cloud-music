@@ -6,7 +6,12 @@
     </div>
     <page-loading  v-show="loading"></page-loading>
     <div class="recommends-content">
-      <recommend-songs-item :picUrl="item.picUrl" :name="item.name" :playCount="item.playCount" v-for='item in recommendsongs'></recommend-songs-item>
+      <recommend-songs-item 
+      v-for='item in recommendsongs' :picUrl="item.picUrl" 
+      :name="item.name" 
+      :playCount="item.playCount" 
+      :songDetailId='item.id'
+      ></recommend-songs-item>
     </div>
   </div>
 </template>

@@ -9,7 +9,7 @@
 
           <div slot="item-text">我的</div>
        </tab-bar-item>
-       <tab-bar-item path="/find" activeColor='black' @click.native="tip">
+       <tab-bar-item path="/find" activeColor='black' @click.native="tip" :key="key">
          
           <div slot="item-text">发现</div>
        
@@ -32,7 +32,8 @@ import TopTip from './index'
 export default {
   data(){
     return{
-      tips: '为你推荐更多有趣的内容'
+      tips: '为你推荐更多有趣的内容',
+      key:0
     }
   },
   components:{
@@ -48,6 +49,9 @@ export default {
   methods:{
     tip(){
       this.$refs.tip.showTip()
+      ++this.key
+      console.log(this.key);
+      
     }
   }
 }

@@ -37,3 +37,12 @@ export function getNewSongs(type){
     }
   })
 }
+
+export function getSongDetail(id){
+  return request({
+    url: 'playlist/detail',
+    params: {
+      id
+    }
+  })
+}

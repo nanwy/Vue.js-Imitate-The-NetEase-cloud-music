@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 
 const Home = ()=> import('../views/home/Home')
 const Find = ()=> import('../views/find/Find')
+const FindSongDetail = ()=> import('views/find/findChild/findDetail/FindSongDetail')
+const Song = ()=> import('components/common/Song')
 Vue.use(VueRouter)
 
 const routes = [
@@ -16,8 +18,17 @@ const routes = [
   },
   {
     path:"/find",
-    component:Find
+    component:Find,
   },
+  {
+    path:'/detail/:id',
+    component:FindSongDetail
+  },
+  {
+    path:'/song',
+    name:'song',
+    component:Song
+  }
 ]
 
 const router = new VueRouter({

@@ -1,9 +1,9 @@
 <template>
-  <div class="recommend-item">
+  <div class="recommend-item" @click="SongDetail(idx)">
     <div class="item-content">
-      <a href="">
-        <img :src="picUrl" alt="">
-      </a>
+      
+        <img v-lazy="picUrl" alt="">
+      
       <span class="song-text">{{name}}</span>
       <span class="play-number" v-if="playCount"><i class="iconbofang icon"></i> {{playCount | setPlayCount}}</span>
     </div>
@@ -28,6 +28,12 @@ export default {
      type:Number,
      
      },
+     songDetailId:{
+       type:Number
+     },
+     idx:{
+       type:String
+     }
  },
  filters:{
    setPlayCount(val){
@@ -38,6 +44,13 @@ export default {
        val = Math.floor(val / 10000) + '万'
      }
      return val
+   }
+ },
+ methods:{
+   SongDetail(idx){
+     if(!idx){
+       this.$router.push({name:'song',params:{songDetailId:this.songDetailId}})
+     }
    }
  }
 }
