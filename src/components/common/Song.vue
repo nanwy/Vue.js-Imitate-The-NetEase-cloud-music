@@ -1,6 +1,7 @@
 <template>
+ 
   <div>
-    <h2>JJJ</h2>
+    
     <find-song-detail 
     :songDetailId="songDetailId"
     :imgUrl="songDetail.coverImgUrl"
@@ -8,6 +9,7 @@
     :name='songDetail.name'
     :background='background'></find-song-detail>
   </div>
+ 
 </template>
 
 <script>
@@ -54,6 +56,7 @@ export default {
     
      
     }
+    console.log('ji');
     
   },
   mounted(){
@@ -66,6 +69,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.slide-enter-active,.slide-leave-active{
+  transition: all .3s;
+}
+.slide-enter,.slide-leave-to{
+  transform: translate3d(100%,0,0);
+}
 </style>

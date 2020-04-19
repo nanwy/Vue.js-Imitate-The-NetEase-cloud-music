@@ -2,7 +2,7 @@
   <div class="index">
     <tab-bar>
       <div class="nav-left">
-        <i class="login"></i>
+        <i class="iconcaidan iconfont"  ></i>
       </div>
       <div class="nav-center">
         <tab-bar-item path="/home" activeColor='pink'>
@@ -16,7 +16,7 @@
        </tab-bar-item>
       </div>
       <div class="nav-right">
-        <router-link to="/search" >搜索</router-link>
+        <router-link to="/search" class="iconserch iconfont"></router-link>
       </div>
     </tab-bar>
      <top-tip ref="tip">
@@ -58,6 +58,14 @@ export default {
 </script>
 
 <style scoped>
+.iconfont {
+font-family:"iconfont" !important;      
+font-size:25px;
+font-style:normal;
+color: #000;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
 .index{
   z-index: 20;
 }
@@ -82,16 +90,7 @@ export default {
   flex: 4;
   
 }
-.login{
-  width: 16px;
-  height: 1px;
-  border-top: 1px solid #333;
-  border-bottom: 1px solid #333;
-  background-color: #333;
-  padding: 5px 0;
-  display: inline-block;
-  background-clip: content-box;
-}
+
 .nav-center{
 flex: 4;
 display: flex;

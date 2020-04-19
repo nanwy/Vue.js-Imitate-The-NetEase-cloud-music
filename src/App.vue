@@ -19,25 +19,17 @@
       </div>
     </nav> -->
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" @click.native="getSong"/> -->
-    <main-tab-bar class="tab-bar"></main-tab-bar>
-    <keep-alive>
+    
     <router-view></router-view>
-    </keep-alive>
   </div>
 </template>
 
 <script>
+import Main from 'views/Main'
 
-
-import MainTabBar from './components/common/MainTabBar'
 
 export default {
-  
-  components: {
-    
-    MainTabBar
-  }
-
+ 
 }
 </script>
 

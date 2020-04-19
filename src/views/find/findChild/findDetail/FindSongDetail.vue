@@ -1,17 +1,26 @@
 <template>
   <div>
-    <gbnav>
+    
+    <div class="content" :style="{background}">
+      <div class="item">
+      <gbnav>
       <div class="left">
         <span>{{title}}</span>
       <span class="name">编辑推荐:{{name}}</span>
       </div>
       <div class="right">
-        <span>搜索</span>
-      <span>菜单</span>
+        <span>
+          <i class="iconserch iconfont"></i>
+        </span>
+      <span>
+        <i class="iconcaidan1 iconfont"></i>
+      </span>
       </div>
+      
     </gbnav>
-    <div class="content" :style="{background}">
       <img v-lazy="imgUrl" alt="">
+      <div>asdasdas</div>
+      </div>
     </div>
     
   </div>
@@ -47,7 +56,30 @@ export default {
 .content{
   width: 500px;
   height: 500px;
-  opacity: 0.8;
+
+   z-index:1;
+   position: relative;
+
+}
+.content:after{
+    content: "";
+    width:100%;
+    height:100%;
+    position: absolute;
+    left:0;
+    top:0;
+    background: inherit;
+    filter: blur(50px);
+    z-index: 2;
+}
+.item{
+    position: absolute;
+    width: 500px;
+    
+
+
+    z-index:11;
+
 }
 img{
   width: 200px;
@@ -69,6 +101,14 @@ img{
 
 }
 .right{
-  margin-left: auto;
+  margin-left: 67px;
+}
+.iconfont {
+font-family:"iconfont" !important;      
+font-size:25px;
+font-style:normal;
+color: #000;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
 }
 </style>
