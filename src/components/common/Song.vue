@@ -7,7 +7,10 @@
     :imgUrl="songDetail.coverImgUrl"
     :title='title'
     :name='songDetail.name'
-    :background='background'></find-song-detail>
+    :background='background'
+    :description='songDetail.description'
+    :touImg="songDetail.creator ? songDetail.creator.avatarUrl : songDetail.album ? songDetail.album.artist.picUrl:''"
+    :nickname="songDetail.creator ? songDetail.creator.nickname : songDetail.album ? songDetail.album.artist.name : ''"></find-song-detail>
   </div>
  
 </template>
@@ -22,7 +25,7 @@ export default {
       songDetailId:0,
       songDetail:[],
       title:'',
-      background:'red',
+      background:'',
       img:require('assets/logo.png')
     }
   },
@@ -40,6 +43,8 @@ export default {
             // 将请求回来的数据使用，将load 样式关闭
             this.songDetail = data.playlist
            console.log(this.songDetail);
+           console.log(this.songDetail.creator.avatarUrl);
+           
            let result = rgbaster(
       this.songDetail.coverImgUrl,
       {
@@ -47,7 +52,7 @@ export default {
       }
     )
     result.then((res)=>{
-      console.log(res[0].color);
+    
       this.background = res[0].color
     })
           }
@@ -56,7 +61,7 @@ export default {
     
      
     }
-    console.log('ji');
+    
     
   },
   mounted(){

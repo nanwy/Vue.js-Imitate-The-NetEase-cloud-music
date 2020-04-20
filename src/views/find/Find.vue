@@ -4,8 +4,8 @@
     <page-loading style="height:5rem" v-show="loading"></page-loading>
     <find-swiper :banners="banners" @loadImg='swiperImgLoad'></find-swiper>
     <find-nav></find-nav>
-    <recommend-songs :key="menuKey" @click.native="itclick"></recommend-songs>
-    <new-c-d :key="menuKey"></new-c-d>
+    <recommend-songs :key="key"></recommend-songs>
+    <new-c-d :key="key1"></new-c-d>
      </scroll>
   </div>
 </template>
@@ -18,6 +18,7 @@ import RecommendSongs from './findChild/RecommendSongs'
 import PageLoading from './findChild/pageLoading'
 import NewCD from './findChild/NewCD'
 
+import {mapGetters} from 'vuex'
 import Scroll from 'components/common/scroll/Scroll'
 
 export default {
@@ -27,8 +28,14 @@ export default {
       banners:[],
       loading:true,
        menuKey:1,
-    menuTree:[]
+    menuTree:[],
+    
     }
+  },
+  computed:{
+   ...mapGetters([
+     'key','key1'
+   ])
   },
   components:{
     FindSwiper,
@@ -48,7 +55,8 @@ export default {
       
       
     })
-    ++this.menuKey
+    
+    
    
     
   },
@@ -62,9 +70,11 @@ export default {
       
     },
     itclick(){
-      ++this.menuKey
-                 console.log(this.menuKey);
-    }
+      
+                 console.log(this.key1);
+                 
+    },
+    
   },
   watch:{
              menuTree(){

@@ -29,7 +29,7 @@ export default {
     left: 0;
     right: 0;
     top: 0; */
-    /* position: sticky; */
+    position: sticky;
     z-index: 13;
     box-shadow:0px -1px 1px rgba(10,10,10,.1);
     padding: 0 10px;
