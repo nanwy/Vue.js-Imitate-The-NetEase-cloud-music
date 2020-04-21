@@ -25,16 +25,33 @@
           <div class="name">{{name}}
             <div class="tou" v-if="touImg">
               <img v-lazy="touImg" alt="">
-              <span v-if="nickname">{{}}></span>
+              <span v-if="nickname">{{nickname}}></span>
               <div class="description description1">
                 {{description}}
               </div>
             </div>
           </div>
         </div>
+        <div class="downlond">
+          <div class="comments" v-if="comment">评论
+            <span>{{comment}}</span>
+          </div>
+          <div class="comments">分享
+            <span>{{share}}</span>
+          </div>
+          <div class="comments">下载</div>
+          <div class="comments">多选</div>
+        </div>
       </div>
     </div>
-    
+    <div class="play-list">
+      <div class="play-title">
+        <i>播放</i>
+        <span>播放全部</span>
+        <span class="total" v-if="many">(共{{many}}首)</span>
+        <span class="star">+收藏({{subscribedCount}})</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -68,6 +85,18 @@ export default {
      default(){
        return '网易云'
      }
+   },
+   many:{
+     type:Number
+   },
+   subscribedCount:{
+     type:Number
+   },
+   comment:{
+     type:Number
+   },
+   share:{
+     type:Number
    }
  },
  components:{
@@ -79,7 +108,7 @@ export default {
 <style scoped>
 .content{
   width: 100%;
-  height: 500px;
+  height: 320px;
   color: #fff;
    z-index:1;
    position: relative;
@@ -149,6 +178,7 @@ img{
     -webkit-box-orient: vertical;
     font-size: 13px;
     font-weight: normal;
+    line-height: 1;
 }
 .nav{
   display: flex;
@@ -160,16 +190,18 @@ img{
 .left .description{
   display: block;
   font-size: 12px;
-
+  margin-top: 8px;
+  transform: scale(.9);
   width: 230px;
   
   text-overflow: ellipsis;
 
-    
+  font-weight: 100;
     overflow: hidden; 
     -webkit-box-orient: vertical;
     white-space:nowrap;
-
+  color: #efebeb;
+  transform-origin: 0 0
 }
 .right{
 
@@ -181,5 +213,46 @@ font-style:normal;
 color: #fff;
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
+padding: 0 5px;
+}
+.downlond{
+  display: flex;
+  margin-top: 10px;
+  justify-content:space-around;
+  height: 50px;
+}
+.comments{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.play-list{
+    
+  margin-top: -15px;
+  position: relative;
+  z-index: 10;
+}
+.play-title{
+  display: flex;
+  height: 60px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  background-color: #fff;
+  line-height: 60px;
+}
+.total{
+  font-size: 12px;
+  color: #ccc;
+}
+.play-title .star{
+  margin-right: 5px;
+  margin-top: 10px;
+margin-left: auto;
+color: #fff;
+height: 35px;
+background-color: red;
+border-radius: 50px;
+padding: 2px 10px 2px 10px;
+line-height: 38px;
 }
 </style>

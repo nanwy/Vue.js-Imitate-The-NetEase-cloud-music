@@ -1,5 +1,7 @@
 <template>
- 
+  <transition name="slide">
+  
+  
   <div>
     
     <find-song-detail 
@@ -10,9 +12,13 @@
     :background='background'
     :description='songDetail.description'
     :touImg="songDetail.creator ? songDetail.creator.avatarUrl : songDetail.album ? songDetail.album.artist.picUrl:''"
-    :nickname="songDetail.creator ? songDetail.creator.nickname : songDetail.album ? songDetail.album.artist.name : ''"></find-song-detail>
+    :nickname="songDetail.creator ? songDetail.creator.nickname : songDetail.album ? songDetail.album.artist.name : ''"
+    :many="songDetail.tracks.length"
+    :subscribedCount="songDetail.subscribedCount"
+    :comment="songDetail.commentCount"
+    :share="songDetail.shareCount"></find-song-detail>
   </div>
- 
+ </transition>
 </template>
 
 <script>
@@ -76,9 +82,12 @@ export default {
 
 <style scoped>
 .slide-enter-active,.slide-leave-active{
-  transition: all .3s;
+  transition: all .1s;
 }
-.slide-enter,.slide-leave-to{
-  transform: translate3d(100%,0,0);
+.slide-enter{
+  transform: translate3d(0,100%,0)
+}
+.slide-leave-to{
+  opacity: .1;
 }
 </style>
