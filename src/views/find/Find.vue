@@ -60,6 +60,10 @@ export default {
    
     
   },
+  activated(){
+    console.log('我创建');
+    this.$refs.scroll.refresh()
+  },
   methods:{
     contentScroll(){
 

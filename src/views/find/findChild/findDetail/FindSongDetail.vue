@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <div class="content" :style="{background}">
       <div class="item">
         <div class="title">
@@ -33,7 +32,7 @@
           </div>
         </div>
         <div class="downlond">
-          <div class="comments" v-if="comment">评论
+          <div class="comments">评论
             <span>{{comment}}</span>
           </div>
           <div class="comments">分享
@@ -49,7 +48,7 @@
         <i>播放</i>
         <span>播放全部</span>
         <span class="total" v-if="many">(共{{many}}首)</span>
-        <span class="star">+收藏({{subscribedCount}})</span>
+        <span class="star" v-if="subscribedCount">+收藏({{subscribedCount}})</span>
       </div>
     </div>
   </div>
