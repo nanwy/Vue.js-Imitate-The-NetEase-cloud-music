@@ -183,9 +183,7 @@ img{
   display: flex;
   justify-content:space-evenly;
 }
-.left {
 
-}
 .left .description{
   display: block;
   font-size: 12px;
@@ -202,9 +200,7 @@ img{
   color: #efebeb;
   transform-origin: 0 0
 }
-.right{
 
-}
 .iconfont {
 font-family:"iconfont" !important;      
 font-size:25px;

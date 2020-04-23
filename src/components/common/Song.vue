@@ -16,7 +16,7 @@
     :subscribedCount="songDetail.subscribedCount"
     :comment="songDetail.commentCount"
     :share="songDetail.shareCount"></find-song-detail>
-    <music-list :maxbr="isSq[index]" v-if="isSq" v-for="(item,index) in songDetail.tracks"
+    <music-list :maxbr="isSq[index]"  v-for="(item,index) in songDetail.tracks"
     :key="index"
     :num="index+1"
     :songName="item.name"
@@ -118,7 +118,7 @@ export default {
           return false
         }
       })
-      console.log(...this.isSq);
+      // console.log(...this.isSq);
       
       
     }
