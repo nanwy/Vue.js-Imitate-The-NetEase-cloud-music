@@ -2,23 +2,7 @@
   <div>
     <div class="content" :style="{background}">
       <div class="item">
-        <div class="title">
-          <gbnav>
-          <div class="left">
-            <span>{{title}}</span>
-            <span class="description">编辑推荐:{{description}}</span>
-          </div>
-          <div class="right">
-            <span>
-              <i class="iconserch iconfont"></i>
-            </span>
-            <span>
-              <i class="iconcaidan1 iconfont"></i>
-            </span>
-          </div>
-      
-          </gbnav>
-        </div>
+        
         <div class="title-content">
           <img v-lazy="imgUrl" alt="">
           <div class="name">{{name}}
@@ -43,19 +27,11 @@
         </div>
       </div>
     </div>
-    <div class="play-list">
-      <div class="play-title">
-        <i>播放</i>
-        <span>播放全部</span>
-        <span class="total" v-if="many">(共{{many}}首)</span>
-        <span class="star" v-if="subscribedCount">+收藏({{subscribedCount}})</span>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
-import Gbnav from 'components/common/Gbnav'
+
 export default {
  props:{
    songDetailId:{
@@ -85,12 +61,7 @@ export default {
        return '网易云'
      }
    },
-   many:{
-     type:Number
-   },
-   subscribedCount:{
-     type:Number
-   },
+   
    comment:{
      type:Number
    },
@@ -99,7 +70,7 @@ export default {
    }
  },
  components:{
-   Gbnav
+  
  }
 }
 </script>
@@ -107,11 +78,11 @@ export default {
 <style scoped>
 .content{
   width: 100%;
-  height: 320px;
+  height: 255px;
   color: #fff;
    z-index:1;
    position: relative;
-
+  padding-top: 50px;
 }
 .content:after{
     content: "";
@@ -179,37 +150,7 @@ img{
     font-weight: normal;
     line-height: 1;
 }
-.nav{
-  display: flex;
-  justify-content:space-evenly;
-}
 
-.left .description{
-  display: block;
-  font-size: 12px;
-  margin-top: 8px;
-  transform: scale(.9);
-  width: 230px;
-  
-  text-overflow: ellipsis;
-
-  font-weight: 100;
-    overflow: hidden; 
-    -webkit-box-orient: vertical;
-    white-space:nowrap;
-  color: #efebeb;
-  transform-origin: 0 0
-}
-
-.iconfont {
-font-family:"iconfont" !important;      
-font-size:25px;
-font-style:normal;
-color: #fff;
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
-padding: 0 5px;
-}
 .downlond{
   display: flex;
   margin-top: 10px;
@@ -221,33 +162,5 @@ padding: 0 5px;
   flex-direction: column;
   justify-content: space-around;
 }
-.play-list{
-    
-  margin-top: -15px;
-  position: relative;
-  z-index: 10;
-}
-.play-title{
-  display: flex;
-  height: 60px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  background-color: #fff;
-  line-height: 60px;
-}
-.total{
-  font-size: 12px;
-  color: #ccc;
-}
-.play-title .star{
-  margin-right: 5px;
-  margin-top: 10px;
-margin-left: auto;
-color: #fff;
-height: 35px;
-background-color: red;
-border-radius: 50px;
-padding: 2px 10px 2px 10px;
-line-height: 38px;
-}
+
 </style>

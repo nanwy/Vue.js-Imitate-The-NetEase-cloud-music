@@ -3,7 +3,7 @@
     <div class="list-item">
       <span class="num">{{num}}</span>
       <div class="song-detail">
-        <div class="song-name">{{songName}} <span v-show="alia.length">({{alia}})</span> </div>
+        <div class="song-name">{{songName}} <span v-show="alia">({{alia}})</span> </div>
         <div class="creator" v-for="item in arName">
           <span  v-if="maxbr" class="maxbr">SQ</span>{{item.name}} - {{alName}}</div>
       </div>
@@ -38,7 +38,7 @@ export default {
      type:Number
    },
    alia:{
-     type:Array
+     type:String
    }
  },
  created(){

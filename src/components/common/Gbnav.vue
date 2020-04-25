@@ -25,8 +25,10 @@ color: #fff;
 -moz-osx-font-smoothing: grayscale;
 }
 .nav{
+  width: 100%;
   display: flex;
-  height: 50px;
-
+  height: 40px;
+      position: sticky;
+        justify-content:space-between;
 }
 </style>

@@ -27,7 +27,7 @@
 import {getNewCDs,getNewSongs} from 'network/find'
 import {getRandomArray} from 'components/common/getRandomArray.js'
 import RecommendSongsItem from './RecommendSongsItem'
-import PageLoading from './pageLoading'
+import PageLoading from 'components/common/pageLoading'
 export default {
   
  data(){

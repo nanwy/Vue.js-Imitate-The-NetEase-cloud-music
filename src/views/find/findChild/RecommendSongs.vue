@@ -19,7 +19,7 @@
 <script>
 import {getRecommendSongs} from 'network/find'
 import RecommendSongsItem from './RecommendSongsItem'
-import PageLoading from './pageLoading'
+import PageLoading from 'components/common/pageLoading'
 import {getRandomArray} from 'components/common/getRandomArray.js'
 export default {
   data(){

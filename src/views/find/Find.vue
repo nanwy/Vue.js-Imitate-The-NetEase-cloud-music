@@ -15,7 +15,7 @@ import {getSwiper} from 'network/find'
 import FindSwiper from './findChild/FindSwiper'
 import FindNav from './findChild/FindNav'
 import RecommendSongs from './findChild/RecommendSongs'
-import PageLoading from './findChild/pageLoading'
+import PageLoading from 'components/common/pageLoading'
 import NewCD from './findChild/NewCD'
 
 import {mapGetters} from 'vuex'
