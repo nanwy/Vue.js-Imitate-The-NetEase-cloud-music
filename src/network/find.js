@@ -1,5 +1,16 @@
 import {request} from './base'
 
+// export default{
+//   albumDetailFn (id, s = 5) {
+//     return axios.get(albumDetail, {
+//       params: {
+//         id,
+//         s
+//       }
+//     })
+//   }
+// }
+
 export function getSwiper(type){
   return request({
     url: '/banner',

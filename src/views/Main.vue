@@ -1,7 +1,8 @@
 <template>
   <div class="main">
+    <login></login>
     <main-tab-bar class="tab-bar" v-if="!isPath"></main-tab-bar>
-    <keep-alive>
+    <keep-alive >
     <router-view></router-view>
     </keep-alive>
   </div>
@@ -10,8 +11,9 @@
 <script>
 
 import MainTabBar from 'components/common/MainTabBar'
-
+import Login from './Login'
 export default {
+  name:'Main',
  data(){
    return {
      isPath:false
@@ -19,7 +21,8 @@ export default {
  },
   components: {
     
-    MainTabBar
+    MainTabBar,
+    Login
   },
   activated(){
     console.log('kk');

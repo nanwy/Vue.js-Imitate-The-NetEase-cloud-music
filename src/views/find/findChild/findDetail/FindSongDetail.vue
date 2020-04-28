@@ -1,8 +1,10 @@
 <template>
   <div>
-    <div class="content" :style="{background}">
+    <div class="content" :style="{backgroundImage:'url(' + backgroundImage + ')'}">
       <div class="item">
-        
+        <div class="h">
+
+        </div>
         <div class="title-content">
           <img v-lazy="imgUrl" alt="">
           <div class="name">{{name}}
@@ -33,6 +35,7 @@
 <script>
 
 export default {
+  name:"FindSongDetail",
  props:{
    songDetailId:{
      type:Number
@@ -46,7 +49,7 @@ export default {
    name:{
      type:String
    },
-   background:{
+   backgroundImage:{
      type:String
    },
    description:{
@@ -69,6 +72,15 @@ export default {
      type:Number
    }
  },
+ data(){
+   return {
+    //  backgroundImage:require('assets/logo.png'),
+   }
+ },
+ created(){
+   console.log(this.backgroundImage);
+   
+ },
  components:{
   
  }
@@ -79,10 +91,12 @@ export default {
 .content{
   width: 100%;
   height: 255px;
-  color: #fff;
+  color: #eee;
    z-index:1;
    position: relative;
-  padding-top: 50px;
+  /* padding-top: 50px; */
+  background-size:cover;
+  /* margin-top: -50px; */
 }
 .content:after{
     content: "";
@@ -92,14 +106,17 @@ export default {
     left:0;
     top:0;
     background: inherit;
-    filter: blur(50px);
+    filter: blur(5px);
     z-index: 2;
+}
+.h{
+  height: 50px;
 }
 .item{
     position: absolute;
     width: 100%;
-    margin-top: 10px;
 
+    /* padding-top: 50px; */
 
     z-index:11;
 

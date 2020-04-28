@@ -30,7 +30,7 @@ export default {
       }
       timer = setTimeout(() => {
         this.hideTip()
-      }, 3000)
+      }, 1500)
     },
     hideTip () {
       this.isTip = false

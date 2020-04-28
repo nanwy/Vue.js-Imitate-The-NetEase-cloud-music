@@ -2,9 +2,9 @@
   <div class="new-cd">
     <div class="cd-title">
       <div class="cd-left">
-        <span @click="cur='newsong'" :class="{active: cur=== 'newsong'}">新歌</span>
+        <span @click="cur='newsong'" :class="{active: cur=== 'newsong'}">新碟</span>
         <i>|</i>
-        <span @click="cur='newcd'" :class="{active:cur === 'newcd'}">新碟</span>
+        <span @click="cur='newcd'" :class="{active:cur === 'newcd'}">新歌</span>
        
       </div>
       <div class="cd-square" v-show="cur ==='newsong'">更多新碟</div>
@@ -14,20 +14,27 @@
     <page-loading  v-show="loading"></page-loading>
     <div v-show="!loading">
       <div class="newsong" v-show="cur ==='newsong'">
-      <recommend-songs-item   v-for="(item,index) in newCDs" :picUrl='item.picUrl' :name='item.name' :playCount='0' :key="index"></recommend-songs-item>
+      <recommend-songs-item   v-for="(item,index) in newCDs" 
+      :picUrl='item.picUrl' :name='item.name' 
+      :playCount='0' :key="index"
+      :newSongDeatilId="item.id"></recommend-songs-item>
     </div>
     <div class="newsong" v-show="cur ==='newcd'">
-      <recommend-songs-item   v-for="(item,index) in newSongs" :picUrl='item.album.blurPicUrl' :name='item.album.name' :playCount='0' :key="index"></recommend-songs-item>
+      <recommend-songs-item   v-for="(item,index) in newSongs" :picUrl='item.album.blurPicUrl' 
+      :name='item.album.name' 
+      :playCount='0' 
+      :key="index"></recommend-songs-item>
     </div>
     </div>
   </div>
 </template>
 
 <script>
-import {getNewCDs,getNewSongs} from 'network/find'
+
 import {getRandomArray} from 'components/common/getRandomArray.js'
 import RecommendSongsItem from './RecommendSongsItem'
 import PageLoading from 'components/common/pageLoading'
+import api from 'network/index'
 export default {
   
  data(){
@@ -47,7 +54,8 @@ export default {
    PageLoading
  },
  created(){
-   getNewCDs(this.limit).then(res => {
+   
+   api.getNewCDs(this.limit).then(res => {
     //  console.log(res);
     if(res.data.code === 200){
        this.newCDs = getRandomArray(res.data.albums,3)
@@ -59,7 +67,7 @@ export default {
    this.type1 = getRandomArray(this.type,1)
    console.log(this.type1[0]);
    
-   getNewSongs(this.type1[0]).then(res => {
+   api.getNewSongs(this.type1[0]).then(res => {
      console.log(res);
      if(res.data.code === 200){
        this.newSongs.push(...res.data.data)

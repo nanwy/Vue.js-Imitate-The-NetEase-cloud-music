@@ -19,17 +19,21 @@
       </div>
     </nav> -->
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" @click.native="getSong"/> -->
-    
+    <loading></loading>
+    <keep-alive>
     <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
 <script>
 import Main from 'views/Main'
-
+import Loading from 'views/Loading'
 
 export default {
- 
+ components:{
+   Loading
+ }
 }
 </script>
 

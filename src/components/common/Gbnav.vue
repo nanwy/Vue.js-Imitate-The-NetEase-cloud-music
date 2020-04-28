@@ -16,14 +16,7 @@ export default {
 </script>
 
 <style>
-.iconfont {
-font-family:"iconfont" !important;      
-font-size:25px;
-font-style:normal;
-color: #fff;
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
-}
+
 .nav{
   width: 100%;
   display: flex;

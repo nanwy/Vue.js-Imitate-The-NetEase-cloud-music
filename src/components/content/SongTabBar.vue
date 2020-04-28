@@ -27,6 +27,7 @@ props:{
     
   margin-top: -15px;
   position: relative;
+  
   z-index: 10;
 }
 .play-title{

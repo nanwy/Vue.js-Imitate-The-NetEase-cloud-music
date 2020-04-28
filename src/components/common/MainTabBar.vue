@@ -2,7 +2,7 @@
   <div class="index">
     <tab-bar>
       <div class="nav-left">
-        <i class="iconcaidan iconfont"  ></i>
+        <i class="iconcaidan iconfont" @click="SHOW_LOGIN"></i>
       </div>
       <div class="nav-center">
         <tab-bar-item path="/home" activeColor='pink'>
@@ -48,9 +48,15 @@ export default {
     TopTip
   },
   mounted () {
-    setTimeout(() => {
+   
+    
+  },
+  activated(){
+     setTimeout(() => {
       this.$refs.tip.showTip()
-    },500)
+    },2200)
+    console.log('sss');
+    
   },
   methods:{
     tip(){
@@ -59,10 +65,12 @@ export default {
       ++this.key.key1
       console.log(this.key1);
       this.setKey(this.key)
+
       
     },
     ...mapMutations({
-      setKey:'SET_KEY'
+      setKey:'SET_KEY',
+      SHOW_LOGIN:'SHOW_LOGIN'
     })
   }
 }

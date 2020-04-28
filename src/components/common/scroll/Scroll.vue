@@ -8,6 +8,7 @@
 
 <script>
 import BScroll from 'better-scroll'
+
 export default {
   props:{
     probeType:{
@@ -21,15 +22,21 @@ export default {
   },
  data(){
    return{
-     scroll:null
+     scroll:'null'
    }
  },
  mounted() {
    this.scroll = new BScroll(this.$refs.wrapper,{
      click:true,
+     startY:55,
      probeType:this.probeType,
      pullUpLoad:this.pullUpload,
-     bounce: false
+     bounce: false,
+     deceleration: 0.003,
+     momentumLimitTime: 500,
+     momentumLimitDistance: 10,
+     useTransition: false,
+     
    })
    this.scroll.on('scroll',(position) => {
     //  console.log(position);

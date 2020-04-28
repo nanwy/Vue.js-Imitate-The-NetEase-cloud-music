@@ -33,6 +33,9 @@ export default {
      },
      idx:{
        type:String
+     },
+     newSongDeatilId:{
+       type:Number
      }
  },
  filters:{
@@ -49,7 +52,14 @@ export default {
  methods:{
    SongDetail(idx){
      if(!idx){
-       this.$router.push({name:'song',params:{songDetailId:this.songDetailId}})
+      if(this.songDetailId){
+         this.$router.push({name:'song',params:{songDetailId:this.songDetailId}}) 
+         return
+      }
+      if(this.newSongDeatilId){
+        this.$router.push({name:'song',params:{newSongDeatilId:this.newSongDeatilId}})
+        return
+      }
      }
    }
  }

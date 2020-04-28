@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="music-content">
     <div class="list-item">
       <span class="num">{{num}}</span>
       <div class="song-detail">
@@ -54,7 +54,7 @@ export default {
 </script>
 
 <style scoped>
-.content{
+.music-content{
   position: relative;
 background-color: #fff;
 margin-top: -1px;

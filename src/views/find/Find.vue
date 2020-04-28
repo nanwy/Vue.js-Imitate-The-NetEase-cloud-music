@@ -17,11 +17,12 @@ import FindNav from './findChild/FindNav'
 import RecommendSongs from './findChild/RecommendSongs'
 import PageLoading from 'components/common/pageLoading'
 import NewCD from './findChild/NewCD'
-
+import api from 'network/index'
 import {mapGetters} from 'vuex'
 import Scroll from 'components/common/scroll/Scroll'
 
 export default {
+  name:'Find',
   data(){
     return {
       type:0,
@@ -47,21 +48,26 @@ export default {
   },
   created(){
     this.type=1
-    getSwiper(this.type).then(res => {
+    api.getSwiper(this.type).then(res => {
       this.banners.push(...res.data.banners)
       this.loading = false
-      // console.log(res.data.banners);
-      // console.log(this.banners);
-      
-      
+       console.log(res.data.banners);
     })
+    // getSwiper(this.type).then(res => {
+    //   this.banners.push(...res.data.banners)
+    //   this.loading = false
+    //   // console.log(res.data.banners);
+    //   // console.log(this.banners);
+      
+      
+    // })
     
     
    
     
   },
   activated(){
-    console.log('我创建');
+    console.log(this.$refs.scroll.scroll);
     this.$refs.scroll.refresh()
   },
   methods:{
