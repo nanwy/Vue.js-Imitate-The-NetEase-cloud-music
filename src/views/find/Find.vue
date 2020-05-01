@@ -104,7 +104,11 @@ export default {
 
 }
 .content{
-  height: calc(100% - 40px);
-  background-color: #fff;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    bottom: 100px;
+    left: 0;
+    right: 0;
 }
 </style>

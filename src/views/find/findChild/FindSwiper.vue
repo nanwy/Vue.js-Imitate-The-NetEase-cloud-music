@@ -1,6 +1,6 @@
 <template>
-  <swiper v-if="Object.keys(banners).length !==0" class="find-swiper">
-    <swiper-item v-for="item in banners" class="find-swiper-item">
+  <swiper v-if="Object.keys(banners).length !==0" class="find-swiper" @touchstart.native="isFindSwiper">
+    <swiper-item v-for="(item,index) in banners" class="find-swiper-item" :key="index">
       <a href="#">
         <img :src="item.pic" alt="" @load="loadImg">
         <span class="title" :style="{backgroundColor:item.titleColor}">{{item.typeTitle}}</span> 
@@ -12,6 +12,7 @@
 
 <script>
 import {Swiper, SwiperItem} from 'components/common/swiper'
+import {mapMutations} from 'vuex'
 export default {
   components:{
     Swiper, 
@@ -33,7 +34,15 @@ export default {
         this.isLoad = true
       }
       
-    }
+    },
+    swiperClick(){
+      // this.isFindSwiper = false
+      console.log('kk');
+       console.log(this.isFindSwiper);
+    },
+    ...mapMutations({
+      isFindSwiper:"IS_FIND_SWIPER"
+    })
   }
 }
 </script>

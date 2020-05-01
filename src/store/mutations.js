@@ -12,6 +12,17 @@ const mutations = {
   },
   [types.HIDE_LOGIN](state){
     state.login = false
+  },
+  [types.SET_PLAY_LIST](state, list){
+    state.playList = list
+    console.log(list);
+    
+  },
+  [types.IS_FIND_SWIPER](state){
+    state.isFindSwiper = false
+  },
+  [types.HIDE_FIND_SWIPER](state){
+    state.isFindSwiper = true
   }
 }
 

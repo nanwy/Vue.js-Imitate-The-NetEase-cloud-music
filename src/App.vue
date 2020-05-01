@@ -20,19 +20,24 @@
     </nav> -->
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" @click.native="getSong"/> -->
     <loading></loading>
+    
     <keep-alive>
     <router-view></router-view>
     </keep-alive>
+    <bottom-bar></bottom-bar>
   </div>
 </template>
 
 <script>
 import Main from 'views/Main'
-import Loading from 'views/Loading'
-
+ import Swipers from 'components/content/swiper.vue';
+ import Loading from 'views/Loading'
+import BottomBar from 'components/content/BottomBar'
 export default {
  components:{
-   Loading
+   Loading,
+   Swipers,
+   BottomBar
  }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="music-content">
+  <div class="music-content" @click="startPlay">
     <div class="list-item">
       <span class="num">{{num}}</span>
       <div class="song-detail">
@@ -16,9 +16,14 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
 export default {
-  
- props:{
+  computed:{
+    ...mapGetters({
+      playList:"PLAY_LIST"
+    })
+  },
+  props:{
    num:{
      type:Number
    },
@@ -42,12 +47,16 @@ export default {
    }
  },
  created(){
-  //  console.log(this.maxbr);
+   console.log(this.maxbr);
    
  },
 
  methods: {
- 
+ startPlay(){
+   console.log('dianji');
+   this.$emit('startPlay')
+   
+ }
 },
 }
 

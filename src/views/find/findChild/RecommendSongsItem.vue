@@ -53,11 +53,11 @@ export default {
    SongDetail(idx){
      if(!idx){
       if(this.songDetailId){
-         this.$router.push({name:'song',params:{songDetailId:this.songDetailId}}) 
+         this.$router.push({name:'songsdetail',params:{songDetailId:this.songDetailId}}) 
          return
       }
       if(this.newSongDeatilId){
-        this.$router.push({name:'song',params:{newSongDeatilId:this.newSongDeatilId}})
+        this.$router.push({name:'songsdetail',params:{newSongDeatilId:this.newSongDeatilId}})
         return
       }
      }

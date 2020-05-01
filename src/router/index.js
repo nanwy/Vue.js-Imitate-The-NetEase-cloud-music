@@ -6,6 +6,7 @@ const Find = ()=> import('../views/find/Find')
 const Main = ()=> import('../views/Main')
 const FindSongDetail = ()=> import('views/find/findChild/findDetail/FindSongDetail')
 const Song = ()=> import('components/common/Song')
+const Swipers  = ()=> import ('components/content/swiper.vue')
 Vue.use(VueRouter)
 
 const routes = [
@@ -16,18 +17,19 @@ const routes = [
   {
     path:"/find",
     component:Main,
-    children:[{
-      path:"/find",
-      component:Find
-    },
+    children:[
   {
-    path:'/song',
-    name:'song',
+      path:"/find",
+      component:Swipers
+  },
+  {
+    path:'/songsdetail',
+    name:'songsdetail',
     component:Song
   },
   {
     path:"/home",
-    component:Home
+    component:Swipers
   }
   ]
   },

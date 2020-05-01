@@ -36,6 +36,7 @@
         "axios": "^0.19.2",
         "better-scroll": "^1.15.2",
         "core-js": "^3.6.4",
+        "default-passive-events": "^1.0.10",
         "express": "^4.17.1",
         "less-loader": "^5.0.0",
         "pac-proxy-agent": "^3.0.1",
@@ -48,15 +49,16 @@
         "vuex": "^3.2.0"
     },
     "devDependencies": {
+        "@vue/cli-plugin-babel": "~4.3.0",
+        "@vue/cli-service": "~4.3.0",
         "eslint": "^6.6.0",
         "eslint-plugin-html": "^6.0.0",
         "husky": "^3.0.9",
         "intelli-espower-loader": "^1.0.1",
         "lint-staged": "^9.4.2",
         "mocha": "^6.2.2",
+        "postcss-px-to-viewport": "^1.1.1",
         "power-assert": "^1.6.1",
-        "@vue/cli-plugin-babel": "~4.3.0",
-        "@vue/cli-service": "~4.3.0",
         "vue-template-compiler": "^2.6.11"
     }
 }

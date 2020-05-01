@@ -1,6 +1,7 @@
 <template>
   <div class="loading" v-if="loading">
-    <h2 class="first-loading">555</h2>
+    <div class="index-title">音樂的力量</div>
+    <div class="foot">网易云音乐</div>
   </div>
 </template>
 
@@ -28,5 +29,22 @@ export default {
   height: 100vh;
   background-color: red;
   z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   color: #fff;
+}
+.index-title{
+
+  font-size: 50px;
+   transform: translateY(-20%);
+   font-style: oblique;
+
+}
+.foot{
+position: absolute;
+bottom: 10%;
+left: 50%;
+transform: translate(-50%,-50%);
 }
 </style>

@@ -7,11 +7,11 @@
     <page-loading  v-show="loading"></page-loading>
     <div class="recommends-content">
       <recommend-songs-item 
-      v-for='item in recommendsongs' :picUrl="item.picUrl" 
+      v-for='(item,index) in recommendsongs' :picUrl="item.picUrl" 
       :name="item.name" 
       :playCount="item.playCount" 
       :songDetailId='item.id'
-      ></recommend-songs-item>
+      :key="index"></recommend-songs-item>
     </div>
   </div>
 </template>

@@ -28,14 +28,11 @@ export default {
  mounted() {
    this.scroll = new BScroll(this.$refs.wrapper,{
      click:true,
-     startY:55,
+
      probeType:this.probeType,
      pullUpLoad:this.pullUpload,
      bounce: false,
-     deceleration: 0.003,
-     momentumLimitTime: 500,
-     momentumLimitDistance: 10,
-     useTransition: false,
+    
      
    })
    this.scroll.on('scroll',(position) => {

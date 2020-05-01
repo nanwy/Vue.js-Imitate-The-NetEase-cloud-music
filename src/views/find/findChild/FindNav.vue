@@ -1,6 +1,6 @@
 <template>
   <div class="find-icon">
-    <find-icon v-for="item in findIcon" :icon="item">
+    <find-icon v-for="(item,index) in findIcon" :icon="item" :key="index">
       <span class="today" v-if="item.url === 'iconrili1'">{{data}}</span>
     </find-icon>
   </div>

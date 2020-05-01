@@ -1,8 +1,11 @@
 @charset "utf-8";
-
+* { touch-action: pan-y; } 
 html {
   background-color: #fff;
-  color: #000
+  color: #000;
+
+
+ 
 }
 
 body,

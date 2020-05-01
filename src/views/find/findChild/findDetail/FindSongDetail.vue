@@ -7,9 +7,11 @@
         </div>
         <div class="title-content">
           <img v-lazy="imgUrl" alt="">
+          <span class="play-number"><i class="iconbofang iconfont"></i> {{playCount | setPlayCount}}</span>
           <div class="name">{{name}}
             <div class="tou" v-if="touImg">
               <img v-lazy="touImg" alt="">
+              
               <span v-if="nickname">{{nickname}}></span>
               <div class="description description1">
                 {{description}}
@@ -64,6 +66,9 @@ export default {
        return '网易云'
      }
    },
+   playCount:{
+     type:Number
+   },
    
    comment:{
      type:Number
@@ -81,6 +86,17 @@ export default {
    console.log(this.backgroundImage);
    
  },
+ filters:{
+   setPlayCount(val){
+     if(!val){
+       return ''
+     }
+     if(val > 10000){
+       val = Math.floor(val / 10000) + '万'
+     }
+     return val
+   }
+ },
  components:{
   
  }
@@ -94,7 +110,7 @@ export default {
   color: #eee;
    z-index:1;
    position: relative;
-  /* padding-top: 50px; */
+  padding-bottom: 25px;
   background-size:cover;
   /* margin-top: -50px; */
 }
@@ -126,11 +142,20 @@ export default {
   padding: 0 15px;
   justify-content: space-between;
 }
-img{
+.title-content img{
+  position: relative;
   width: 150px;
   height: 150px;
   border-radius: 8px;
   
+}
+.play-number{
+  position: absolute;
+  color: #fff;
+  /* right: 5px; */
+  left: 110px;
+  /* top: 5px; */
+  font-size: 14px;
 }
 .name{
   width: 175px;
@@ -179,5 +204,13 @@ img{
   flex-direction: column;
   justify-content: space-around;
 }
-
+.iconfont {
+font-family:"iconfont" !important;      
+font-size:5 px;
+font-style:normal;
+ color: #fff;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+padding: 0 2px;
+}
 </style>

@@ -2,7 +2,8 @@
   <div class="main">
     <login></login>
     <main-tab-bar class="tab-bar" v-if="!isPath"></main-tab-bar>
-    <keep-alive >
+
+    <keep-alive exclude="Song">
     <router-view></router-view>
     </keep-alive>
   </div>
@@ -11,6 +12,7 @@
 <script>
 
 import MainTabBar from 'components/common/MainTabBar'
+
 import Login from './Login'
 export default {
   name:'Main',
@@ -34,8 +36,8 @@ export default {
   },
   watch:{
     $route(to,from){
-    this.isPath =  to.path == '/song' 
-    console.log(to.path == '/song');
+    this.isPath =  to.path == '/songsdetail' 
+    console.log(to.path == '/songsdetail');
     
   }
   },

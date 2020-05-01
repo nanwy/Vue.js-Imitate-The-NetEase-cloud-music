@@ -4,8 +4,8 @@
  
   <div id="song">
     <page-loading  v-show="loading" style="height:5rem"></page-loading>
-    <div class="title" v-show="!loading" :style="{background}">
-          <gbnav>
+    <div class="title" v-show="!loading" :style="{backgroundImage:'url(' + background + ')'}">
+          <gbnav class="nav">
           <div class="left">
             <span class="left-title">{{title}}</span>
             <span class="description">编辑推荐:{{songDetail.description | description1}}</span>
@@ -39,7 +39,8 @@
     
     :comment="songDetail.commentCount"
     :share="songDetail.shareCount"
-   
+    :playCount="songDetail.playCount"
+    
     v-show="!loading"></find-song-detail>
     <song-tab-bar 
     :many="songDetail.trackCount ? songDetail.trackCount : songDetail.album ? songDetail.album.size : 0"
@@ -54,6 +55,7 @@
     :alName="item.al.name"
     :alia="item.alia[0]"
     :songId="item.id"
+    @startPlay="startPlayAll"
     v-show="!loading"
     >
       
@@ -71,7 +73,7 @@ import PageLoading from './pageLoading'
 import MusicList from 'components/content/MusicList'
 import SongTabBar from 'components/content/SongTabBar'
 // import {getSongDetail} from 'network/find'
-import { mapActions } from 'vuex'
+import { mapActions,mapGetters, } from 'vuex'
 import rgbaster from 'rgbaster'
 import Gbnav from 'components/common/Gbnav'
 import Scroll from 'components/common/scroll/Scroll'
@@ -121,14 +123,8 @@ export default {
       
     
   },
+ 
   created(){
-    //  this.$nextTick(() => {
-    //             this.$refs.scroll.scrollTo(0,-50,0)
-    //             console.log(this.$refs.scroll.scrollTo);
-    //         });
-      //  console.log(this.$refs.scroll.scrollTo);
-  },
-  activated(){
     // this.$refs.scroll.scrollTo(0,50,5000)
     let songDetailId = this.$route.params.songDetailId
     let newSongDeatilId = this.$route.params.newSongDeatilId
@@ -191,17 +187,7 @@ export default {
           
           //  console.log(this.songDetail.name);
           //  console.log(this.songPeivileges[0].id);
-           
-           let result = rgbaster(
-      this.songDetail.coverImgUrl,
-      {
-        exclude: [ 'rgb(255,255,255)', 'rgb(0,0,0)' ]
-      }
-    )
-    result.then((res)=>{
-    this.background1 = res[0].color
-      this.loading = false
-    })
+         
           }
     }).catch(error => {
           console.log(error)
@@ -298,7 +284,9 @@ export default {
      if((-position.y) > 100){
        this.title = this.songDetail.name
         this.isTabFixed = (-position.y + 50)> this.tabOffsetTop
-        this.background = this.background1
+        this.background = this.songDetail.coverImgUrl
+        console.log(this.background);
+        
         // this.isNone = (-position.y + 110)> (this.tabOffsetTop)
      }else{
        this.title = '歌单'
@@ -321,13 +309,24 @@ export default {
         if(item > 500000){
           return true
         }else{
-          return ''
+          return false
         }
       })
       // console.log(...this.isSq);
       
       
     },
+    startPlayAll(){
+       console.log('kjkj')
+      this.setSongAll({
+        list:this.songDetail.tracks
+        
+        
+      })
+      console.log(this.$store.state.playList);
+      
+    },
+    ...mapActions(['setSongAll'])
     
   }
   
@@ -335,9 +334,7 @@ export default {
 </script>
 
 <style scoped>
-.music-list{
-  
-}
+
 .slide-enter-active,.slide-leave-active{
   transition: all .1s;
 }
@@ -377,10 +374,26 @@ export default {
   position: absolute;
   top: 0px;
   left: 0;
-  color: rgb(148, 148, 151);
+  color: #fff;
   font-weight: 700;
-  background-color:transparent;
+   background-position:0 30%;
+   background-size:100%,44px;
     z-index:11;
+
+}
+.title:after{
+    content: "";
+    width:100%;
+    height:100%;
+    position: absolute;
+    left:0;
+    top:0;
+    background: inherit;
+    filter: blur(5px);
+    z-index: 2;
+}
+.nav{
+  z-index: 11;
 }
 .left-title{
   width: 230px;
@@ -404,7 +417,7 @@ export default {
     overflow: hidden; 
     -webkit-box-orient: vertical;
     white-space:nowrap;
-  color: rgb(148, 148, 151);
+  color: #fff;
   transform-origin: 0 0
 }
 .songtabbar{
@@ -418,7 +431,7 @@ export default {
 
     width: 100%;
   position: relative  ;
-  z-index: 9;
+  z-index: 20;
   background-color: #fff;
   top: 50px;
   /* padding-top: 50px; */
@@ -430,7 +443,7 @@ export default {
 font-family:"iconfont" !important;      
 font-size:25px;
 font-style:normal;
- color: rgb(148, 148, 151);
+ color: #fff;
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 padding: 0 5px;

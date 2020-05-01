@@ -4,12 +4,12 @@
       <div class="nav-left">
         <i class="iconcaidan iconfont" @click="SHOW_LOGIN"></i>
       </div>
-      <div class="nav-center">
-        <tab-bar-item path="/home" activeColor='pink'>
+      <div class="nav-center" >
+        <tab-bar-item path="/home" activeColor='pink' @click.native="tabClick(0)">
 
           <div slot="item-text">我的</div>
        </tab-bar-item>
-       <tab-bar-item path="/find" activeColor='black' @click.native="tip" >
+       <tab-bar-item path="/find" activeColor='black' @click.native="tip();tabClick(1)"  >
          
           <div slot="item-text">发现</div>
        
@@ -29,7 +29,7 @@
 import TabBar from './TabBar'
 import TabBarItem from './TabBarItem'
 import TopTip from './index'
-
+import VueRouter from 'vue-router';
 import {mapMutations} from 'vuex'
 export default {
   data(){
@@ -39,7 +39,10 @@ export default {
         key:0,
         key1:2
       },
-      
+       navList: [
+          {name: '我的'},
+          {name: '发现'},
+        ],
     }
   },
   components:{
@@ -48,7 +51,12 @@ export default {
     TopTip
   },
   mounted () {
-   
+    this.$nextTick(() => {
+        // 初始化，保证刷新页面后内容区和导航键一致
+        this.initPage();
+      });
+      // 接收swiper组件发射的index进行导航按钮切换高亮和更新模板地址
+      this.$root.eventHub.$on('slideTab', this.slideTab);
     
   },
   activated(){
@@ -68,6 +76,23 @@ export default {
 
       
     },
+     initPage() {
+        this.nowIndex = this.$route.path == '/home' ? 0 : this.$route.path == '/find' ? 1 :0;
+      },
+    tabClick(index) {
+        this.nowIndex = index;
+        // 点击导航按钮时向swiper组件发射index
+        this.$root.eventHub.$emit('changeTab', index);
+        console.log(index);
+        
+      },
+    slideTab(index) {
+        this.nowIndex = index;
+        let router = new VueRouter();
+        let href = index === 0 ? '/home' : index === 1 ? '/find': '/home';
+        // 利用路由的push方法更新路径地址
+        this.$router.push(href);
+      },
     ...mapMutations({
       setKey:'SET_KEY',
       SHOW_LOGIN:'SHOW_LOGIN'
