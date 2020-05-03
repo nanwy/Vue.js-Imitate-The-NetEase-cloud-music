@@ -1,5 +1,5 @@
 <template>
-  <swiper v-if="Object.keys(banners).length !==0" class="find-swiper" @touchstart.native="isFindSwiper">
+  <swiper v-if="Object.keys(banners).length !==0" class="find-swiper ignore" @touchstart.native="isFindSwiper">
     <swiper-item v-for="(item,index) in banners" class="find-swiper-item" :key="index">
       <a href="#">
         <img :src="item.pic" alt="" @load="loadImg">
@@ -50,13 +50,16 @@ export default {
 <style scoped>
 .find-swiper{
   margin: 0 auto;
-  width: 290px;
+ 
   border-radius: 10px;
   overflow: hidden;
   
 
 }
-
+.ignore {
+    width: 290px;
+    background-color: red;
+}
 .find-swiper-item{
   position: relative;
   height: 100%;

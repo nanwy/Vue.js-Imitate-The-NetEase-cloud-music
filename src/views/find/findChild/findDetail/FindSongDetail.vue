@@ -153,7 +153,7 @@ export default {
   position: absolute;
   color: #fff;
   /* right: 5px; */
-  left: 110px;
+  left: 90px;
   /* top: 5px; */
   font-size: 14px;
 }

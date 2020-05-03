@@ -6,10 +6,11 @@ module.exports = {
       viewportHeight: 667,
       unitPrecision: 5,
       viewportUnit: 'vw',
-      selectorBlackList: ['ignore',],
+      selectorBlackList: ['ignore'],
       minPixelValue: 1,
       mediaQuery: false
 
     },
-  }
+  },
+  
 }

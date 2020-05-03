@@ -205,16 +205,7 @@ body {
   font-size: .28em;
   line-height: 1;
   -webkit-text-size-adjust: none;
-  animation: scale 0.3s ease-in;
-  animation-delay:2s;
-}
-@keyframes scale{
-  0%{
-    transform: scale(2,2);
-  }   
-  100%{
-    transform: scale(1,1);
-  }
+
 }
 
 hr {

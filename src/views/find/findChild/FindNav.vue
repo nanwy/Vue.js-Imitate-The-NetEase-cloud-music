@@ -59,9 +59,9 @@ border-bottom:1px solid #eee;
 }
 .today{
   width: 18px;
-  height: 13px;
+  height: 14px;
   position: absolute;
-  top:16px;
+  top:14px;
   left:11px;
   color: red;
   background-color: #fff;

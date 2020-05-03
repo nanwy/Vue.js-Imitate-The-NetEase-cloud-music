@@ -1,5 +1,5 @@
 <template>
-  <div class="loading" v-if="loading">
+  <div class="loading-first" v-if="loading">
     <div class="index-title">音樂的力量</div>
     <div class="foot">网易云音乐</div>
   </div>
@@ -15,13 +15,40 @@ export default {
   created(){
     setTimeout(() => {
       this.loading = false
+           document.getElementsByTagName('body')[0].className = 'anim'
+          
+           
     }, 2000);
-  }
+    console.log('www');
+
+  console.log('xiaohui');
+    
+  },
+  activated() {
+  
+  },
+  mounted () {
+  
+  },
+  destroyed(){
+ 
+}
 }
 </script>
 
-<style scoped>
-.loading{
+<style>
+.anim{
+  animation: scale .3s ease;
+}
+@keyframes scale{
+  0%{
+    transform: scale(2,2);
+  }   
+  100%{
+    transform: scale(1,1);
+  }
+}
+.loading-first{
   position: fixed;
   top: 0;
   left: 0;

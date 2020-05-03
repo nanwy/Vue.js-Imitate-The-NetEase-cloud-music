@@ -32,13 +32,13 @@
 import Main from 'views/Main'
  import Swipers from 'components/content/swiper.vue';
  import Loading from 'views/Loading'
-import BottomBar from 'components/content/BottomBar'
+import BottomBar from 'components/content/player/BottomBar'
 export default {
  components:{
    Loading,
    Swipers,
    BottomBar
- }
+ },
 }
 </script>
 

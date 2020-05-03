@@ -51,5 +51,8 @@ export default {
 </script>
 
 <style>
-
+.main{
+  position: relative;
+  z-index: 10;
+}
 </style>

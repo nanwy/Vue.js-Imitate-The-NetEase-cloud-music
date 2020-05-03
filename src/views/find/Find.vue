@@ -107,7 +107,7 @@ export default {
     overflow: hidden;
     position: absolute;
     top: 0;
-    bottom: 100px;
+    bottom: 0px;
     left: 0;
     right: 0;
 }
