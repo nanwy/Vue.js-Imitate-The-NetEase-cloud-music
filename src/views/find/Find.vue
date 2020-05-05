@@ -97,7 +97,7 @@ export default {
 
 <style scoped>
 #find{
-   height: 100vh;
+   height: calc(100vh - 44px);
     position: relative;
     z-index: 11;
     background-color: #fff;

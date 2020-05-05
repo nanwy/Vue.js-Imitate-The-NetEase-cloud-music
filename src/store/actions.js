@@ -1,14 +1,13 @@
-import {
-  SET_PLAY_LIST
-} from './mutation-types'
+import* as types from './mutation-types'
 
 export default{
-  setSongAll({
-    commit,
-  }, {
-    list
-  }){
-    commit(SET_PLAY_LIST, list)
-    return true
+  setSongAll( {
+    commit, state
+  }, {list, index}){
+    commit(types.SET_PLAY_LIST, list)
+    commit(types.SET_FULL_SCREEN, true)
+    commit(types.SET_PLAY_STATE, true)
+    commit(types.SET_CURRENT_INDEX, index)
+    commit(types.SET_SEQUENCE_LIST, list)
   }
 }

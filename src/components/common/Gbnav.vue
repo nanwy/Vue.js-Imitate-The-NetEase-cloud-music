@@ -1,15 +1,24 @@
 <template>
   <div class="nav">
-    <i class="iconback iconfont" @click="backClick"></i>
+    <i class="iconback iconfont" @click="backClick(flag)"></i>
     <slot></slot>
   </div>
 </template>
 
 <script>
 export default {
+  props:{
+    flag:{
+      type:Boolean
+    }
+  },
   methods:{
-    backClick(){
-      this.$router.back()
+    backClick(flag){
+      if(flag){
+        this.$router.back()
+      }
+      this.$emit('hideFull')
+      
     }
   }
 }
@@ -23,5 +32,8 @@ export default {
   height: 40px;
       position: sticky;
         justify-content:space-between;
+}
+.iconback{
+  padding-left: 5px;
 }
 </style>

@@ -15,7 +15,7 @@
 <script type="text/ecmascript-6">
   import Find from 'views/find/Find';
   import Home from 'views/home/Home';
-    import Swiper1 from '../../../static/swiper.min';
+    import Swiper1 from '../../../static/swiper.min.js';
   import '../../../static/swiper.min.css';
 import {mapGetters,mapMutations} from 'vuex'
   export default {

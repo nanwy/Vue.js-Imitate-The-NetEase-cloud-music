@@ -3,12 +3,15 @@
   
  
   <div id="song">
-    <page-loading  v-show="loading" style="height:5rem"></page-loading>
+    <page-loading  v-if="loading" style="height:5rem"></page-loading>
     <div class="title" v-show="!loading" :style="{backgroundImage:'url(' + background + ')'}">
-          <gbnav class="nav">
+          <gbnav class="nav" :flag="true">
           <div class="left">
-            <span class="left-title">{{title}}</span>
+            <span class="left-title">
+              <!-- <marrquee :val="title"></marrquee> -->
+            </span>
             <span class="description">编辑推荐:{{songDetail.description | description1}}</span>
+            
           </div>
           <div class="right">
             <span>
@@ -55,7 +58,7 @@
     :alName="item.al.name"
     :alia="item.alia[0]"
     :songId="item.id"
-    @startPlay="startPlayAll"
+    @startPlay="startPlayAll(item,index)"
     v-show="!loading"
     >
       
@@ -72,6 +75,7 @@ import FindSongDetail from 'views/find/findChild/findDetail/FindSongDetail'
 import PageLoading from './pageLoading'
 import MusicList from 'components/content/MusicList'
 import SongTabBar from 'components/content/SongTabBar'
+import marrquee from './marrquee'
 // import {getSongDetail} from 'network/find'
 import { mapActions,mapGetters, } from 'vuex'
 import rgbaster from 'rgbaster'
@@ -96,7 +100,7 @@ export default {
       isTabFixed:false,
       tabOffsetTop:0,
       isNone:0,
-      newSongDeatilId:0
+      newSongDeatilId:0,
     }
   },
   beforeCreate() {
@@ -109,6 +113,12 @@ export default {
       }
       return  that.songDetail.description 
     }
+  },
+  computed:{
+    ...mapGetters({
+      fullScreen:'FULL_SCREEN',
+      currentIndex:'CURRENT_INDEX'
+    })
   },
   mounted(){
 
@@ -273,24 +283,29 @@ export default {
     PageLoading,
     Scroll,
     Gbnav,
-    SongTabBar
+    SongTabBar,
+    marrquee
   },
   methods:{
     contentscroll(position){
       // console.log(-position.y);
       this.tabOffsetTop = this.$refs.findsongdetail.$el.offsetTop
-      console.log(this.$refs.findsongdetail.$el.offsetTop);
+      // console.log(this.$refs.findsongdetail.$el.offsetTop);
       
      if((-position.y) > 100){
        this.title = this.songDetail.name
         this.isTabFixed = (-position.y + 50)> this.tabOffsetTop
         this.background = this.songDetail.coverImgUrl
-        console.log(this.background);
+        // console.log(this.background);
+        console.log(this.title);
+        
         
         // this.isNone = (-position.y + 110)> (this.tabOffsetTop)
      }else{
        this.title = '歌单'
        this.background = 'transparent'
+        console.log(this.title);
+        
      }
     },
     _isSQ(){
@@ -316,14 +331,14 @@ export default {
       
       
     },
-    startPlayAll(){
+    startPlayAll(item,index){
        console.log('kjkj')
       this.setSongAll({
-        list:this.songDetail.tracks
-        
+        list:this.songDetail.tracks,
+        index
         
       })
-      console.log(this.$store.state.playList);
+      console.log(this.$store.state.currentIndex);
       
     },
     ...mapActions(['setSongAll'])
@@ -357,7 +372,7 @@ export default {
   overflow: hidden;
   position: absolute;
   top: 0;
-  bottom: 49px;
+  bottom: 0;
   left: 0;
   right: 0;
 }
@@ -369,7 +384,8 @@ export default {
 }
 .title{
   width: 100%;
-  padding: 10px 5px 0 5px;
+  padding-top: 10px;
+  /* padding-left: 5px; */
   display: flex;
   position: absolute;
   top: 0px;
@@ -377,9 +393,10 @@ export default {
   color: #fff;
   font-weight: 700;
    background-position:0 30%;
-   background-size:100%,44px;
+  background-size: cover;
     z-index:11;
-
+  align-items: center ;
+  justify-content: center;
 }
 .title:after{
     content: "";
@@ -389,11 +406,13 @@ export default {
     left:0;
     top:0;
     background: inherit;
-    filter: blur(5px);
+    filter: brightness(0.5) blur(4px);
     z-index: 2;
+    transform: scale(1,1);
 }
 .nav{
   z-index: 11;
+  /* padding: 0 0 0 10px ; */
 }
 .left-title{
   width: 230px;
@@ -404,13 +423,16 @@ export default {
     -webkit-box-orient: vertical;
 
 }
+.left{
+  overflow: hidden;
+}
 .left .description{
   display: block;
   font-size: 12px;
   margin-top: 8px;
   transform: scale(.9);
   width: 230px;
-  
+  position: absolute;
   text-overflow: ellipsis;
 
   font-weight: 100;
@@ -418,8 +440,10 @@ export default {
     -webkit-box-orient: vertical;
     white-space:nowrap;
   color: #fff;
-  transform-origin: 0 0
+  transform-origin: 0 0;
+  /* animation: move 10s infinite; */
 }
+
 .songtabbar{
   visibility: hidden; 
    /* margin-top: -50px; */

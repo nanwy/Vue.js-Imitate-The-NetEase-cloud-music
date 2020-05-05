@@ -1,10 +1,21 @@
 <template>
-  <div class="player">
-    <div class="title">歌曲名称</div>
-    <div class="lyric">歌词</div>
-    <div class="control">播放</div>
-
-  </div>
+ <div class="player">
+   <!-- <div class="top" v-show="!loading" :style="{backgroundImage:'url(' + background + ')'}"> -->
+    <div class="top">      
+          <gbnav class="nav">
+          <div class="left">
+            <span class="left-title">{{他下个}}</span>
+            <span class="description">编辑推荐:{{作者}}</span>
+          </div>
+          <div class="right">
+            <span>
+              <i class="iconserch iconfont"></i>
+            </span>
+          </div>
+      
+          </gbnav>
+        </div>
+ </div>
 </template>
 
 <script>

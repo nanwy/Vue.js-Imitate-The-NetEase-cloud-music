@@ -1,20 +1,16 @@
 <template>
-  <div class="bottom-bar" @click="shwoPlayer">
-    <div class="front-cover"></div>
-    <div class="item-info">
-        <div class="name">爱你</div>
-        <div class="songer">老戴</div>
-    </div>
-    <div class="control">
-      <div>播放</div>
-      <div>菜单</div>
-    </div>
-  </div>
+  
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
-
+computed:{
+  ...mapGetters([
+    'fullScreen',
+    'playlist'
+  ])
+}
 }
 </script>
 
@@ -60,5 +56,6 @@ export default {
   margin-left: auto;
   padding-right: 10px;
   display: flex;
+  
 }
 </style>

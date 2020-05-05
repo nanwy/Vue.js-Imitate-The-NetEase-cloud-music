@@ -7,7 +7,8 @@ import {
   songDetail,
   newCDs,
   newSongs,
-  recommendSongs
+  recommendSongs,
+  lyric
   
 } from './config'
 
@@ -48,5 +49,12 @@ export default{
         
       }
     })
+  },
+  getLyric (id){
+    return axios.get(lyric), {
+      params: {
+        id
+      }
+    }
   }
 }

@@ -113,6 +113,7 @@ export default {
   padding-bottom: 25px;
   background-size:cover;
   /* margin-top: -50px; */
+  
 }
 .content:after{
     content: "";
@@ -122,7 +123,7 @@ export default {
     left:0;
     top:0;
     background: inherit;
-    filter: blur(5px);
+    filter: brightness(0.5) blur(5px);
     z-index: 2;
 }
 .h{
@@ -141,20 +142,20 @@ export default {
   display: flex;
   padding: 0 15px;
   justify-content: space-between;
+  position: relative;
 }
 .title-content img{
-  position: relative;
+  /* position: relative; */
   width: 150px;
   height: 150px;
   border-radius: 8px;
   
 }
 .play-number{
-  position: absolute;
+   position: absolute;
   color: #fff;
-  /* right: 5px; */
-  left: 90px;
-  /* top: 5px; */
+  right: 215px;
+  top: 5px;
   font-size: 14px;
 }
 .name{

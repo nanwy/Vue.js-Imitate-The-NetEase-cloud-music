@@ -13,6 +13,21 @@ const mutations = {
   [types.HIDE_LOGIN](state){
     state.login = false
   },
+  [types.SET_PLAY_STATE](state, flag){
+    state.playing = flag
+  },
+  [types.SET_FULL_SCREEN](state, flag){
+    state.fullScreen = flag
+  },
+  [types.SET_SEQUENCE_LIST](state, list){
+    state.sequenceList = list
+  },
+  [types.SET_PLAY_MODE](state, mode){
+    state.playMode = mode
+  },
+  [types.SET_CURRENT_INDEX](state, index){
+    state.currentIndex = index
+  },
   [types.SET_PLAY_LIST](state, list){
     state.playList = list
     console.log(list);

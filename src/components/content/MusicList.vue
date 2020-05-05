@@ -47,13 +47,13 @@ export default {
    }
  },
  created(){
-   console.log(this.maxbr);
+  //  console.log(this.maxbr);
    
  },
 
  methods: {
  startPlay(){
-   console.log('dianji');
+  //  console.log('dianji');
    this.$emit('startPlay')
    
  }
