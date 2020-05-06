@@ -1,14 +1,14 @@
 <template>
-<div>
-  <div class="bottom-bar" v-show="!fullScreen" @click='showFull'>
+<div v-if="playList.length>0">
+  <div class="bottom-bar" v-show="!fullScreen"  @click="showFull">
     <div class="front-cover" :style="{backgroundImage:'url(' + currentSong.al.picUrl + ')'}"></div>
     <div class="item-info">
-        <div class="name">爱你</div>
-        <div class="songer">老戴</div>
+        <div class="name">{{currentSong.name}}</div>
+        <span class="songer"  v-for="item in currentSong.ar">{{item.name}}</span>
     </div>
     <div class="control">
-      <div>播放</div>
-      <div>菜单</div>
+      <i @click.stop="togglePlaying" :class="playIcon" class="play iconfont"></i>
+      <i class="iconcaidan iconfont"></i>
     </div>
   </div>
   <transition name="song-detail"
@@ -22,7 +22,7 @@
           <gbnav class="nav" :flag='false' @hideFull="hideFull">
           <div class="left">
             <span class="left-title">{{currentSong.name}}</span>
-            <span class="description" v-for="item in currentSong.ar">{{item.name}}</span>
+            <span class="songer" v-for="item in currentSong.ar">{{item.name}}</span>
           </div>
           <div class="right">
             <span>
@@ -41,8 +41,22 @@
       </div>
      
     </div>
+    <div class="player-control" :class="{shadow:isShadow}" @touchstart="changeIsShadow" @touchend="changeIsShadow">
+      <i class="iconsuiji iconfont"></i>
+      <i class="iconshangyishou iconfont"></i>
+      <i @click="togglePlaying" :class="playIcon" class="play1 iconfont"></i>
+      <i class="iconshangyishou1 iconfont"></i>
+      <i class="iconcaidan iconfont"></i>
+    </div>
   </div>
   </transition>
+  <audio
+      :src="currentUrl"
+      ref="audio"
+      autoplay
+     
+      preload="auto"
+    ></audio>
 </div>
 </template>
 
@@ -50,18 +64,55 @@
 import {mapGetters,mapMutations} from 'vuex'
 import Gbnav from 'components/common/Gbnav'
 import animations from 'create-keyframe-animation'
+import api from 'network/index'
 export default {
+  data(){
+    return {
+      id:0,
+      currentUrl:'',
+      isShadow:false
+    }
+  },
 computed:{
+  playIcon(){
+    return this.playing? 'iconzantingtingzhi':'iconbofang1'
+  },
   ...mapGetters({
     fullScreen:'FULL_SCREEN',
-    playlist:'PLAY_LIST',
-    currentSong:'CURRENT_SONG'
+    playList:'PLAY_LIST',
+    currentSong:'CURRENT_SONG',
+    playing:'PLAYING'
   })
 },
 components:{
   Gbnav
 },
+watch:{
+  currentSong(val,oldval){
+    let albumId = this.$route.params.albumId
+    
+    this.$nextTick(() => {
+    this._getSongPlay(val.id)
 
+    })
+  },
+  playing(val){
+   
+
+       
+   this.$nextTick(() => {
+     console.log(val);
+     
+      const audio = this.$refs.audio
+        val? audio.play() : audio.pause()
+     
+
+
+    })
+  
+  },
+  
+},
 methods:{
   hideFull(){
     this.setFullScreen(false)
@@ -69,12 +120,30 @@ methods:{
   },
   showFull(){
     this.setFullScreen(true)
-    
+    // this._getSongPlay(29753437)
     
   },
+  changeIsShadow(){
+    this.isShadow = !this.isShadow
+  },
   ...mapMutations({
-    setFullScreen:'SET_FULL_SCREEN'
+    setFullScreen:'SET_FULL_SCREEN',
+    setTogglePlaying:'SET_PLAY_STATE'
   }),
+  _getSongPlay(id){
+    api.getSongPlay(id).then(res => {
+      console.log(res);
+      const data = res.data
+      if(data.code == 200){
+        this.currentUrl = data.data[0].url
+        this.toPlay()
+      }
+    })
+  },
+  toPlay () {
+      this.$refs.audio.play()
+      
+    },
   enter(el,done){
     const {x,y,scale} = this._getPosAndSclae()
     let animation = {
@@ -82,12 +151,14 @@ methods:{
         transform:`translate3d(${x}px,${y}px,0) scale(${scale})`
       },
       60:{
-        transform:`translate3d(-50%,-10%,0) scale(1.1)`
+        transform:`translate3d(0,0,0) scale(1.1)`
       },
       100:{
-        transform:`translate3d(-50%,-10%,0) scale(1)`
+        transform:`translate3d(0,0,0) scale(1)`
       }
     }
+    console.log(x,y);
+    
     animations.registerAnimation({
       name:'move',
       animation,
@@ -96,17 +167,20 @@ methods:{
         easing:'Linear'
       }
     })
-    animations.runAnimation(this.$refs.round,'move',done)
+
+               animations.runAnimation(this.$refs.round,'move',done)
+
+    console.log(this.$refs.round  );
+    
   },
   afterEnter(){
     animations.unregisterAnimation('move')
-    // this.$ref.round.style.animation = ''
+    this.$refs.round.style.animation = ''
   },
-  leave(el,done){
-
-  },
-  leaveEnter(){
-
+  togglePlaying(){
+    this.setTogglePlaying(!this.playing)
+    console.log('ssds');
+    
   },
   _getPosAndSclae(){
     const targetWidth = 30
@@ -115,7 +189,7 @@ methods:{
     const paddingTop = 100
     const width = window.innerWidth * 0.8
     const scale = targetWidth / width
-    const x = -(window.innerWidth - 80 )
+    const x = -(window.innerWidth/2 - 20 )
     const y = window.innerHeight - paddingTop - width/2 - paddingBottom
     return {
       x,
@@ -128,6 +202,19 @@ methods:{
 </script>
 
 <style scoped>
+.play{
+  height: 40px;
+  width: 40px;
+}
+.play1{
+  width: 50px;
+  height: 50px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 50px;
+  padding:10px
+}
 .song-detail-enter-active,.song-detail-leave-active{
   transition: all .3s cubic-bezier(.86,.18,.82,1.32);
 }
@@ -157,13 +244,21 @@ methods:{
   left: 0; 
   border-top: 1px solid rgb(214, 214, 214); 
   width: 200%; 
-  height: 200%; transform: scale(.5); 
+ transform: scale(.5); 
   transform-origin: left top;
 }
 
 .item-info{
   margin-left: 5px;
 }
+
+.songer::after {
+        content: "/";
+      }
+.songer:last-child::after {
+        content: "";
+      }
+    
 .front-cover{
   
   width: 30px;
@@ -172,6 +267,7 @@ methods:{
   background-color: #000;
   vertical-align: middle;
   background-size: cover  ;
+  animation: rotate5 24s linear infinite;
 }
 .control{
   margin-left: auto;
@@ -201,7 +297,7 @@ methods:{
     background: inherit;
     filter: brightness(0.5) blur(40px);
     z-index: 2;
-    transform: scale(1.5);
+    transform: scale(2);
 }
 .top{
   display: flex;
@@ -222,33 +318,51 @@ z-index: 10;
   width: 230px;
    display: block;
 }
+.right{
+  padding-right: 10px;
+}
 .center{
   width: 100%;
-  height: 500px;
+  height: 400px;
   position: relative;
   z-index: 20;
 }
 .round{
-  width: 250px;
-  height: 250px;
+ display: flex;
+    justify-content: center;
+    width: 80vw;
+    margin: 80px auto;
+    height: 0;
+    padding-bottom: 80vw;
   border-radius: 50%;
-  position: absolute;
-  left: 50%;
-  top: 20%;
-  transform: translate(-50%,-10%);
+  transform: translate3d(-175px,362px,0);
+  /* position: absolute; */
+  /* left: 50%;
+  top: 20%; */
+  /* transform: translate(-50%,-10%); */
   background-size: cover;
   z-index: 20;
+  animation: rotate5 4s linear infinite;
+}
+@keyframes rotate5 {
+  0%{
+    transform: rotate(0);
+  }
+  100%{
+     transform: rotate(360deg);
+  }
+
 }
 .wave,
 .wave1,
 .wave2 {
     position: absolute;
     /* bottom: -30%; */
-    left: 16%;
-    top: 14%;
+    left: 10%;
+    top: 0%;
     /* transform: translate(-50%,-10%); */
-    width: 260px;
-    height: 260px;
+    width: 83vw;
+    height: 83vw;
     background-color: rgba(207, 210, 211, 0.5 5);
     border-radius: 45%;
     animation: rotate 6s linear infinite;
@@ -293,5 +407,31 @@ z-index: 10;
     }100% {
         transform: rotate(360deg);
     }
+}
+.player-control{
+  padding: 0 20px;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.player-control i{
+  /* background-color: #fff; */
+}
+.iconfont {
+font-family:"iconfont" !important;      
+font-size:25px;
+font-style:normal;
+ color: #fff;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+/* padding: 0 5px; */
+
+
+
+}
+.shadow{
+  text-shadow: 2px 0px 3px #fff,-2px 0px 3px #fff,0px 2px 3px #fff,0px -2px 3px #fff;
 }
 </style>

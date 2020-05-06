@@ -207,7 +207,7 @@ export default {
 }
 .iconfont {
 font-family:"iconfont" !important;      
-font-size:5 px;
+font-size:5px;
 font-style:normal;
  color: #fff;
 -webkit-font-smoothing: antialiased;

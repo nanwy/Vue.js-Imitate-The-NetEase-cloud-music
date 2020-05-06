@@ -8,7 +8,7 @@
           <gbnav class="nav" :flag="true">
           <div class="left">
             <span class="left-title">
-              <!-- <marrquee :val="title"></marrquee> -->
+              <marrquee :val="title"></marrquee>
             </span>
             <span class="description">编辑推荐:{{songDetail.description | description1}}</span>
             

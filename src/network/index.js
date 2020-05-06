@@ -8,7 +8,8 @@ import {
   newCDs,
   newSongs,
   recommendSongs,
-  lyric
+  lyric,
+  songUrl
   
 } from './config'
 
@@ -56,5 +57,12 @@ export default{
         id
       }
     }
+  },
+  getSongPlay(id){
+    return axios.get(songUrl, {
+      params: {
+        id
+      }
+    })
   }
 }

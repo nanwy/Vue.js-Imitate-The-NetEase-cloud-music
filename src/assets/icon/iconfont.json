@@ -6,6 +6,62 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "14490299",
+      "name": "单曲循环 (1)",
+      "font_class": "danquxunhuan1",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "14490300",
+      "name": "列表循环 (3)",
+      "font_class": "liebiaoxunhuan3",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "14490302",
+      "name": "随机",
+      "font_class": "suiji",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "14490303",
+      "name": "网易云音乐",
+      "font_class": "wangyiyunyinle",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "14490304",
+      "name": "上一首 (1)",
+      "font_class": "shangyishou1",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "14490305",
+      "name": "上一首",
+      "font_class": "shangyishou",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "14490306",
+      "name": "播放 (1)",
+      "font_class": "bofang1",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "14490307",
+      "name": "暂停 停止",
+      "font_class": "zantingtingzhi",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
       "icon_id": "14177909",
       "name": "菜单",
       "font_class": "caidan",

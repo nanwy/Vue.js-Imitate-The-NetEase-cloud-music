@@ -58,11 +58,11 @@ justify-content: space-around;
 border-bottom:1px solid #eee;
 }
 .today{
-  width: 18px;
-  height: 14px;
+  width: 20px;
+  height: 16px;
   position: absolute;
   top:14px;
-  left:11px;
+  left:10px;
   color: red;
   background-color: #fff;
   line-height: 19px;

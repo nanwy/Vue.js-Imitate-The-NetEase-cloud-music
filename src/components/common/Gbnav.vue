@@ -36,4 +36,14 @@ export default {
 .iconback{
   padding-left: 5px;
 }
+.iconfont {
+font-family:"iconfont" !important;      
+font-size:25px;
+font-style:normal;
+ color: #fff;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+padding: 0 5px;
+}
+
 </style>
