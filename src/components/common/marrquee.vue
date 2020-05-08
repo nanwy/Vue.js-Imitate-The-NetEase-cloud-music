@@ -105,7 +105,7 @@ export default {
  p {
   word-break:keep-all;
   white-space: nowrap;
-  font-size: 16px;
+  font-size: 14px;
   font-family: "微软雅黑 Light";
  }
  .scroll {

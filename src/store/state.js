@@ -11,7 +11,8 @@ const state = {
   isFindSwiper: true,
   playing: false,
   fullScreen: false,
-  currentIndex: -1
+  currentIndex: -1,
+  noCopyright: []
 }
 
 export default state

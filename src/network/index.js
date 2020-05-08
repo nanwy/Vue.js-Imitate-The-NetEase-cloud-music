@@ -9,7 +9,8 @@ import {
   newSongs,
   recommendSongs,
   lyric,
-  songUrl
+  songUrl,
+  success
   
 } from './config'
 
@@ -60,6 +61,13 @@ export default{
   },
   getSongPlay(id){
     return axios.get(songUrl, {
+      params: {
+        id
+      }
+    })
+  },
+  getSuccessSong(id){
+    return axios.get(success, {
       params: {
         id
       }

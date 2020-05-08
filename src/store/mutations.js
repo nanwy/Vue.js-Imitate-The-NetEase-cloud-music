@@ -33,6 +33,11 @@ const mutations = {
     console.log(list);
     
   },
+  [types.SET_COPY_RIGHT](state, nolist){
+    state.noCopyright = nolist
+    // console.log(list);
+    
+  },
   [types.IS_FIND_SWIPER](state){
     state.isFindSwiper = false
   },

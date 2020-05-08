@@ -101,6 +101,7 @@ export default {
       tabOffsetTop:0,
       isNone:0,
       newSongDeatilId:0,
+      no:{}
     }
   },
   beforeCreate() {
@@ -194,7 +195,7 @@ export default {
             this._isSQ()
             this.loading = false
             // console.log(this.isSq);
-          
+           console.log(this.no);
           //  console.log(this.songDetail.name);
           //  console.log(this.songPeivileges[0].id);
          
@@ -219,6 +220,8 @@ export default {
             this.songPeivileges = data.privileges
             this._isSQ()
             this.loading = false
+           
+            
             // console.log(this.isSq);
             
           //  console.log(this.songDetail.name);
@@ -311,15 +314,17 @@ export default {
     _isSQ(){
       // this.songDetail.id ==
     let result = []; 
+    let nobanquan = [];
       // console.log(this.songPeivileges);
       for (let k of this.songPeivileges) {
             // console.log(k.id);
             result.push(k.maxbr);
+            nobanquan.push(k.st)
             // console.log(k.maxbr)   
             //  return k.maxbr > 100000
           }
           // console.log(result);
-          
+      this.no = nobanquan
       this.isSq = result.map((item) => {
         if(item > 500000){
           return true
@@ -335,6 +340,7 @@ export default {
        console.log('kjkj')
       this.setSongAll({
         list:this.songDetail.tracks,
+        nolist:this.no,
         index
         
       })
@@ -429,12 +435,13 @@ export default {
 .left .description{
   display: block;
   font-size: 12px;
-  margin-top: 8px;
+  height: 25px;
+  padding-top: 5px;
   transform: scale(.9);
   width: 230px;
   position: absolute;
   text-overflow: ellipsis;
-
+  line-height: 25px;
   font-weight: 100;
     overflow: hidden; 
     -webkit-box-orient: vertical;

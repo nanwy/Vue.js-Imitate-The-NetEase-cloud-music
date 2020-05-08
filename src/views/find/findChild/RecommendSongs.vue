@@ -21,6 +21,7 @@ import {getRecommendSongs} from 'network/find'
 import RecommendSongsItem from './RecommendSongsItem'
 import PageLoading from 'components/common/pageLoading'
 import {getRandomArray} from 'components/common/getRandomArray.js'
+import api from 'network/index'
 export default {
   data(){
     return {
@@ -35,7 +36,7 @@ export default {
   },
 created(){
 
-  getRecommendSongs(this.limit).then(res => {
+  api.getRecommendSongs(this.limit).then(res => {
     // console.log(res);
     
     this.recommendsongs = getRandomArray(res.data.result,6)

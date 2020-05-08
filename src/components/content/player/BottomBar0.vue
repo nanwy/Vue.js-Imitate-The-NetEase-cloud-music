@@ -1,7 +1,7 @@
 <template>
 <div v-if="playList.length>0">
   <div class="bottom-bar" v-show="!fullScreen"  @click="showFull">
-    <div class="front-cover" :class="cdCls" :style="{backgroundImage:'url(' + currentSong.al.picUrl + ')'}"></div>
+    <div class="front-cover" :style="{backgroundImage:'url(' + currentSong.al.picUrl + ')'}"></div>
     <div class="item-info">
         <div class="name">{{currentSong.name}}</div>
         <span class="songer"  v-for="item in currentSong.ar">{{item.name}}</span>
@@ -23,7 +23,6 @@
           <div class="left">
             <span class="left-title">{{currentSong.name}}</span>
             <span class="songer" v-for="item in currentSong.ar">{{item.name}}</span>
-            <i>></i>
           </div>
           <div class="right">
             <span>
@@ -35,19 +34,20 @@
     </div>
     <div class="center">
       <div class="fengmian">
-        <div class="round" ref="round" :class="cdCls" :style="{backgroundImage:'url(' + currentSong.al.picUrl + ')'}"></div>
-        <div class="wave" :class="cdCls"></div>
-        <div class="wave1" :class="cdCls"></div>
-        <div class="wave2" :class="cdCls"></div>
+        <div class="round" ref="round" :style="{backgroundImage:'url(' + currentSong.al.picUrl + ')'}"></div>
+        <div class="wave"></div>
+        <div class="wave1"></div>
+        <div class="wave2"></div>
       </div>
      
     </div>
-    <timer :duration='allTime' :time="setTime(currentTime)" :percent="percent"></timer>
-    <div  class="player-control">
-    <div v-for="(item,index) in findIcon" :icon="item" :key="index" :class="{shadow:currindex==index}" @touchstart="changeIsShadow(index)" @touchend="changeIsShadow1(index)">
-      <i :class="[index==2? playIcon:item]" class="iconfont"></i>
-      <!-- {{setTime(updataTime)}} -->
-    </div>
+    <timer>215</timer>
+    <div class="player-control">
+      <i class="iconsuiji iconfont"></i>
+      <i class="iconshangyishou iconfont"></i>
+      <i @click="togglePlaying" :class="playIcon" class="play1 iconfont"></i>
+      <i class="iconshangyishou1 iconfont"></i>
+      <i class="iconcaidan iconfont"></i>
     </div>
   </div>
   </transition>
@@ -55,9 +55,8 @@
       :src="currentUrl"
       ref="audio"
       autoplay
-      @canplay='ready'
-      @error='error'
-      @timeupdate="updateTime"
+     
+      preload="auto"
     ></audio>
 </div>
 </template>
@@ -65,30 +64,18 @@
 <script>
 import {mapGetters,mapMutations} from 'vuex'
 import Gbnav from 'components/common/Gbnav'
-import Timer from './bbarchild/Timer'
 import animations from 'create-keyframe-animation'
+import Timer from './bbarchild/Timer'
 import api from 'network/index'
 export default {
   data(){
     return {
-      
+      id:0,
       currentUrl:'',
-      isShadow:false,
-      findIcon:['icondanquxunhuan1','iconshangyishou','iconzantingtingzhi','iconshangyishou1','iconcaidan'],
-      currindex:null,
-      songReady:false,
-      forIndex:'',
-      currentTime:0,
-      allTime:''
+      isShadow:false
     }
   },
 computed:{
-  percent(){
-    return this.currentTime / this.currentSong.dt 
-  },
-  cdCls(){  
-    return this.playing? '' : 'pause'
-  },
   playIcon(){
     return this.playing? 'iconzantingtingzhi':'iconbofang1'
   },
@@ -96,36 +83,31 @@ computed:{
     fullScreen:'FULL_SCREEN',
     playList:'PLAY_LIST',
     currentSong:'CURRENT_SONG',
-    playing:'PLAYING',
-    currentIndex:'CURRENT_INDEX'
+    playing:'PLAYING'
   })
 },
 components:{
   Gbnav,
-  Timer
+  
 },
 watch:{
   currentSong(val,oldval){
     let albumId = this.$route.params.albumId
-    console.log(val);
     
     this.$nextTick(() => {
     this._getSongPlay(val.id)
-    this.allTime = val.dt
+
     })
   },
   playing(val){
-  // console.log(this.percent); 
-  
+   
 
        
    this.$nextTick(() => {
-
+     console.log(val);
      
       const audio = this.$refs.audio
         val? audio.play() : audio.pause()
-    //  console.log(this.$refs.audio.duration);
-    
      
 
 
@@ -135,10 +117,8 @@ watch:{
   
 },
 methods:{
-
   hideFull(){
     this.setFullScreen(false)
-    console.log(this.currentTime  );
     
   },
   showFull(){
@@ -146,122 +126,20 @@ methods:{
     // this._getSongPlay(29753437)
     
   },
-  changeIsShadow(index){
+  changeIsShadow(){
     this.isShadow = !this.isShadow
-   this.forIndex = index
-   this.currindex = index
-    console.log(index);
-    
-   
-   if(index === 1){
-    this.prevSong()
-  
-   }
-    if(index === 2){
-      
-      this.setTogglePlaying(!this.playing)
-        // this.findIcon.splice(2,1,(this.playing? 'iconzantingtingzhi':'iconbofang1'))
-      // return this.playing? 'iconzantingtingzhi':'iconbofang1'
-
-    
-    }
-    if(index === 3){
-     this.nextSong()
-     
-   }
-  },
-  ready(){
-    this.songReady = true
-  },
-  error(){
-    this.songReady = true
-    
-  },
-  updateTime(e){
-    this.currentTime = e.target.currentTime
-    // console.log(e.target.currentTime);
-    
-  },
-  setTime(interval){
-    interval = interval | 0
-    let min = interval / 60 | 0
-    let sec = this._pad(interval % 60)
-    min = '0' + min
-    // sec = '0' + sec
-    return `${min}:${sec}`
-  },
-  _pad(num,n=2){
-    let len = num.toString().length
-    while(len < n){
-      num = '0' + num
-      len ++
-    }
-    return num
-  },
-  changeIsShadow1(index){
-    setTimeout(() => {
-      this.currindex = null
-    }, 1000);
-    // if(index === 2){
-    //   this.setTogglePlaying(!this.playing)
-    // }
   },
   ...mapMutations({
     setFullScreen:'SET_FULL_SCREEN',
-    setTogglePlaying:'SET_PLAY_STATE',
-    changePrevSong:'SET_CURRENT_INDEX'
+    setTogglePlaying:'SET_PLAY_STATE'
   }),
-  _getSongPlay(id){
-    api.getSuccessSong(id).then(res => {
-      
-      if(res.data.success = true){
-        api.getSongPlay(id).then(res => {
-      console.log(res);
-      const data = res.data
-      if(data.code == 200){
-        this.currentUrl = data.data[0].url
-        this.toPlay()
-      }
-    })
-      }
-    }).catch(err => {
-      this.songReady = true
-      // if(currindex === )
-      console.log(err);
-      this.changeIsShadow(this.forIndex)
-      this.songReady = true
-    })
 
-  },
-  prevSong(){
-    if(!this.songReady){
-       return
-     }
-     let prev = this.currentIndex-1
-     if(prev === -1){
-       prev = this.playList.length-1
-        console.log(this.playList.length);
-     }
-     if(!this.playing){
-       this.setTogglePlaying(!this.playing)
-     }
-     this.changePrevSong(prev)
-     this.songReady = false
-  },
-  nextSong(){
-    if(!this.songReady){
-       return
-     }
-     let next = this.currentIndex+1
-     
-     if(next === this.playList.length){
-       next = 0
-     }
-      if(!this.playing){
-       this.setTogglePlaying(!this.playing)
-     }
-     this.changePrevSong(next)
-     this.songReady = false
+  _getSongPlay(id){
+    api.getSuccessSong(id).then(res =>{
+      console.log(res);
+      
+    })
+    
   },
   toPlay () {
       this.$refs.audio.play()
@@ -338,11 +216,6 @@ methods:{
   line-height: 50px;
   padding:10px
 }
-
-    .play1:hover  {
-         text-shadow: 2px 0px 3px #fff,-2px 0px 3px #fff,0px 2px 3px #fff,0px -2px 3px #fff;
-    }
-
 .song-detail-enter-active,.song-detail-leave-active{
   transition: all .3s cubic-bezier(.86,.18,.82,1.32);
 }
@@ -383,7 +256,7 @@ methods:{
 .songer::after {
         content: "/";
       }
-.songer:nth-last-child(2)::after {
+.songer:last-child::after {
         content: "";
       }
     
@@ -401,7 +274,7 @@ methods:{
   margin-left: auto;
   padding-right: 10px;
   display: flex;
-  
+  /* color: #000; */
 }
 .control-iconfont{
   color: #000 !important;
@@ -474,9 +347,6 @@ z-index: 10;
   background-size: cover;
   z-index: 20;
   animation: rotate5 4s linear infinite;
-}
-.pause{
-  animation-play-state: paused !important;
 }
 @keyframes rotate5 {
   0%{
@@ -566,16 +436,6 @@ font-style:normal;
 
 }
 .shadow{
-   /* text-shadow: 2px 0px 3px #fff,-2px 0px 3px #fff,0px 2px 3px #fff,0px -2px 3px #fff; */
-  animation: shadow 1s infinite;
-  animation-iteration-count:1;
-}
-@keyframes shadow {
-  0%{
-    text-shadow: 2px 0px 3px #fff,-2px 0px 3px #fff,0px 2px 3px #fff,0px -2px 3px #fff;
-  }
-  100%{
-    text-shadow: 0px 0px 0px #fff,0px 0px 0px #fff,0px 0px 0px #fff,0px 0px 0px #fff;
-  }
+  text-shadow: 2px 0px 3px #fff,-2px 0px 3px #fff,0px 2px 3px #fff,0px -2px 3px #fff;
 }
 </style>
