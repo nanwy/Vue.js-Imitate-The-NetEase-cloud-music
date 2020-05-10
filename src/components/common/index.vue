@@ -21,7 +21,11 @@ export default {
       isTip: false
     }
   },
-  
+  props:{
+    time:{
+      type:Number
+    }
+  },
   methods: {
     showTip () {
       this.isTip = true
@@ -30,7 +34,7 @@ export default {
       }
       timer = setTimeout(() => {
         this.hideTip()
-      }, 1500)
+      }, this.time)
     },
     hideTip () {
       this.isTip = false
@@ -56,6 +60,6 @@ export default {
   right: 0;
   display: flex;
   justify-content: center;
-  z-index: 12;
+  z-index: 999;
 }
 </style>

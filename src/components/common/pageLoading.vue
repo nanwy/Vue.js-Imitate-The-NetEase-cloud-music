@@ -27,8 +27,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 1rem;
-  line-height: 1rem;
+  height: 20px;
+  line-height: 20px;
   z-index: 999;
 }
 .page-loading {
@@ -36,13 +36,13 @@ export default {
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-between;
-  width: 0.5rem;
-  margin-right: 0.2rem;
+  width: 50px;
+  margin-right: 10px;
 
   }
   .span {
-    width: 0.05rem;
-    height: 0.2rem;
+    width: 5px;
+    height: 20px;
     background-color: red;}
 
   .span:nth-of-type(1) {

@@ -3,7 +3,7 @@
   
  
   <div id="song">
-    <page-loading  v-if="loading" style="height:5rem"></page-loading>
+    
     <div class="title" v-show="!loading" :style="{backgroundImage:'url(' + background + ')'}">
           <gbnav class="nav" :flag="true">
           <div class="left">
@@ -29,7 +29,7 @@
     :subscribedCount="songDetail.subscribedCount" v-show="isTabFixed"
       class="song-tab-bar1" ></song-tab-bar>  
      <scroll class="content" ref="scroll"  :probe-type='3' @scroll='contentscroll'>
-    
+    <page-loading  v-if="loading" style="height:5rem"></page-loading>
     <find-song-detail 
     :songDetailId="songDetailId"
     :imgUrl="songDetail.coverImgUrl"
@@ -63,8 +63,15 @@
     >
       
     </music-list>
+    
     </div>
      </scroll>
+     <div class="mask" v-if="showModal" @click="showModal=false"></div>
+    <div class="pop" v-if="showModal">
+        <!-- <button @click="showModal=false" class="btn">点击出现弹框</button> -->
+        <img src="~assets/img/582513839.jpg" alt="">
+        <p>抱歉,该资源暂无版权,我们正在努力争取中</p>
+    </div>
   </div>
  
  </transition>
@@ -101,7 +108,8 @@ export default {
       tabOffsetTop:0,
       isNone:0,
       newSongDeatilId:0,
-      no:{}
+      no:{},
+      showModal:false
     }
   },
   beforeCreate() {
@@ -175,10 +183,16 @@ export default {
     //       console.log(error)
     //     })
     
-    
+    if (!songDetailId) {
+      this.$router.push('/find')
+      return
+    }
      
     // }
     if(songDetailId){
+      
+      console.log(this.songDetailId);
+      
       this.title = '歌单'
         // this.$refs.scroll.scrollTo(0,50,0)
      api.getSongDetail(this.songDetailId)
@@ -204,44 +218,7 @@ export default {
           console.log(error)
         })     
     }
-    if(newSongDeatilId){
-      this.title = '歌单'
-     
-     api.getSongDetail(this.newSongDeatilId)
-        // 请求成功后返回数据
-        .then(res => {
-          // 接受数据
-          const data = res.data
-          console.log(res);
-          // 查看返回数据的 code 状态，如果是 200 的话进行使用
-          if (data.code === 200) {
-            // 将请求回来的数据使用，将load 样式关闭
-            this.songDetail = data.playlist
-            this.songPeivileges = data.privileges
-            this._isSQ()
-            this.loading = false
-           
-            
-            // console.log(this.isSq);
-            
-          //  console.log(this.songDetail.name);
-          //  console.log(this.songPeivileges[0].id);
-           
-           let result = rgbaster(
-      this.songDetail.coverImgUrl,
-      {
-        ignore: ['rgb(255,255,255)', 'rgb(0,0,0)']
-      }
-    )
-    result.then((res)=>{
-    this.background = res[0].color
-      this.loading = false
-    })
-          }
-    }).catch(error => {
-          console.log(error)
-        })     
-    }
+    
     // if(songDetailId){
     //   this.title = '歌单'
     // api.albumDetailFn(this.songDetailId)
@@ -311,6 +288,7 @@ export default {
         
      }
     },
+
     _isSQ(){
       // this.songDetail.id ==
     let result = []; 
@@ -337,10 +315,17 @@ export default {
       
     },
     startPlayAll(item,index){
-       console.log('kjkj')
+      if(this.no[index] === (-200)){
+        // console.log('暂无版权');
+        this.showModal=true
+        return
+      }
+      console.log(this.songDetail.tracks);
+      
+      //  console.log('kjkj')
       this.setSongAll({
         list:this.songDetail.tracks,
-        nolist:this.no,
+
         index
         
       })
@@ -355,7 +340,48 @@ export default {
 </script>
 
 <style scoped>
-
+.mask {
+  
+  background-color: rgba(42, 42, 42, 0.9);
+  opacity: 0.3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+}
+.pop {
+  overflow: hidden;
+  background-color: #fff;
+  border-radius: 8px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  transform: translate(-50%,-50%);
+  height:250px;
+  z-index: 51;
+}
+.pop p{
+  width: 80%;
+  line-height: 20px;
+  margin: 0 auto;
+}
+.pop img{
+  width: 100%;
+  height: 158px;
+}
+.btn {
+  position: absolute;
+  top: 50px;
+  background-color: red;
+  border-radius: 4px;
+  border: 1px solid blue;
+  padding: 4px 12px;
+  width: 50px;
+  height: 40px;
+}
 .slide-enter-active,.slide-leave-active{
   transition: all .1s;
 }

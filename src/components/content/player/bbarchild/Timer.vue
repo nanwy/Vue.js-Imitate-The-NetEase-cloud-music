@@ -1,9 +1,11 @@
 <template>
   <div class="timer">
     <span>{{time}}</span>
-    <div class="bar" ref="progressBar">
+    <div class="bar" ref="progressBar"  @click="progressClick">
       <div class="line" ref="progress"></div>
-      <div class="point" ref="progressButton" @click="point"></div>
+      <div class="ignore point" ref="progressButton" @touchstart.prevent="pointTouchStart"
+      @touchmove.prevent="pointTouchMove"
+      @touchend.prevent="pointTouchEnd"></div>
     </div>
     <span>{{duration | setTime}}</span>
   </div>
@@ -35,25 +37,56 @@ export default {
    }
   },
   updated(){
-    console.log(this.percent);
+    // console.log(this.percent);
     
+  },
+  created(){
+    this.touch = {}
   },
   watch:{
     percent(val){
-      if(val >= 0){
+      if(val >= 0 && !this.touch.initiated){
         let barWidth = this.$refs.progressBar.clientWidth
         let offsetWidth = val * barWidth * 1000
-        this.$refs.progress.style.width = `${offsetWidth}px`
-        this.$refs.progressButton.style.left = `${offsetWidth}px`
-        console.log(barWidth);
+       this._offset(offsetWidth)
+        // console.log(barWidth);
         
       }
     }
   },
   methods:{
-    point(){
-      console.log('点击');
+    pointTouchStart(e){
+      this.touch.initiated = true
+      this.touch.startX = e.touches[0].pageX
+      this.touch.left = this.$refs.progress.clientWidth
+    },
+    pointTouchMove(e){
+      if(!this.touch.initiated){
+        return
+      }
+      let deltaX = e.touches[0].pageX - this.touch.startX
+      let offsetWidth =Math.min(this.$refs.progressBar.clientWidth, Math.max(0,this.touch.left + deltaX))
+      this._offset(offsetWidth)
+    },
+    pointTouchEnd(){
+      this.touch.initiated = false
+      this._triggerPercent()
       
+    },
+    _triggerPercent(){
+      let barWidth = this.$refs.progressBar.clientWidth
+      let percent = this.$refs.progress.clientWidth / barWidth
+      this.$emit('chengePercent',percent)
+    },
+    _offset(offsetWidth){
+       this.$refs.progress.style.width = `${offsetWidth}px`
+        this.$refs.progressButton.style.transform = `translate3d(${offsetWidth}px, 0, 0)`
+    },
+    progressClick(e){
+      let offsetWidth = e.offsetX
+      this._offset(offsetWidth)
+      // console.log(e);
+      this._triggerPercent()
     }
   },
   filters:{
@@ -74,7 +107,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='less' scoped>
 .timer{
   position: relative;
   z-index: 10;
@@ -83,30 +116,40 @@ export default {
   height: 20px;
   color: #fff;
   align-items: center;
-  width: 95%;
+  width: 85%;
   margin: 0 auto;
   padding:20px 0;
-  transform: scale(.9);
+    span{
+      transform: scale(.8);
+    }
+    .bar{
+    position: relative;
+    width: 80%;
+    margin: 0 15px;
+    background-color: #a1a1a1;
+    height: 1px;
+    }
+  
 }
-.bar{
-  position: relative;
-  width: 80%;
-  margin: 0 15px;
-  background-color: #aeaeae;
-  height: 1px;
-}
+
 .line{
   width: 0;
   height: 1px;
   background-color: #e4e4e4;
 }
+
 .point{
-  position: absolute;
-  top: -3px;
-  left: 0;
-  width: 8px;
-  height: 8px;
-  background-color: #fff;
-  border-radius: 50%;
+position: absolute;
+    left: 0px;
+    top: -4px;
+     background-color: #fff;
+    border-radius: 50%;
+    /* transform: scale(1) !important; */
+}
+.ignore {
+    
+    width: 8px;
+    height: 8px;
+   
 }
 </style>

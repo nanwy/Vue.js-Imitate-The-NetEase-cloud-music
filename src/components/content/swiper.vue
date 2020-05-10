@@ -49,6 +49,10 @@ import {mapGetters,mapMutations} from 'vuex'
       var mySwiper = new Swiper1('.swiper-container', {
        passiveListeners : false,
         // direction : 'vertical',
+        touchRatio : 0.9,
+//         longSwipesMs : 50,
+// longSwipes:true,
+
         autoplayDisableOnInteraction : false,
         loop:false,
         // 设定初始化时slide的索引

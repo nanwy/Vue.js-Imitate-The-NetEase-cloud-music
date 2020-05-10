@@ -7,12 +7,12 @@ const state = {
   cur: 0,
   playList: [],
   sequenceList: [],
-  mode: playMode.sequence,
+  playMode: playMode.sequence,
   isFindSwiper: true,
   playing: false,
   fullScreen: false,
   currentIndex: -1,
-  noCopyright: []
+
 }
 
 export default state

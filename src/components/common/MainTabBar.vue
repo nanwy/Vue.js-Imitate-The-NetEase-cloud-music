@@ -19,7 +19,7 @@
         <router-link to="/search" class="iconserch iconfont"></router-link>
       </div>
     </tab-bar>
-     <top-tip ref="tip">
+     <top-tip ref="tip" :time='1500'>
       <span class="tips">{{tips}}</span>
     </top-tip>
   </div>
@@ -73,8 +73,6 @@ export default {
       ++this.key.key1
       console.log(this.key1);
       this.setKey(this.key)
-
-      
     },
      initPage() {
         this.nowIndex = this.$route.path == '/home' ? 0 : this.$route.path == '/find' ? 1 :0;
