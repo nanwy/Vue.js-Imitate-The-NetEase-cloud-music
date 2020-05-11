@@ -2,7 +2,7 @@
   <div class="play-list">
       <div class="play-title">
         <i>播放</i>
-        <span>播放全部</span>
+        <span @click="startAll">播放全部</span>
         <span class="total" v-if="many">(共{{many}}首)</span>
         <span class="star" v-if="subscribedCount">+收藏({{subscribedCount}})</span>
       </div>
@@ -18,6 +18,11 @@ props:{
    subscribedCount:{
      type:Number
    },
+},
+methods:{
+  startAll(){
+    this.$emit('startAllSong')
+  }
 }
 }
 </script>

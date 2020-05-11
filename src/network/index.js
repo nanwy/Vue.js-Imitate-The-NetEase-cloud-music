@@ -53,11 +53,11 @@ export default{
     })
   },
   getLyric (id){
-    return axios.get(lyric), {
+    return axios.get(lyric, {
       params: {
         id
       }
-    }
+    })
   },
   getSongPlay(id){
     return axios.get(songUrl, {

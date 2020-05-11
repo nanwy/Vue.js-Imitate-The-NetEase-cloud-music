@@ -46,6 +46,7 @@
     
     v-show="!loading"></find-song-detail>
     <song-tab-bar 
+    @startAllSong='startPlayAll(0)'
     :many="songDetail.trackCount ? songDetail.trackCount : songDetail.album ? songDetail.album.size : 0"
     :subscribedCount="songDetail.subscribedCount" v-show="!loading"
     :class="{songtabbar:isTabFixed}"  ref="findsongdetail" ></song-tab-bar>
@@ -58,7 +59,7 @@
     :alName="item.al.name"
     :alia="item.alia[0]"
     :songId="item.id"
-    @startPlay="startPlayAll(item,index)"
+    @startPlay="startPlayAll(index)"
     v-show="!loading"
     >
       
@@ -314,7 +315,7 @@ export default {
       
       
     },
-    startPlayAll(item,index){
+    startPlayAll(index){
       if(this.no[index] === (-200)){
         // console.log('暂无版权');
         this.showModal=true
@@ -433,14 +434,15 @@ export default {
 .title:after{
     content: "";
     width:100%;
-    height:100%;
+    height:150%;
     position: absolute;
     left:0;
     top:0;
     background: inherit;
-    filter: brightness(0.5) blur(4px);
+    filter: brightness(0.5) blur(8px);
     z-index: 2;
-    transform: scale(1,1);
+    /* transform: scale(1.1,1.1); */
+    transform-origin: 0,0;
 }
 .nav{
   z-index: 11;
@@ -493,7 +495,8 @@ export default {
   top: 50px;
   /* padding-top: 50px; */
   margin-top: 0px;
-
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
       /* height: 59px; */
 }
 .iconfont {

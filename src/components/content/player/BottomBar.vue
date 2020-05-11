@@ -42,7 +42,7 @@
           </gbnav>
     </div>
     <div class="center">
-      <div class="fengmian">
+      <div class="fengmian"  v-show="!isLyric" @click="changeLyric">
         <div class="round1" ref="round1">
           <div class="round" ref="round" :class="cdCls" :style="{backgroundImage:'url(' + currentSong.al.picUrl + ')'}"></div>
         </div>
@@ -50,7 +50,17 @@
         <div class="wave1" :class="cdCls"></div>
         <div class="wave2" :class="cdCls"></div>
       </div>
-     
+      <scroll class="lyric content" ref="scroll" v-show="isLyric" @click.native="changeLyric"
+      :data="currentLyric && currentLyric.lines">
+        <div class="lyric-wrapper">
+              <div v-if="currentLyric">
+                <p ref="lyricLine"
+                   class="text"
+                   :class="{'active':currentLineNum === index}"
+                   v-for="(line,index) in currentLyric.lines">{{line.txt}}</p>
+              </div>
+        </div>
+      </scroll>
     </div>
     <timer :duration='allTime' :time="setTime(currentTime)" :percent="percent" @chengePercent="onChengePercent"></timer>
     <div  class="player-control">
@@ -91,6 +101,8 @@ import TopTip from 'components/common/index'
 import animations from 'create-keyframe-animation'
 import {playMode} from 'common/js/config.js'
 import {shuffle} from 'common/js/util.js'
+import Lyric from 'lyric-parser'
+import Scroll from 'components/common/scroll/Scroll'
 import api from 'network/index'
 export default {
   data(){
@@ -103,12 +115,15 @@ export default {
       songReady:false,
       forIndex:'',
       currentTime:0,
-      allTime:''
+      allTime:'',
+      currentLyric:'',
+      isLyric:false,
+      currentLineNum:0
     }
   },
 computed:{
   percent(){
-    return this.currentTime / this.currentSong.dt 
+    return this.currentTime / this.currentSong.dt * 1000
   },
   cdCls(){  
     return this.playing? '' : 'pause'
@@ -133,7 +148,8 @@ components:{
   Gbnav,
   Timer,
   RoundCircle,
-  TopTip
+  TopTip,
+  Scroll
 },
 mounted(){
   
@@ -146,6 +162,10 @@ watch:{
       
       return
     }
+    if (this.currentLyric) {
+          this.currentLyric.stop()
+          
+        }
     let albumId = this.$route.params.albumId
     console.log(val);
     console.log(this.currentSong);
@@ -154,6 +174,7 @@ watch:{
       this.$refs.tip.showTip()
     },200) 
     this._getSongPlay(val.id)
+    
     this.allTime = val.dt
     })
   },
@@ -188,6 +209,9 @@ methods:{
     this.setFullScreen(true)
     // this._getSongPlay(29753437)
       
+  },
+  changeLyric(){
+    this.isLyric = !this.isLyric
   },
   changeIsShadow(index){
     this.isShadow = !this.isShadow
@@ -269,10 +293,12 @@ methods:{
       
       if(res.data.success = true){
         api.getSongPlay(id).then(res => {
-      console.log(res);
+      // console.log(res);
       const data = res.data
       if(data.code == 200){
         this.currentUrl = data.data[0].url
+        this._getLyric(id)
+        
         this.toPlay()
       }
     })
@@ -285,6 +311,34 @@ methods:{
       this.songReady = true
     })
 
+  },
+  _getLyric(id){
+    api.getLyric(id).then(res => {
+      console.log(res);
+      const data = res.data
+      if(data.code === 200){
+      
+        this.currentLyric = new Lyric(data.lrc.lyric, this.handleLyric)
+          if (this.playing) {
+            this.currentLyric.play()
+          }
+          
+          console.log(this.currentLyric);
+          
+      }
+    })
+  },
+  handleLyric({lineNum, txt}) {
+        this.currentLineNum = lineNum
+        
+        if(lineNum > 5){
+          let lineEl = this.$refs.lyricLine[lineNum - 5]
+          this.$refs.scroll.scrollTo(0,-lineEl.offsetTop,1000)
+          this.$refs.scroll.refresh()
+          console.log(lineEl.offsetTop);
+        }else{
+          this.$refs.scroll.scrollTo(0,0,1000)
+        }
   },
   prevSong(){
     if(!this.songReady){
@@ -565,14 +619,36 @@ methods:{
   }
   .center{
   width: 100%;
-  height: 400px;
+  height: 460px;
   position: relative;
   z-index: 20;
+  margin: 30px 0 0 0;
+     .content{
+       overflow: hidden;
+       position: absolute;
+       top: -30px;
+       bottom: 0;
+       left: 0;
+       right: 0;
+       height: 460px;
+       .lyric-wrapper{
+          // margin: 0 auto;
+            .active{
+              color: #fff !important;
+            }
+            .text{
+            line-height: 32px;
+            text-align: center;
+            color: #a9a9a9;
+            }
+       }
+       
+     }
      .round{
       display: flex;
       justify-content: center;
       width: 80vw;
-      margin: 80px auto;
+      margin: 0px auto;
       height: 0;
       padding-bottom: 80vw;
       border-radius: 50%;

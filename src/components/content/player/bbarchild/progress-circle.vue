@@ -1,6 +1,6 @@
 <template>
   <div class="progress-circle">
-    <svg :width="radius" :height="radius" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <svg :width="radius" :height="radius" viewBox="0 0 100 100" version="1.1">
       <circle class="progress-background" r="50" cx="50" cy="50" fill="transparent"/>
       <circle class="progress-bar" r="50" cx="50" cy="50" fill="transparent" :stroke-dasharray="dashArray"
               :stroke-dashoffset="dashOffset"/>
@@ -14,7 +14,7 @@
     props: {
       radius: {
         type: Number,
-        default: 32
+        default: 100
       },
       percent: {
         type: Number,
@@ -28,7 +28,7 @@
     },
     computed: {
       dashOffset() {
-        return (1 - this.percent * 1000) * this.dashArray
+        return this.percent === 0 ?  this.dashArray : (1 - this.percent) * this.dashArray 
       }
     }
   }
@@ -56,5 +56,5 @@
       transform: scale(0.9) rotate(-90deg);
       stroke: rgb(233, 48, 48);
   }
-        
+
 </style>

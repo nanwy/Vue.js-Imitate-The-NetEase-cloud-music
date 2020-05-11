@@ -47,7 +47,7 @@ export default {
     percent(val){
       if(val >= 0 && !this.touch.initiated){
         let barWidth = this.$refs.progressBar.clientWidth
-        let offsetWidth = val * barWidth * 1000
+        let offsetWidth = val * barWidth
        this._offset(offsetWidth)
         // console.log(barWidth);
         
@@ -80,7 +80,7 @@ export default {
     },
     _offset(offsetWidth){
        this.$refs.progress.style.width = `${offsetWidth}px`
-        this.$refs.progressButton.style.transform = `translate3d(${offsetWidth}px, 0, 0)`
+        this.$refs.progressButton.style.left = `${offsetWidth}px`
     },
     progressClick(e){
       let offsetWidth = e.offsetX
@@ -117,6 +117,7 @@ export default {
   color: #fff;
   align-items: center;
   width: 85%;
+  max-width: 85%;
   margin: 0 auto;
   padding:20px 0;
     span{
@@ -127,19 +128,22 @@ export default {
     width: 80%;
     margin: 0 15px;
     background-color: #a1a1a1;
+    max-width: 80%;
     height: 1px;
+      .line{
+      width: 0;
+      height: 1px;
+      background-color: #e4e4e4;
+      max-width:calc(100vw - 150px) ;
+      }
     }
   
 }
 
-.line{
-  width: 0;
-  height: 1px;
-  background-color: #e4e4e4;
-}
+
 
 .point{
-position: absolute;
+    position: absolute;
     left: 0px;
     top: -4px;
      background-color: #fff;
