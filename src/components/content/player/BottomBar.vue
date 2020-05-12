@@ -4,7 +4,12 @@
     <div class="front-cover" :class="cdCls" :style="{backgroundImage:'url(' + currentSong.al.picUrl + ')'}"></div>
     <div class="item-info">
         <div class="name">{{currentSong.name}}</div>
-        <span class="songer"  v-for="item in currentSong.ar">{{item.name}}</span>
+        <div class="is-lyric-wrapper"  v-show='playing'>
+          <span class="mini-lyric">{{miniLyric}}</span>
+        </div>
+        <span class="songer" v-show="!playing" v-for="item in currentSong.ar">{{item.name}}</span>
+        
+        
     </div>
     <div class="control">
      
@@ -42,7 +47,8 @@
           </gbnav>
     </div>
     <div class="center">
-      <div class="fengmian"  v-show="!isLyric" @click="changeLyric">
+      <transition name="hide">
+      <div class="fengmian" ref="fengmian" v-show="!isLyric" @click="changeLyric">
         <div class="round1" ref="round1">
           <div class="round" ref="round" :class="cdCls" :style="{backgroundImage:'url(' + currentSong.al.picUrl + ')'}"></div>
         </div>
@@ -50,17 +56,22 @@
         <div class="wave1" :class="cdCls"></div>
         <div class="wave2" :class="cdCls"></div>
       </div>
+      </transition>
+      <transition name="hide">
       <scroll class="lyric content" ref="scroll" v-show="isLyric" @click.native="changeLyric"
       :data="currentLyric && currentLyric.lines">
         <div class="lyric-wrapper">
+             
               <div v-if="currentLyric">
                 <p ref="lyricLine"
                    class="text"
                    :class="{'active':currentLineNum === index}"
                    v-for="(line,index) in currentLyric.lines">{{line.txt}}</p>
               </div>
+              <div class="hei"></div>
         </div>
       </scroll>
+      </transition>
     </div>
     <timer :duration='allTime' :time="setTime(currentTime)" :percent="percent" @chengePercent="onChengePercent"></timer>
     <div  class="player-control">
@@ -118,7 +129,10 @@ export default {
       allTime:'',
       currentLyric:'',
       isLyric:false,
-      currentLineNum:0
+      currentLineNum:0,
+      onTimeY:0,
+      lineEl:'',
+      miniLyric:''
     }
   },
 computed:{
@@ -129,7 +143,7 @@ computed:{
     return this.playing? '' : 'pause'
   },
   playIcon(){
-    return this.playing? 'iconzantingtingzhi':'iconbofang1'
+    return this.playing? 'iconzantingtingzhi border-round':'iconbofang1 border-round'
   },
   iconMode(){
     return this.mode === playMode.sequence? 'iconliebiaoxunhuan3' : this.mode === playMode.loop? 'icondanquxunhuan1' : 'iconsuiji'
@@ -212,6 +226,20 @@ methods:{
   },
   changeLyric(){
     this.isLyric = !this.isLyric
+    console.log(this.isLyric);
+    
+    if(!this.isLyric){
+      this.onTimeY = this.lineEl.offsetTop
+      console.log(this.onTimeY);
+      console.log(this.$refs.scroll.scroll.y,this.onTimeY,this.lineEl.offsetTop);
+      
+      // return
+    }
+    if(this.isLyric){
+      this.$refs.scroll.scrollTo(0,-this.onTimeY,0)
+    }
+    
+    
   },
   changeIsShadow(index){
     this.isShadow = !this.isShadow
@@ -226,7 +254,7 @@ methods:{
    }
     if(index === 1){
       
-      this.setTogglePlaying(!this.playing)
+      this.togglePlaying()
         // this.findIcon.splice(2,1,(this.playing? 'iconzantingtingzhi':'iconbofang1'))
       // return this.playing? 'iconzantingtingzhi':'iconbofang1'
 
@@ -259,10 +287,16 @@ methods:{
     return `${min}:${sec}`
   },
   onChengePercent(percent){
+    let currentTime = this.currentSong.dt * percent
     this.$refs.audio.currentTime = percent * this.currentSong.dt / 1000
     // console.log(percent * this.currentSong.dt);
     if(!this.playing){
       this.setTogglePlaying(!this.playing)
+    }
+    console.log(currentTime);
+    
+    if(this.currentLyric){
+      this.currentLyric.seek(currentTime)
     }
   },
   _pad(num,n=2){
@@ -296,8 +330,9 @@ methods:{
       // console.log(res);
       const data = res.data
       if(data.code == 200){
-        this.currentUrl = data.data[0].url
         this._getLyric(id)
+        this.currentUrl = data.data[0].url
+        
         
         this.toPlay()
       }
@@ -314,7 +349,7 @@ methods:{
   },
   _getLyric(id){
     api.getLyric(id).then(res => {
-      console.log(res);
+      // console.log(res);
       const data = res.data
       if(data.code === 200){
       
@@ -323,23 +358,28 @@ methods:{
             this.currentLyric.play()
           }
           
-          console.log(this.currentLyric);
+          // console.log(this.currentLyric);
           
       }
-    })
+    }).catch(() => {
+          this.currentLyric = null
+          this.miniLyric = ''
+          this.currentLineNum = 0
+        })
   },
   handleLyric({lineNum, txt}) {
         this.currentLineNum = lineNum
         
         if(lineNum > 5){
-          let lineEl = this.$refs.lyricLine[lineNum - 5]
-          this.$refs.scroll.scrollTo(0,-lineEl.offsetTop,1000)
-          this.$refs.scroll.refresh()
-          console.log(lineEl.offsetTop);
+           this.lineEl = this.$refs.lyricLine[lineNum - 5]
+          this.$refs.scroll.scrollTo(0,-this.lineEl.offsetTop,1000)
+          // this.$refs.scroll.refresh()
+          // console.log(lineEl.offsetTop);
         }else{
           this.$refs.scroll.scrollTo(0,0,1000)
         }
-  },
+        this.miniLyric = txt
+  },  
   prevSong(){
     if(!this.songReady){
        return
@@ -366,6 +406,9 @@ methods:{
   loop(){
     this.$refs.audio.currentTime = 0
     this.$refs.audio.play()
+    if(this.currentLyric){
+      this.currentLyric.seek(0)
+    }
   },
   nextSong(){
     if (!this.songReady) {
@@ -424,9 +467,14 @@ methods:{
     // this.$refs.round.style.animation = ''
   },
   togglePlaying(){
+    if(!this.songReady){
+      return
+    }
     this.setTogglePlaying(!this.playing)
     console.log('ssds');
-    
+    if (this.currentLyric) {
+          this.currentLyric.togglePlay()
+        }
   },
   
   changeMode(){
@@ -478,6 +526,55 @@ methods:{
 </script>
 
 <style lang="less" scoped>
+.hide-enter-active,.hide-leave-active{
+  transition: all .5s ;
+  // .center .fengmian{
+  //   transition: all 4s cubic-bezier(0.86, 0.18, 0.82, 1.32)
+  // }
+  // .lyric {
+  //   transition: all 4s cubic-bezier(0.86, 0.18, 0.82, 1.32)
+  // }
+}
+
+.hide-enter,.hide-leave-to{
+  opacity: 0;
+  transform: translate3d(0,3%,0);
+  // .center .fengmian{
+  //   transform: translate3d(0, -100px, 0);
+  //   opacity: 0;
+  // }
+  // .lyric {
+  //  transform: translate3d(0, -100px, 0);
+  // opacity: 0;
+  // }
+}
+.song-detail-enter-active,.song-detail-leave-active{
+  transition: all .3s cubic-bezier(.86,.18,.82,1.32);
+  // .center .fengmian{
+  //   transition: all 4s cubic-bezier(0.86, 0.18, 0.82, 1.32)
+  // }
+  // .lyric {
+  //   transition: all 4s cubic-bezier(0.86, 0.18, 0.82, 1.32)
+  // }
+}
+
+.song-detail-enter,.song-detail-leave-to{
+  opacity: 0;
+  transform: translate3d(0,3%,0);
+  // .center .fengmian{
+  //   transform: translate3d(0, -100px, 0);
+  //   opacity: 0;
+  // }
+  // .lyric {
+  //  transform: translate3d(0, -100px, 0);
+  // opacity: 0;
+  // }
+}
+.border-round{
+  border-radius: 50%;
+  border: 1px solid #fff;
+  padding: 20px;
+}
 .play{
   /* border: 1px solid #000; */
   /* border-radius: 50%; */
@@ -508,13 +605,8 @@ methods:{
          text-shadow: 2px 0px 3px #fff,-2px 0px 3px #fff,0px 2px 3px #fff,0px -2px 3px #fff;
     } */
 
-.song-detail-enter-active,.song-detail-leave-active{
-  transition: all .3s cubic-bezier(.86,.18,.82,1.32);
-}
-.song-detail-enter,.song-detail-leave-to{
-  opacity: 0;
-  transform: translate3d(0,3%,0);
-}
+
+
 .bottom-bar{
   padding: 0 5px;
 
@@ -538,6 +630,10 @@ methods:{
       .songer:last-child::after {
             content: "";
           }
+      .mini-lyric{
+        font-size: 12px;
+        font-family: KaiTi;
+      }
     } 
     .front-cover{
       
@@ -631,8 +727,12 @@ methods:{
        left: 0;
        right: 0;
        height: 460px;
+       .hei{
+         height: 330px;
+       }
        .lyric-wrapper{
           // margin: 0 auto;
+          // padding-top: 500px;
             .active{
               color: #fff !important;
             }

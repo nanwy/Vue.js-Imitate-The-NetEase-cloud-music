@@ -73,6 +73,9 @@ export default {
 
 </script>
 
-<style>
-
+<style scoped>
+.content{
+  padding-top: 500px;
+  display: none;
+}
 </style>

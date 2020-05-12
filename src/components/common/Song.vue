@@ -196,6 +196,7 @@ export default {
       
       this.title = '歌单'
         // this.$refs.scroll.scrollTo(0,50,0)
+        // http://localhost:3000/api/playlist/detail?id=4920881606
      api.getSongDetail(this.songDetailId)
         // 请求成功后返回数据
         .then(res => {
