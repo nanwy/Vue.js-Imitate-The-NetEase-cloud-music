@@ -4,12 +4,7 @@
     <div class="front-cover" :class="cdCls" :style="{backgroundImage:'url(' + currentSong.al.picUrl + ')'}"></div>
     <div class="item-info">
         <div class="name">{{currentSong.name}}</div>
-        <div class="is-lyric-wrapper"  v-show='playing'>
-          <span class="mini-lyric">{{miniLyric}}</span>
-        </div>
-        <span class="songer" v-show="!playing" v-for="item in currentSong.ar">{{item.name}}</span>
-        
-        
+        <span class="songer"  v-for="item in currentSong.ar">{{item.name}}</span>
     </div>
     <div class="control">
      
@@ -48,7 +43,7 @@
     </div>
     <div class="center">
       <transition name="hide">
-      <div class="fengmian" ref="fengmian" :class="{'yinxing':!isLyric,'jianxian':isLyric}" @click="changeLyric">
+      <div class="fengmian" ref="fengmian" v-show="!isLyric" @click="changeLyric">
         <div class="round1" ref="round1">
           <div class="round" ref="round" :class="cdCls" :style="{backgroundImage:'url(' + currentSong.al.picUrl + ')'}"></div>
         </div>
@@ -57,27 +52,16 @@
         <div class="wave2" :class="cdCls"></div>
       </div>
       </transition>
-      <div class="line" v-show="isLine && !isLyric">
-        <i class="iconbofang1 iconfont line-arrow" @click="changeLyricLine"></i>
-        <span>{{lineTime}}</span>
-      </div>
       <transition name="hide">
-      
-      <scroll class="lyric content" ref="scroll" :class="{'yinxing':isLyric,'jianxian':!isLyric}" @click.native="changeLyric"
-      :data="currentLyric && currentLyric.lines"
-      :probeType='3' @scroll='contentscroll'
-      >
-        <div class="lyric-wrapper" @touchstart.prevent='startTouch' 
-        @touchmove.prevent='moveLine' 
-        @touchend.prevent='lyricEnd'>
-              <div style="height:200px"></div>
+      <scroll class="lyric content" ref="scroll" v-show="isLyric" @click.native="changeLyric"
+      :data="currentLyric && currentLyric.lines">
+        <div class="lyric-wrapper">
               <div v-if="currentLyric">
                 <p ref="lyricLine"
                    class="text"
                    :class="{'active':currentLineNum === index}"
                    v-for="(line,index) in currentLyric.lines">{{line.txt}}</p>
               </div>
-              <div style="height:500px"></div>
         </div>
       </scroll>
       </transition>
@@ -124,7 +108,6 @@ import {shuffle} from 'common/js/util.js'
 import Lyric from 'lyric-parser'
 import Scroll from 'components/common/scroll/Scroll'
 import api from 'network/index'
-var timer=null;
 export default {
   data(){
     return {
@@ -138,16 +121,10 @@ export default {
       currentTime:0,
       allTime:'',
       currentLyric:'',
-      isLyric:true,
+      isLyric:false,
       currentLineNum:0,
       onTimeY:0,
-      lineEl:'',
-      miniLyric:'',
-      isTouchLyric:false,
-      lineTime:'',
-      currentLine:0,
-      y:0,
-      isLine:false
+      lineEl:''
     }
   },
 computed:{
@@ -225,15 +202,6 @@ watch:{
     })
   
   },
-  y(){
-    this.currentLine = Math.floor((-this.y+this.$refs.scroll.$el.offsetHeight/2 - 200) / this.$refs.lyricLine[0].offsetHeight)
-    this.lineTime = this.setTime(this.currentLyric.lines[this.currentLine].time/1000)
-    // if(!this.isTouchLyric){
-    //   setTimeout(() => {
-    //   this.isLine = false
-    // }, 4000);
-    // }
-  },
   
 },
 methods:{
@@ -250,15 +218,13 @@ methods:{
   },
   changeLyric(){
     this.isLyric = !this.isLyric
-    console.log(this.isLyric);
-    
-    // if(!this.isLyric){
-    //   this.onTimeY = this.lineEl.offsetTop
-    //   console.log(this.onTimeY);
-    //   console.log(this.$refs.scroll.scroll.y,this.onTimeY,this.lineEl.offsetTop);
+    if(!this.isLyric){
+      this.onTimeY = this.lineEl.offsetTop
+      console.log(this.onTimeY);
+      console.log(this.$refs.scroll.scroll.y,this.onTimeY,this.lineEl.offsetTop);
       
-    //   // return
-    // }
+      // return
+    }
     if(this.isLyric){
       this.$refs.scroll.scrollTo(0,-this.onTimeY,0)
     }
@@ -373,7 +339,7 @@ methods:{
   },
   _getLyric(id){
     api.getLyric(id).then(res => {
-      // console.log(res);
+      console.log(res);
       const data = res.data
       if(data.code === 200){
       
@@ -385,78 +351,19 @@ methods:{
           console.log(this.currentLyric);
           
       }
-    }).catch(() => {
-          this.currentLyric = null
-          this.miniLyric = ''
-          this.currentLineNum = 0
-        })
+    })
   },
   handleLyric({lineNum, txt}) {
         this.currentLineNum = lineNum
-        if(this.isTouchLyric){
-            return
-          }
-        if(lineNum > 3){
-          
-           this.lineEl = this.$refs.lyricLine[lineNum - 3]
-          this.$refs.scroll.scrollTo(0,-this.lineEl.offsetTop+100,1000)
-          this.onTimeY = this.lineEl.offsetTop - 100
+        
+        if(lineNum > 5){
+           this.lineEl = this.$refs.lyricLine[lineNum - 5]
+          this.$refs.scroll.scrollTo(0,-this.lineEl.offsetTop,1000)
           // this.$refs.scroll.refresh()
           // console.log(lineEl.offsetTop);
+        }else{
+          this.$refs.scroll.scrollTo(0,0,1000)
         }
-        this.miniLyric = txt
-  },
-  startTouch(){
-    this.isTouchLyric = true
-    console.log(this.$refs.scroll.getScrolly());
-    
-    
-    console.log(this.currentLyric.lines[this.currentLine].time);
-    clearInterval(timer);
-    timer = setTimeout(() => {
-      this.isLine = false
-    }, 5000);
-  },
-  moveLine(){
-    this.isLine = true
-    
-    
-  //  this.isTouchLyric = false
-  
-    
-  },
-  lyricEnd(){
-    this.isTouchLyric = false
-    clearInterval(timer);
-    timer = setTimeout(() => {
-      this.isLine = false
-    }, 5000);
-    // console.log(this.$refs.lyricLine[0].offsetHeight);
-    
-    // console.log(-this.$refs.scroll.scroll.y+this.$refs.scroll.$el.offsetHeight/1.5);
-    // console.log(this.currentLyric.lines[currentLine].time);
-    
-  },  
-  changeLyricLine(){
-    // this.isTouchLyric = true
-    if(this.isLyric){
-      return
-    }
-    if(!this.playing){
-      this.setTogglePlaying(!this.playing)
-    }
-    // console.log(currentTime);
-    
-    this.$refs.audio.currentTime = this.currentLyric.lines[this.currentLine].time / 1000
-    
-    if(this.currentLyric){
-      this.currentLyric.seek(this.currentLyric.lines[this.currentLine].time)
-    }
-    
-    console.log(-this.$refs.scroll.scroll.y+this.$refs.scroll.$el.offsetHeight);
-    setTimeout(() => {
-      this.isLine = false
-    }, 2000);
   },
   prevSong(){
     if(!this.songReady){
@@ -575,10 +482,6 @@ methods:{
     this.setPlayList(list)
     console.log(list);
     
-  },
-  contentscroll(position){
-      console.log(position);
-     this.y=position.y
   },
   resetCurrentIndex(list) {
       let index = list.findIndex((item) => {
@@ -712,10 +615,6 @@ methods:{
       .songer:last-child::after {
             content: "";
           }
-      .mini-lyric{
-        font-size: 12px;
-        font-family: KaiTi;
-      }
     } 
     .front-cover{
       
@@ -741,7 +640,7 @@ methods:{
     }
     .control-iconfont{
       color: #000 !important;
-      border: 0 !important;
+      
     }
 }
 .bottom-bar:after{
@@ -795,50 +694,22 @@ methods:{
       }
     }
   }
-  .line{
-    width: 80%;
-    height: 1px;
-    
-    background-color: #fff;
-    position: fixed;
-    left: 7%;
-    top: 320px;
-    opacity: .5;
-    z-index: 50;
-
-    .line-arrow{
-      position: absolute;
-      top: -7px;
-      left: -15px;
-      font-size: 15px !important;
-    }
-    span{
-      position: absolute;
-      top: -5px;
-      right: -35px;
-      color: #fff;
-    }
-  }
   .center{
   width: 100%;
   height: 460px;
   position: relative;
   z-index: 20;
-  margin: 40px 0 0 0;
+  margin: 30px 0 0 0;
      .content{
        overflow: hidden;
        position: absolute;
-       top: 0px;
+       top: -30px;
        bottom: 0;
        left: 0;
        right: 0;
        height: 460px;
-       .hei{
-         height: 330px;
-       }
        .lyric-wrapper{
           // margin: 0 auto;
-          // padding-top: 500px;
             .active{
               color: #fff !important;
             }
@@ -847,25 +718,8 @@ methods:{
             text-align: center;
             color: #a9a9a9;
             }
-            
        }
        
-     }
-     .yinxing{
-       opacity: 0;
-     }
-     .jianxian{
-       animation: opacity1 .3s;
-     }
-     @keyframes opacity1 {
-       0%{
-         opacity: 0;
-         transform: translate(0,10%);
-       }
-       100%{
-         opacity: 1;
-         transform: translate(0,0);
-       }
      }
      .round{
       display: flex;

@@ -75,7 +75,7 @@ export default {
 
 <style scoped>
 .content{
-  padding-top: 500px;
-  display: none;
+  /* padding-top: 500px; */
+  /* display: none; */
 }
 </style>
