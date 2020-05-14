@@ -20,9 +20,10 @@
       :newSongDeatilId="item.id"></recommend-songs-item>
     </div>
     <div class="newsong" v-show="cur ==='newcd'">
-      <recommend-songs-item   v-for="(item,index) in newSongs" :picUrl='item.album.blurPicUrl' 
+      <recommend-songs-item   v-for="(item,index) in newSongs" @startPlay="toAudioList(item,index)" :picUrl='item.album.blurPicUrl' 
       :name='item.album.name' 
-      :playCount='0' 
+      :playCount='0'
+      :isSong='true'
       :key="index"></recommend-songs-item>
     </div>
     </div>
@@ -35,6 +36,7 @@ import {getRandomArray} from 'components/common/getRandomArray.js'
 import RecommendSongsItem from './RecommendSongsItem'
 import PageLoading from 'components/common/pageLoading'
 import api from 'network/index'
+import { mapActions,mapGetters, } from 'vuex'
 export default {
   
  data(){
@@ -78,6 +80,19 @@ export default {
     }
      
    })
+ },
+ methods:{
+   toAudioList(item,index){
+     console.log(item);
+     this.addToAudioList(
+       {
+        list:item,
+        index
+     }
+     )
+     
+   },
+    ...mapActions(['addToAudioList'])
  }
 }
 </script>

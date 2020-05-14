@@ -10,7 +10,8 @@ import {
   recommendSongs,
   lyric,
   songUrl,
-  success
+  success,
+  topList
   
 } from './config'
 
@@ -72,5 +73,8 @@ export default{
         id
       }
     })
+  },
+  getTopList(){
+    return axios.get(topList)
   }
 }

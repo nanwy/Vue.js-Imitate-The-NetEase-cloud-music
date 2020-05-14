@@ -1,6 +1,6 @@
 <template>
   <div class="nav">
-    <i class="iconback iconfont" @click="backClick(flag)"></i>
+    <i class="iconback" :class="iconfont" @click="backClick(flag)"></i>
     <slot></slot>
   </div>
 </template>
@@ -10,6 +10,9 @@ export default {
   props:{
     flag:{
       type:Boolean
+    },
+    iconfont:{
+      type:String
     }
   },
   methods:{
@@ -36,14 +39,6 @@ export default {
 .iconback{
   padding-left: 5px;
 }
-.iconfont {
-font-family:"iconfont" !important;      
-font-size:25px;
-font-style:normal;
- color: #fff;
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
-padding: 0 5px;
-}
+
 
 </style>

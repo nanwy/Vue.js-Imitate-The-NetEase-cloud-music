@@ -36,13 +36,13 @@ export default {
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-between;
-  width: 50px;
-  margin-right: 10px;
+  width: 30px;
+  margin-right: 5px;
 
   }
   .span {
-    width: 5px;
-    height: 20px;
+    width: 3px;
+    height: 10px;
     background-color: red;}
 
   .span:nth-of-type(1) {

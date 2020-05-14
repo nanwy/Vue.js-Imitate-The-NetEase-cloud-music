@@ -36,6 +36,9 @@ export default {
      },
      newSongDeatilId:{
        type:Number
+     },
+     isSong:{
+       type:Boolean
      }
  },
  filters:{
@@ -56,12 +59,12 @@ export default {
          this.$router.push({name:'songsdetail',params:{songDetailId:this.songDetailId}}) 
          return
       }
-      if(this.newSongDeatilId){
-        this.$router.push({name:'songsdetail',params:{newSongDeatilId:this.newSongDeatilId}})
-        return
+      if(this.isSong){
+         this.$emit('startPlay')
       }
      }
-   }
+   },
+   
  }
 }
 </script>
@@ -87,7 +90,7 @@ export default {
   margin-bottom: 15px;
   width: 94px;
   padding-top: 1px;
-  height: 23px;
+  /* height: 23px; */
   text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;

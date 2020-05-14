@@ -36,7 +36,7 @@ export default {
   },
   watch:{
     $route(to,from){
-    this.isPath =  to.path == '/songsdetail' 
+    this.isPath =  to.path != '/find' &&  to.path != '/home'
     console.log(to.path == '/songsdetail');
     
   }

@@ -65,8 +65,12 @@ export default {
   },
   getScrolly(){
     return this.scroll ? this.scroll.y : 0
+  },
+  disable(){
+    return this.scroll.disable()
+    console.log('禁止');
+    
   }
-  
  
 },
 }

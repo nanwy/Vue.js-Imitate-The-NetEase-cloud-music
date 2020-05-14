@@ -14,6 +14,9 @@ export default {
  props: {
    val:{
      type:String
+   },
+   isLong:{
+     type:Boolean
    }
  },
  data () {
@@ -54,6 +57,9 @@ export default {
      }else{
        this.$refs.copy.innerText = this.val
    var timer = setTimeout(() => {
+     if(this.isLong){
+       return
+     }
    this.move()
    console.log('timer');
   //  clearTimeout(timer)
@@ -67,7 +73,7 @@ export default {
   move () {
    let maxWidth = document.querySelector('.marquee-wrap').clientWidth
    let width = document.querySelector('.getWidth').scrollWidth
-   if (width <= maxWidth) return
+   if (width <= maxWidth*0.4) return
    let scroll = document.querySelector('.scroll')
   //  let copy = document.querySelector('.copy')
   //  copy.innerText = this.val
@@ -77,7 +83,7 @@ export default {
    this.timer = setInterval(() => {
     distance -= 1
     if (-distance >= width) {
-     distance = 16
+     distance = 56
     }
     scroll.style.transform = 'translateX(' + distance + 'px)'
    }, 20)
@@ -95,12 +101,12 @@ export default {
 
 <style scoped>
  .marquee-wrap {
-  width: 70%;
+  width: 90%;
   overflow: hidden;
   position: relative;
  }
  .marquee{
-  margin-right: 16px;
+  margin-right: 50px;
  }
  p {
   word-break:keep-all;

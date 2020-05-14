@@ -1,19 +1,6 @@
 <template>
-<div v-if="playList.length>0">
-  <transition name="bar">
+<div v-if="true">
   
-  
-  <div class="bottom-bar" v-show="!fullScreen"  @click="showFull">
-    <div class="front-cover" :class="cdCls" :style="{backgroundImage:'url(' + imgUrl + ')'}"></div>
-    <div class="item-info">
-        <div class="name">{{currentSong.name}}</div>
-        <div class="is-lyric-wrapper"  v-show='playing'>
-          <span class="mini-lyric">{{miniLyric}}</span>
-        </div>
-        <span class="songer" v-show="!playing" v-for="item in currentSongAr">{{item.name}}</span>
-        
-        
-    </div>
     <div class="control">
      
         <round-circle :radius='32' :percent="percent">
@@ -27,19 +14,18 @@
       <i class="iconcaidan iconfont control-iconfont"></i>
     </div>
   </div>
-  </transition>
   <transition name="song-detail"
               @enter='enter'
               @after-enter='afterEnter'
              
               >
-  <div class="player" :style="{backgroundImage:'url(' + imgUrl + ')'}" v-show="fullScreen">
+  <div class="player" :style="{backgroundImage:'url(' + currentSong.al.picUrl + ')'}" v-show="fullScreen">
     <div class="top">
          
-          <gbnav class="nav iconfont" :flag='false' @hideFull="hideFull" >
+          <gbnav class="nav" :flag='false' @hideFull="hideFull">
           <div class="left">
             <span class="left-title">{{currentSong.name}}</span>
-            <span class="songer1" v-for="item in currentSongAr">{{item.name}}</span>
+            <span class="songer1" v-for="item in currentSong.ar">{{item.name}}</span>
             <i>></i>
           </div>
           <div class="right">
@@ -54,18 +40,15 @@
       <transition name="hide">
       <div class="fengmian" ref="fengmian" :class="{'yinxing':!isLyric,'jianxian':isLyric}" @click="changeLyric">
         <div class="round1" ref="round1">
-          <div class="round" ref="round" :class="cdCls">
-            <img v-lazy="imgUrl" alt="">
-          </div>
+          <div class="round" ref="round" :class="cdCls" :style="{backgroundImage:'url(' + currentSong.al.picUrl + ')'}"></div>
         </div>
         <div class="wave" :class="cdCls"></div>
         <div class="wave1" :class="cdCls"></div>
         <div class="wave2" :class="cdCls"></div>
       </div>
       </transition>
-      <div class="line-wrapper" v-show="isLine && !isLyric" @click="changeLyricLine">
-        <i class="line"></i>
-        <i class="iconbofang1 iconfont line-arrow" ></i>
+      <div class="line" v-show="isLine && !isLyric">
+        <i class="iconbofang1 iconfont line-arrow" @click="changeLyricLine"></i>
         <span>{{lineTime}}</span>
       </div>
       <transition name="hide">
@@ -77,15 +60,14 @@
         <div class="lyric-wrapper" @touchstart.prevent='startTouch' 
         @touchmove.prevent='moveLine' 
         @touchend.prevent='lyricEnd'>
-              <div style="height:100px"></div>
-              <div>
-                
+              <div style="height:200px"></div>
+              <div v-if="currentLyric">
                 <p ref="lyricLine"
                    class="text"
                    :class="{'active':currentLineNum === index}"
                    v-for="(line,index) in currentLyric.lines">{{line.txt}}</p>
               </div>
-              <div style="height:300px"></div>
+              <div style="height:500px"></div>
         </div>
       </scroll>
       </transition>
@@ -113,7 +95,6 @@
       @error='error'
       @timeupdate="updateTime"
       @ended="end"
-      muted="muted"
     ></audio>
     <top-tip ref="tip" :time='2000'>
       <span class="tips">{{tips}}</span>
@@ -156,16 +137,12 @@ export default {
       lineTime:'',
       currentLine:0,
       y:0,
-      isLine:false,
-      imgUrl:'',
-      currentSongDt:0,
-      currentSongAr:[],
-      noLyric:false
+      isLine:false
     }
   },
 computed:{
   percent(){
-    return this.currentTime / this.currentSongDt * 1000
+    return this.currentTime / this.currentSong.dt * 1000
   },
   cdCls(){  
     return this.playing? '' : 'pause'
@@ -199,12 +176,12 @@ mounted(){
 watch:{
   currentSong(val,oldval){
     console.log(this.playList);  
-    console.log(val);
     
     if(val.id === oldval.id){
+      
+      
       return
     }
-   
     if (this.currentLyric) {
           this.currentLyric.stop()
           
@@ -217,16 +194,8 @@ watch:{
       this.$refs.tip.showTip()
     },200) 
     this._getSongPlay(val.id)
-    if(this.isLyric){
-      this.$refs.scroll.scrollTo(0,0,0)
-    }
-    this.currentSongDt = val.dt ? val.dt : val.duration? val.duration : 0
-    this.imgUrl = val.album
-          ? val.album.picUrl
-          : val.al.picUrl
-     console.log(this.imgUrl);       
-    this.currentSongAr = val.ar ? val.ar : val.artists ? val.artists : ''
-    this.allTime = this.currentSongDt
+    
+    this.allTime = val.dt
     })
   },
   playing(val){
@@ -248,7 +217,7 @@ watch:{
   
   },
   y(){
-    this.currentLine = Math.floor((-this.y+this.$refs.scroll.$el.offsetHeight/2 - 100) / this.$refs.lyricLine[0].offsetHeight)
+    this.currentLine = Math.floor((-this.y+this.$refs.scroll.$el.offsetHeight/2 - 200) / this.$refs.lyricLine[0].offsetHeight)
     this.lineTime = this.setTime(this.currentLyric.lines[this.currentLine].time/1000)
     // if(!this.isTouchLyric){
     //   setTimeout(() => {
@@ -268,7 +237,9 @@ methods:{
   showFull(){
     this.setFullScreen(true)
     // this._getSongPlay(29753437)
-      
+    
+      this.$refs.scroll.scrollTo(0,0,0)
+    
   },
   changeLyric(){
     this.isLyric = !this.isLyric
@@ -287,7 +258,6 @@ methods:{
     
     
   },
-  //按钮逻辑
   changeIsShadow(index){
     this.isShadow = !this.isShadow
    this.forIndex = index
@@ -334,8 +304,8 @@ methods:{
     return `${min}:${sec}`
   },
   onChengePercent(percent){
-    let currentTime = this.currentSongDt * percent
-    this.$refs.audio.currentTime = percent * this.currentSongDt / 1000
+    let currentTime = this.currentSong.dt * percent
+    this.$refs.audio.currentTime = percent * this.currentSong.dt / 1000
     // console.log(percent * this.currentSong.dt);
     if(!this.playing){
       this.setTogglePlaying(!this.playing)
@@ -398,32 +368,8 @@ methods:{
     api.getLyric(id).then(res => {
       // console.log(res);
       const data = res.data
+      if(data.code === 200){
       
-      if (data.nolyric) {
-            // 当前歌曲没有歌词
-            this.noLyric = true
-            this.miniLyric = '纯音乐，请欣赏'
-            let currentLyric = '[00:00.00]纯音乐，请欣赏'
-            this.currentLyric = new Lyric(currentLyric, this.handleLyric)
-          if (this.playing) {
-            this.currentLyric.play()
-          }
-            
-            return
-          }
-      if(data.uncollected){
-        this.noLyric = true
-        this.miniLyric = '暂时没有歌词'
-           let currentLyric = '[00:00.00]纯音乐，请欣赏'
-            this.currentLyric = new Lyric(currentLyric, this.handleLyric)
-          if (this.playing) {
-            this.currentLyric.play()
-          }
-            
-            
-            return
-      }
-      this.noLyric = false
         this.currentLyric = new Lyric(data.lrc.lyric, this.handleLyric)
           if (this.playing) {
             this.currentLyric.play()
@@ -431,7 +377,7 @@ methods:{
           
           console.log(this.currentLyric);
           
-      
+      }
     }).catch(() => {
           this.currentLyric = null
           this.miniLyric = ''
@@ -453,7 +399,6 @@ methods:{
         }
         this.miniLyric = txt
   },
-  //歌词滑动改变进度
   startTouch(){
     this.isTouchLyric = true
     console.log(this.$refs.scroll.getScrolly());
@@ -506,9 +451,8 @@ methods:{
       this.isLine = false
     }, 2000);
   },
-  //上一首
   prevSong(){
-    this.$refs.scroll.scrollTo(0,0,0)
+    this.$refs.scroll.scrollTo(0,-100,0)
     if(!this.songReady){
        return
      }
@@ -533,14 +477,13 @@ methods:{
     
   },
   loop(){
-    this.$refs.scroll.scrollTo(0,0,0)
     this.$refs.audio.currentTime = 0
     this.$refs.audio.play()
-    this.currentLyric.seek(0)
+    
   },
   nextSong(){
     
-      this.$refs.scroll.scrollTo(0,0,0)
+      this.$refs.scroll.scrollTo(0,-100,0)
     
     if (!this.songReady) {
           return
@@ -565,7 +508,6 @@ methods:{
       this.$refs.audio.play()
       
     },
-    //动画
   enter(el,done){
     const {x,y,scale} = this._getPosAndSclae()
     let animation = {
@@ -609,7 +551,7 @@ methods:{
           this.currentLyric.togglePlay()
         }
   },
-  //改变模式
+  
   changeMode(){
     
     
@@ -632,14 +574,7 @@ methods:{
     
   },
   contentscroll(position){
-      
-
-      if(!this.fullScreen){
-      return
-    }
-    console.log(this.isLyric);
-    
-    console.log(position);
+      console.log(position);
      this.y=position.y
   },
   resetCurrentIndex(list) {
@@ -670,28 +605,6 @@ methods:{
 </script>
 
 <style lang="less" scoped>
-.bar-enter-active,.bar-leave-active{
-  transition: all .5s ;
-  // .center .fengmian{
-  //   transition: all 4s cubic-bezier(0.86, 0.18, 0.82, 1.32)
-  // }
-  // .lyric {
-  //   transition: all 4s cubic-bezier(0.86, 0.18, 0.82, 1.32)
-  // }
-}
-.bar-enter,.bar-leave-to{
-
-  transform: translate3d(0,30%,0);
-  // .center .fengmian{
-  //   transform: translate3d(0, -100px, 0);
-  //   opacity: 0;
-  // }
-  // .lyric {
-  //  transform: translate3d(0, -100px, 0);
-  // opacity: 0;
-  // }
-}
-
 .hide-enter-active,.hide-leave-active{
   transition: all .5s ;
   // .center .fengmian{
@@ -838,9 +751,7 @@ methods:{
  transform: scale(.5); 
   transform-origin: left top;
 }
-.pause{
-        animation-play-state: paused !important;
-      }
+
 .player{
   width: 100vw;
   height: 100vh;
@@ -864,13 +775,11 @@ methods:{
     z-index: 10;
       .left{
       width: 250px;
-      font-size: 12px;
         .left-title{
         width: 230px;
         display: block;
         
         }
-        
         .songer1::after {
             content: "/";
         }
@@ -883,16 +792,7 @@ methods:{
       }
     }
   }
-  .line-wrapper{
-    background-color: transparent;
-    width: 100%;
-    height: 20px;
-    position: fixed;
-    left: 7%;
-    top: 310px;
-    opacity: .5;
-    z-index: 50;
-    .line{
+  .line{
     width: 80%;
     height: 1px;
     
@@ -901,20 +801,18 @@ methods:{
     left: 7%;
     top: 320px;
     opacity: .5;
-    
+    z-index: 50;
 
-    
-  }
-  .line-arrow{
+    .line-arrow{
       position: absolute;
-      top: 12%;
+      top: -7px;
       left: -15px;
       font-size: 15px !important;
     }
     span{
       position: absolute;
-      top: 12%;
-      right: 35px;
+      top: -5px;
+      right: -35px;
       color: #fff;
     }
   }
@@ -982,15 +880,10 @@ methods:{
       background-size: cover;
       z-index: 20;
       animation: rotate5 4s linear infinite;
-      overflow: hidden;
-      img{
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        z-index: 999;
       }
+      .pause{
+        animation-play-state: paused !important;
       }
-      
       @keyframes rotate5 {
         0%{
           transform: rotate(0);

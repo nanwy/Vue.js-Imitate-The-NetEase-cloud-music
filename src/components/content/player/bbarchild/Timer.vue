@@ -145,7 +145,7 @@ export default {
 .point{
     position: absolute;
     left: 0px;
-    top: -4px;
+    top: -3px;
      background-color: #fff;
     border-radius: 50%;
     /* transform: scale(1) !important; */

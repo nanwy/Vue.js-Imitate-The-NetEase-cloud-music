@@ -5,7 +5,7 @@
   <div id="song">
     
     <div class="title" v-show="!loading" :style="{backgroundImage:'url(' + background + ')'}">
-          <gbnav class="nav" :flag="true">
+          <gbnav class="nav iconfont" :flag="true" >
           <div class="left">
             <span class="left-title">
               <marrquee :val="title"></marrquee>
@@ -426,11 +426,13 @@ export default {
   left: 0;
   color: #fff;
   font-weight: 700;
-   background-position:0 30%;
+  
+   background-position:0 75%;
   background-size: cover;
     z-index:11;
   align-items: center ;
   justify-content: center;
+  overflow: hidden;
 }
 .title:after{
     content: "";
@@ -438,7 +440,7 @@ export default {
     height:150%;
     position: absolute;
     left:0;
-    top:0;
+    top:-10px;
     background: inherit;
     filter: brightness(0.5) blur(8px);
     z-index: 2;

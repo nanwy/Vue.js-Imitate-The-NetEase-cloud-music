@@ -32,7 +32,7 @@ const mutations = {
   },
   [types.SET_PLAY_LIST](state, list){
     state.playList = list
-    console.log(list);
+    console.log(state.playList);
     
   },
 

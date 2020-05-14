@@ -37,7 +37,7 @@ export default {
 created(){
 
   api.getRecommendSongs(this.limit).then(res => {
-    // console.log(res);
+    console.log(res);
     
     this.recommendsongs = getRandomArray(res.data.result,6)
     this.loading=false
