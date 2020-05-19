@@ -8,6 +8,7 @@ const FindSongDetail = ()=> import('views/find/findChild/findDetail/FindSongDeta
 const Charts = ()=> import('views/find/findChild/iconChild/Charts')
 const Song = ()=> import('components/common/Song')
 const Swipers  = ()=> import ('components/content/swiper.vue')
+const SongsSquare = ()=> import('views/find/findChild/findDetail/SongsSquare')
 Vue.use(VueRouter)
 
 const routes = [
@@ -34,6 +35,11 @@ const routes = [
     component:Charts
   },
   {
+    path:'/square',
+    name:'square',
+    component:SongsSquare
+  },
+  {
     path:"/home",
     component:Swipers
   }
@@ -42,7 +48,8 @@ const routes = [
   {
     path:'/detail/:id',
     component:FindSongDetail
-  }
+  },
+
 ]
 
 const router = new VueRouter({

@@ -137,7 +137,7 @@ var timer=null;
 export default {
   data(){
     return {
-      tips:'手机浏览器为节省流量,无法自动播放,请手动暂停再播放歌曲,谢谢!',
+      tips:'手机浏览器打开更流畅!',
       currentUrl:'',
       isShadow:false,
       findIcon:['iconshangyishou','iconzantingtingzhi','iconshangyishou1','iconcaidan'],
@@ -509,6 +509,7 @@ methods:{
   //上一首
   prevSong(){
     this.$refs.scroll.scrollTo(0,0,0)
+    this.currentLyric.seek(0)
     if(!this.songReady){
        return
      }
@@ -541,6 +542,7 @@ methods:{
   nextSong(){
     
       this.$refs.scroll.scrollTo(0,0,0)
+      this.currentLyric.seek(0)
     
     if (!this.songReady) {
           return

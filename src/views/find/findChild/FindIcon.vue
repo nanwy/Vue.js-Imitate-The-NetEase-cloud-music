@@ -1,7 +1,7 @@
 <template>
   <div class="icon">
     <div class="icon-item">
-      <i class="iconfont" :class="icon.url" @click='iconClick'></i>
+      <i class="iconfont" :class="icon.url"></i>
       <slot></slot>
     </div>
     <span class="icon-text">{{icon.text}}</span>
@@ -16,11 +16,6 @@ export default {
      default(){
        return [{}]
      }
-   }
- },
- methods:{
-   iconClick(){
-     this.$router.push('/charts')
    }
  }
 }

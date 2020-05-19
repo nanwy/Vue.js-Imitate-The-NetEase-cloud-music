@@ -20,6 +20,8 @@ export default {
       if(flag){
         this.$router.back()
       }
+      console.log('后退了');
+      
       this.$emit('hideFull')
       
     }

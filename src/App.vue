@@ -19,8 +19,7 @@
       </div>
     </nav> -->
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" @click.native="getSong"/> -->
-    <loading></loading>
-    
+
     <keep-alive>
     <router-view></router-view>
     </keep-alive>
@@ -31,11 +30,11 @@
 <script>
 import Main from 'views/Main'
  import Swipers from 'components/content/swiper.vue';
- import Loading from 'views/Loading'
+
 import BottomBar from 'components/content/player/BottomBar'
 export default {
  components:{
-   Loading,
+
    Swipers,
    BottomBar
  },

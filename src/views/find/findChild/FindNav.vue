@@ -1,6 +1,6 @@
 <template>
   <div class="find-icon">
-    <find-icon v-for="(item,index) in findIcon" :icon="item" :key="index">
+    <find-icon v-for="(item,index) in findIcon" :icon="item" :key="index"  @click.native='iconClick(index)'>
       <span class="today" v-if="item.url === 'iconrili1'">{{data}}</span>
     </find-icon>
   </div>
@@ -42,7 +42,19 @@ methods:{
   getToday(){
     let today = new Date();
     this.data = today.getDate()
-  }
+  },
+
+   iconClick(index){
+     if(index ==1){
+       this.$router.push('/square')
+     }
+     if(index === 2){
+       this.$router.push('/charts')
+     }
+     console.log('点击了');
+     
+   }
+ 
 }
 }
 </script>

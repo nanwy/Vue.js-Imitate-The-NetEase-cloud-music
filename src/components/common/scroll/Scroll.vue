@@ -8,7 +8,6 @@
 
 <script>
 import BScroll from 'better-scroll'
-
 export default {
   props:{
     probeType:{
@@ -18,22 +17,28 @@ export default {
     pullUpload:{
       type:Boolean,
       default:true
+    },
+    useTransition:{
+      type:Boolean,
+      default:true
     }
   },
  data(){
    return{
-     scroll:'null'
+     scroll:null
    }
  },
  mounted() {
    this.scroll = new BScroll(this.$refs.wrapper,{
      click:true,
-
      probeType:this.probeType,
      pullUpLoad:this.pullUpload,
-     bounce: false,
-    
+     useTransition:this.useTransition,
      
+     bounce: {
+       top: false,
+       bottom: false
+   }
    })
    this.scroll.on('scroll',(position) => {
     //  console.log(position);
@@ -56,7 +61,9 @@ export default {
     
   },
   finishPullUp(){
-    this.scroll.finishPullUp()
+    console.log('触发');
+    
+     this.scroll && this.scroll.finishPullUp()
   },
   refresh(){
   console.log('防抖');
@@ -65,21 +72,14 @@ export default {
   },
   getScrolly(){
     return this.scroll ? this.scroll.y : 0
-  },
-  disable(){
-    return this.scroll.disable()
-    console.log('禁止');
-    
   }
+  
  
 },
 }
 
 </script>
 
-<style scoped>
-.content{
-  /* padding-top: 500px; */
-  /* display: none; */
-}
+<style>
+
 </style>

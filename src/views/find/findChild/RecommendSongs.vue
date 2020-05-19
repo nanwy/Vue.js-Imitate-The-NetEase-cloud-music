@@ -2,7 +2,7 @@
   <div class="recommend-songs">
     <div class="title">
       <div class="recommend">推荐歌单</div>
-      <div class="square">歌单广场</div>
+      <div class="square" @click="squareClick">歌单广场</div>
     </div>
     <page-loading  v-show="loading"></page-loading>
     <div class="recommends-content">
@@ -43,6 +43,11 @@ created(){
     this.loading=false
     console.log(this.recommendsongs);
   })
+},
+methods:{
+  squareClick(){
+    this.$router.push('/square')
+  }
 }
 }
 </script>

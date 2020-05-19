@@ -28,7 +28,7 @@
     :many="songDetail.trackCount ? songDetail.trackCount : songDetail.album ? songDetail.album.size : 0"
     :subscribedCount="songDetail.subscribedCount" v-show="isTabFixed"
       class="song-tab-bar1" ></song-tab-bar>  
-     <scroll class="content" ref="scroll"  :probe-type='3' @scroll='contentscroll'>
+     <scroll class="content" :class="{'height5':isPlayList}" ref="scroll"  :probe-type='3' @scroll='contentscroll'>
     <page-loading  v-if="loading" style="height:5rem"></page-loading>
     <find-song-detail 
     :songDetailId="songDetailId"
@@ -127,8 +127,12 @@ export default {
   computed:{
     ...mapGetters({
       fullScreen:'FULL_SCREEN',
-      currentIndex:'CURRENT_INDEX'
-    })
+      currentIndex:'CURRENT_INDEX',
+      playList:'PLAY_LIST',
+    }),
+    isPlayList(){
+      return this.playList.length? true : false
+    }
   },
   mounted(){
 
@@ -184,10 +188,10 @@ export default {
     //       console.log(error)
     //     })
     
-    if (!songDetailId) {
-      this.$router.push('/find')
-      return
-    }
+    // if (!songDetailId) {
+    //   this.$router.push('/find')
+    //   return
+    // }
      
     // }
     if(songDetailId){
@@ -406,9 +410,12 @@ export default {
   overflow: hidden;
   position: absolute;
   top: 0;
-  bottom: 0;
+  bottom: 0px;
   left: 0;
   right: 0;
+}
+.height5{
+  bottom: 55px;
 }
 .content1{
   margin-top: -50px;

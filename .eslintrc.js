@@ -34,5 +34,9 @@ module.exports = {
                 allowTemplateLiterals: true
             }
         ]
+    },
+
+    'globals':{
+      'Swiper':true
     }
 }

@@ -1,7 +1,7 @@
 <template>
  <div class="marquee-wrap">
   <div class="scroll" ref="scroll">
-   <p class="marquee">{{val}}</p>
+   <p class="ignore">{{val}}</p>
    <p class="copy" ref="copy"></p>
   </div>
   <p class="getWidth">{{val}}</p>
@@ -49,10 +49,10 @@ export default {
   //  clearInterval(this.timer)
   
   clearTimeout(this.timer)
- console.log(this.timer);
+//  console.log(this.timer);
    
     this.$refs.scroll.style.transform= 'translateX(' + 0 + 'px)'
-    console.log(this.$refs.scroll);
+    // console.log(this.$refs.scroll);
     
      }else{
        this.$refs.copy.innerText = this.val
@@ -105,7 +105,7 @@ export default {
   overflow: hidden;
   position: relative;
  }
- .marquee{
+ .ignore{
   margin-right: 50px;
  }
  p {

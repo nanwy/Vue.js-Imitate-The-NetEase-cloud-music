@@ -1,11 +1,15 @@
 <template>
   <div class="recommend-item" @click="SongDetail(idx)">
     <div class="item-content">
-      <div class="box-shadow" v-if="updataTime"></div>
+      <div class="box-shadow"></div>
       <img v-lazy="picUrl" alt="">
-      <div class="box-shadow1" v-if="updataTime"></div>
-      <span class="song-text ignore">{{name}}</span>
-      <span class="play-number" v-if="playCount"><i class="iconbofang icon"></i> {{playCount | setPlayCount}}</span>
+      <div class="box-shadow1"></div>
+      <i>{{num}}</i>
+      <div class="song-text">
+        <span  v-for="(item,index) in tracks">
+        {{(index+1) +  item.first + '-' + item.second}}</span>
+      </div>
+      
       <span class="updata-time" v-if="updataTime"> {{updataTime}}</span>
     </div>
   </div>
@@ -25,8 +29,8 @@ export default {
    name:{
      typr:String
      },
-   playCount:{
-     type:Number,
+   updataTime:{
+     type:String,
      
      },
      songDetailId:{
@@ -41,8 +45,11 @@ export default {
      isSong:{
        type:Boolean
      },
-     updataTime:{
-       type:String
+     tracks:{
+       type:Array
+     },
+     num:{
+       type:Number
      }
  },
  filters:{
@@ -61,6 +68,8 @@ export default {
      if(!idx){
       if(this.songDetailId){
          this.$router.push({name:'songsdetail',params:{songDetailId:this.songDetailId}}) 
+         console.log(this.tracks);
+         
          return
       }
       if(this.isSong){
@@ -81,16 +90,16 @@ export default {
 }
 .item-content{
  display: flex;
- flex-direction: column;
+ /* flex-direction: column; */
  justify-content: center;
-  .box-shadow{
+ .box-shadow{
    width: 94px;
    height: 94px;
    position: absolute;
    left: 0;
    top: 0;
-   border-radius: 5px;
    box-shadow: 0 17px 20px -8px #3030307e inset;
+   border-radius: 5px;
  }
  .box-shadow1{
    width: 94px;
@@ -98,43 +107,34 @@ export default {
    position: absolute;
    left: 0;
    top: 0;
-   border-radius: 5px;
    box-shadow: 0 -17px 20px -8px #3030307e inset;
+   border-radius: 5px;
  }
 }
 .recommend-item .item-content img{
   width: 94px;
   height: 94px;
-   border-radius: 5px;
+  border-radius: 5px;
+  // overflow: hidden;
 }
 .song-text{
-  margin-top: 8px;
+  margin-left: 8px;
   margin-bottom: 15px;
-  width: 100%;
-}
-.ignore{
-  
-  // padding-top: 1px;
-  // height: 23px; 
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
+  width: 94px;
+  padding-top: 1px;
+  /* height: 23px; */
+  display: flex;
+  flex-direction: column;
   font-size: 12px;
-}
-.play-number{
-  position: absolute;
-  color: #fff;
-  right: 5px;
-  top: 5px;
-  font-size: 14px;
+  span{
+    margin-bottom: 16px;
+  }
 }
 .updata-time{
-   position: absolute;
+  position: absolute;
   color: #fff;
   left: 5px;
-  bottom: 40px;
+  bottom: 10px;
   font-size: 12px;
   transform: scale(.9,.9);
 }

@@ -11,7 +11,8 @@ import {
   lyric,
   songUrl,
   success,
-  topList
+  topList,
+  songsList
   
 } from './config'
 
@@ -76,5 +77,15 @@ export default{
   },
   getTopList(){
     return axios.get(topList)
+  },
+  getSongList(limit = 30, order = 'hot', cat, offset){
+    return axios.get(songsList, {
+      params: {
+        limit,
+        order,
+        cat,
+        offset
+      }
+    })
   }
 }
