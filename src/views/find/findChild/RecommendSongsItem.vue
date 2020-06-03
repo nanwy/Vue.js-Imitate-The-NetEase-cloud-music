@@ -122,6 +122,7 @@ export default {
   overflow: hidden;
   -webkit-box-orient: vertical;
   font-size: 12px;
+  height: 24px;
 }
 .play-number{
   position: absolute;

@@ -25,6 +25,7 @@
           </gbnav>
         </div>
       <song-tab-bar 
+      @startAllSong='startPlayAll(0)'
     :many="songDetail.trackCount ? songDetail.trackCount : songDetail.album ? songDetail.album.size : 0"
     :subscribedCount="songDetail.subscribedCount" v-show="isTabFixed"
       class="song-tab-bar1" ></song-tab-bar>  
@@ -51,7 +52,7 @@
     :subscribedCount="songDetail.subscribedCount" v-show="!loading"
     :class="{songtabbar:isTabFixed}"  ref="findsongdetail" ></song-tab-bar>
     <div class="music-list">
-    <music-list :maxbr="isSq[index]"  v-for="(item,index) in songDetail.tracks"
+    <music-list :maxbr="isSq[index]"  v-for="(item,index) in songs"
     :key="index"
     :num="index+1"
     :songName="item.name"
@@ -110,7 +111,9 @@ export default {
       isNone:0,
       newSongDeatilId:0,
       no:{},
-      showModal:false
+      showModal:false,
+      ids:[],
+      songs:[]
     }
   },
   beforeCreate() {
@@ -196,7 +199,7 @@ export default {
     // }
     if(songDetailId){
       
-      console.log(this.songDetailId);
+      // console.log(this.songDetailId);
       
       this.title = '歌单'
         // this.$refs.scroll.scrollTo(0,50,0)
@@ -206,7 +209,7 @@ export default {
         .then(res => {
           // 接受数据
           const data = res.data
-          console.log(res);
+          // console.log(res);
           // 查看返回数据的 code 状态，如果是 200 的话进行使用
           if (data.code === 200) {
             // 将请求回来的数据使用，将load 样式关闭
@@ -214,17 +217,31 @@ export default {
             this.songPeivileges = data.privileges
             this._isSQ()
             this.loading = false
+            for (let i = 0; i < data.playlist.trackIds.length; i++) {
+              this.ids.push(data.playlist.trackIds[i].id)
+            }
+            // this.ids = data.playlist.trackIds
+            
+            this.ids = this.ids.toString()
+            console.log(this.ids);
             // console.log(this.isSq);
-           console.log(this.no);
+          //  console.log(this.no);
           //  console.log(this.songDetail.name);
           //  console.log(this.songPeivileges[0].id);
-         
+            api.getAllSongDetail(this.ids).then(res => {
+      console.log(res);
+            this.songs = res.data.songs
+    })
           }
     }).catch(error => {
           console.log(error)
         })     
     }
-    
+    this.$nextTick(() => {
+      console.log(this.ids);
+      
+      
+    })
     // if(songDetailId){
     //   this.title = '歌单'
     // api.albumDetailFn(this.songDetailId)
@@ -330,7 +347,7 @@ export default {
       
       //  console.log('kjkj')
       this.setSongAll({
-        list:this.songDetail.tracks,
+        list:this.songs,
 
         index
         

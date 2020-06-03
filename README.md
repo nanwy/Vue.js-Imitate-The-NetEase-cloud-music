@@ -8,5 +8,6 @@ cd Vue.js-Imitate-The-NetEase-cloud-music
 npm install
 
 npm run serve
+###对你有帮助的话,随手点个star吧!
 小白第一次独立做vue项目,参考了很多前辈的轮子,希望能对自己有所帮助
 

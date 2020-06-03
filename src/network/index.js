@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+// import qs from 'qs'
 import {
 
  
@@ -12,7 +12,8 @@ import {
   songUrl,
   success,
   topList,
-  songsList
+  songsList,
+  songDetails
   
 } from './config'
 
@@ -85,6 +86,13 @@ export default{
         order,
         cat,
         offset
+      }
+    })
+  },
+  getAllSongDetail(ids){
+    return axios.get(songDetails, {
+      params: {
+        ids
       }
     })
   }

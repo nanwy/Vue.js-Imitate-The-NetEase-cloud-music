@@ -83,7 +83,7 @@ export default {
    this.timer = setInterval(() => {
     distance -= 1
     if (-distance >= width) {
-     distance = 56
+     distance = 50
     }
     scroll.style.transform = 'translateX(' + distance + 'px)'
    }, 20)
