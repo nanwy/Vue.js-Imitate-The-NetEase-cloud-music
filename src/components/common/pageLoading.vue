@@ -17,12 +17,11 @@
 
 <script>
 export default {
-  name: 'pageLoading'
-}
+  name: "pageLoading"
+};
 </script>
 
 <style scoped>
-
 .container {
   display: flex;
   justify-content: center;
@@ -38,38 +37,37 @@ export default {
   justify-content: space-between;
   width: 30px;
   margin-right: 5px;
+}
+.span {
+  width: 3px;
+  height: 10px;
+  background-color: red;
+}
 
-  }
-  .span {
-    width: 3px;
-    height: 10px;
-    background-color: red;}
+.span:nth-of-type(1) {
+  animation: grow 1s -0.45s ease-in-out infinite;
+}
 
-  .span:nth-of-type(1) {
-    animation: grow 1s -0.45s ease-in-out infinite;
-  }
+.span:nth-of-type(2) {
+  animation: grow 1s -0.3s ease-in-out infinite;
+}
 
-  .span:nth-of-type(2) {
-    animation: grow 1s -0.3s ease-in-out infinite;
-  }
+.span:nth-of-type(3) {
+  animation: grow 1s -0.15s ease-in-out infinite;
+}
 
-  .span:nth-of-type(3) {
-    animation: grow 1s -0.15s ease-in-out infinite;
-  }
+.span:nth-of-type(4) {
+  animation: grow 1s ease-in-out infinite;
+}
 
-  .span:nth-of-type(4) {
-    animation: grow 1s ease-in-out infinite;
-  }
-
-  @keyframes grow {
-    0%,
-    100% {
-      transform: scaleY(1);
-    }
-
-    50% {
-      transform: scaleY(2);
-    }
+@keyframes grow {
+  0%,
+  100% {
+    transform: scaleY(1);
   }
 
+  50% {
+    transform: scaleY(2);
+  }
+}
 </style>

@@ -1,4 +1,4 @@
-import {request} from './base'
+import { request } from './base'
 
 // export default{
 //   albumDetailFn (id, s = 5) {
@@ -11,7 +11,7 @@ import {request} from './base'
 //   }
 // }
 
-export function getSwiper(type){
+export function getSwiper(type) {
   return request({
     url: '/banner',
     params: {
@@ -20,7 +20,7 @@ export function getSwiper(type){
   })
 }
 
-export function getRecommendSongs(limit){
+export function getRecommendSongs(limit) {
   return request({
     url: '/personalized',
     params: {
@@ -29,18 +29,18 @@ export function getRecommendSongs(limit){
   })
 }
 
-export function getNewCDs(limit, offset){
+export function getNewCDs(limit, offset) {
   return request({
     url: '/top/album',
     params: {
       limit,
       offset
-     
+
     }
   })
 }
 
-export function getNewSongs(type){
+export function getNewSongs(type) {
   return request({
     url: '/top/song',
     params: {
@@ -49,7 +49,7 @@ export function getNewSongs(type){
   })
 }
 
-export function getSongDetail(id){
+export function getSongDetail(id) {
   return request({
     url: 'playlist/detail',
     params: {

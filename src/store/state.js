@@ -1,4 +1,4 @@
-import {playMode} from 'common/js/config'
+import { playMode } from 'common/js/config'
 
 const state = {
   key: 0,

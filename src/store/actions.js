@@ -1,6 +1,6 @@
-import* as types from './mutation-types'
-import {shuffle} from 'common/js/util.js'
-import {playMode} from 'common/js/config.js'
+import * as types from './mutation-types'
+import { shuffle } from 'common/js/util.js'
+import { playMode } from 'common/js/config.js'
 
 
 function findIndex(list, song) {
@@ -9,18 +9,18 @@ function findIndex(list, song) {
   })
 }
 
-export default{
-  setSongAll( {
+export default {
+  setSongAll({
     commit, state
-  }, {list, index}){
-    if(state.playMode === playMode.random){
+  }, { list, index }) {
+    if (state.playMode === playMode.random) {
       let newList = shuffle(list)
       commit(types.SET_PLAY_LIST, newList)
       index = findIndex(newList, list[index])
-    }else{
+    } else {
       commit(types.SET_PLAY_LIST, list)
     }
-    
+
     // commit(types.SET_FULL_SCREEN, true)
     commit(types.SET_PLAY_STATE, true)
     commit(types.SET_CURRENT_INDEX, index)
@@ -29,8 +29,8 @@ export default{
   },
   addToAudioList({
     commit, state
-    
-  }, {list}) {
+
+  }, { list }) {
     let audioList = state.playList
     let playList = state.sequenceList
 

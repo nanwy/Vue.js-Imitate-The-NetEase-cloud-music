@@ -7,40 +7,36 @@
 
 <script>
 export default {
-  props:{
-    flag:{
-      type:Boolean
+  props: {
+    flag: {
+      type: Boolean
     },
-    iconfont:{
-      type:String
+    iconfont: {
+      type: String
     }
   },
-  methods:{
-    backClick(flag){
-      if(flag){
-        this.$router.back()
+  methods: {
+    backClick(flag) {
+      if (flag) {
+        this.$router.back();
       }
-      console.log('后退了');
-      
-      this.$emit('hideFull')
-      
+      console.log("后退了");
+
+      this.$emit("hideFull");
     }
   }
-}
+};
 </script>
 
 <style scoped>
-
-.nav{
+.nav {
   width: 100%;
   display: flex;
   height: 40px;
-      position: sticky;
-        justify-content:space-between;
+  position: sticky;
+  justify-content: space-between;
 }
-.iconback{
+.iconback {
   padding-left: 5px;
 }
-
-
 </style>

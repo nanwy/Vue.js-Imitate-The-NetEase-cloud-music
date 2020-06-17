@@ -7,48 +7,39 @@
 
 <script>
 export default {
-  data(){
-   return {
-     loading:true
-     }
+  data() {
+    return {
+      loading: true
+    };
   },
-  created(){
+  created() {
     setTimeout(() => {
-      this.loading = false
-           document.getElementsByTagName('body')[0].className = 'anim'
-          
-           
+      this.loading = false;
+      document.getElementsByTagName("body")[0].className = "anim";
     }, 2000);
-    console.log('www');
+    console.log("www");
 
-  console.log('xiaohui');
-    
+    console.log("xiaohui");
   },
-  activated() {
-  
-  },
-  mounted () {
-  
-  },
-  destroyed(){
- 
-}
-}
+  activated() {},
+  mounted() {},
+  destroyed() {}
+};
 </script>
 
 <style>
-.anim{
-  animation: scale .3s ease;
+.anim {
+  animation: scale 0.3s ease;
 }
-@keyframes scale{
-  0%{
-    transform: scale(2,2);
-  }   
-  100%{
-    transform: scale(1,1);
+@keyframes scale {
+  0% {
+    transform: scale(2, 2);
+  }
+  100% {
+    transform: scale(1, 1);
   }
 }
-.loading-first{
+.loading-first {
   position: fixed;
   top: 0;
   left: 0;
@@ -56,22 +47,20 @@ export default {
   height: 100vh;
   background-color: red;
   z-index: 20;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-   color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
 }
-.index-title{
-
+.index-title {
   font-size: 50px;
-   transform: translateY(-20%);
-   font-style: oblique;
-
+  transform: translateY(-20%);
+  font-style: oblique;
 }
-.foot{
-position: absolute;
-bottom: 10%;
-left: 50%;
-transform: translate(-50%,-50%);
+.foot {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

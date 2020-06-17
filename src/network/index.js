@@ -2,7 +2,7 @@ import axios from 'axios'
 // import qs from 'qs'
 import {
 
- 
+
   swiper,
   songDetail,
   newCDs,
@@ -14,25 +14,25 @@ import {
   topList,
   songsList,
   songDetails
-  
+
 } from './config'
 
-export default{
-  getSwiper(type){
+export default {
+  getSwiper(type) {
     return axios.get(swiper, {
       params: {
         type
       }
     })
   },
-  getRecommendSongs(limit){
+  getRecommendSongs(limit) {
     return axios.get(recommendSongs, {
       params: {
         limit
       }
     })
   },
-  getNewCDs(limit, offset){
+  getNewCDs(limit, offset) {
     return axios.get(newCDs, {
       params: {
         limit,
@@ -40,46 +40,46 @@ export default{
       }
     })
   },
-  getNewSongs(type){
+  getNewSongs(type) {
     return axios.get(newSongs, {
       params: {
         type
       }
     })
   },
-  getSongDetail (id) {
+  getSongDetail(id) {
     return axios.get(songDetail, {
       params: {
         id
-        
+
       }
     })
   },
-  getLyric (id){
+  getLyric(id) {
     return axios.get(lyric, {
       params: {
         id
       }
     })
   },
-  getSongPlay(id){
+  getSongPlay(id) {
     return axios.get(songUrl, {
       params: {
         id
       }
     })
   },
-  getSuccessSong(id){
+  getSuccessSong(id) {
     return axios.get(success, {
       params: {
         id
       }
     })
   },
-  getTopList(){
+  getTopList() {
     return axios.get(topList)
   },
-  getSongList(limit = 30, order = 'hot', cat, offset){
+  getSongList(limit = 30, order = 'hot', cat, offset) {
     return axios.get(songsList, {
       params: {
         limit,
@@ -89,7 +89,7 @@ export default{
       }
     })
   },
-  getAllSongDetail(ids){
+  getAllSongDetail(ids) {
     return axios.get(songDetails, {
       params: {
         ids
