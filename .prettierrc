@@ -1,0 +1,19 @@
+{
+  "semi": false,
+  "singleQuote": true,
+  "printWidth": 120,
+  "tabWidth": 2,
+  "TrailingCooma": "all",
+  "bracketSpacing": true,
+  "jsxBracketSameLine": false,
+  "space_after_anon_function": true,
+  "space_after_named_function": true,
+  "space-before-function-paren": [
+    "error",
+    {
+      "anonymous": "always",
+      "named": "never",
+      "asyncArrow": "always"
+    }
+  ]
+}

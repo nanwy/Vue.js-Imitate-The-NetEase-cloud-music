@@ -10,34 +10,34 @@
 </template>
 
 <script>
-import MainTabBar from "components/common/MainTabBar";
+import MainTabBar from 'components/common/MainTabBar'
 
-import Login from "./Login";
+import Login from './Login'
 export default {
-  name: "Main",
+  name: 'Main',
   data() {
     return {
       isPath: false
-    };
+    }
   },
   components: {
     MainTabBar,
     Login
   },
   activated() {
-    console.log("kk");
+    console.log('kk')
   },
   mounted() {
-    console.log("ll");
+    console.log('ll')
   },
   watch: {
     $route(to, from) {
-      this.isPath = to.path != "/find" && to.path != "/home";
-      console.log(to.path == "/songsdetail");
+      this.isPath = to.path != '/find' && to.path != '/home'
+      console.log(to.path == '/songsdetail')
     }
   },
   methods: {}
-};
+}
 </script>
 
 <style>

@@ -13,13 +13,13 @@
 </template>
 
 <script>
-let timer = null;
+let timer = null
 export default {
-  name: "",
+  name: '',
   data() {
     return {
       isTip: false
-    };
+    }
   },
   props: {
     time: {
@@ -28,19 +28,19 @@ export default {
   },
   methods: {
     showTip() {
-      this.isTip = true;
+      this.isTip = true
       if (timer) {
-        clearTimeout(timer);
+        clearTimeout(timer)
       }
       timer = setTimeout(() => {
-        this.hideTip();
-      }, this.time);
+        this.hideTip()
+      }, this.time)
     },
     hideTip() {
-      this.isTip = false;
+      this.isTip = false
     }
   }
-};
+}
 </script>
 
 <style  scoped>

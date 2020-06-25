@@ -17,8 +17,8 @@
 
 <script>
 export default {
-  name: "pageLoading"
-};
+  name: 'pageLoading'
+}
 </script>
 
 <style scoped>

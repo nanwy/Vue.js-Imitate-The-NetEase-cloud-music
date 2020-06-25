@@ -10,21 +10,19 @@
 
 <script>
 export default {
- props:{
-   icon:{
-     type:[Object,Array],
-     default(){
-       return [{}]
-     }
-   }
- }
+  props: {
+    icon: {
+      type: [Object, Array],
+      default() {
+        return [{}]
+      }
+    }
+  }
 }
 </script>
 
 <style scoped>
-
-.icon{
-  
+.icon {
   height: 70px;
   display: flex;
   align-items: center;
@@ -33,27 +31,27 @@ export default {
   align-items: center;
 }
 .iconfont {
-font-family:"iconfont" !important;      
-font-size:25px;
-font-style:normal;
-color: #fff;
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
+  font-family: 'iconfont' !important;
+  font-size: 25px;
+  font-style: normal;
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-.icon-item{
+.icon-item {
   width: 40px;
   height: 40px;
   position: relative;
-    border-radius: 50%;
+  border-radius: 50%;
   background-color: red;
-    text-align: center;
+  text-align: center;
   line-height: 40px;
 }
-span{
+span {
   display: block;
 }
-.icon-text{
+.icon-text {
   font-size: 12px;
   display: block;
-}         
+}
 </style>

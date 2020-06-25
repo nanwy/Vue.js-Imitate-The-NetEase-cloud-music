@@ -1,110 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0.9">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    
-    <title>网易云音乐</title>
-  </head>
-  <style scoped>
-    .iconfont1 {
-font-family:"iconfont" !important;      
-font-size:25px;
-font-style:normal;
- color: #fff;
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
-/* padding: 0 5px; */
-opacity: 0;
-position: absolute;
-      bottom: -9px;
-      left: -52px;
-      /* font-size: 2em; */
-      line-height: 1.5;
-      width: 100%;
-      color: #fff;
-      text-align: center;
-      float: right;
 
-animation: fadein 3s 1s;
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0.9">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+
+  <title>网易云音乐</title>
+</head>
+<style scoped>
+  .iconfont1 {
+    font-family: "iconfont" !important;
+    font-size: 25px;
+    font-style: normal;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* padding: 0 5px; */
+    opacity: 0;
+    position: absolute;
+    bottom: -9px;
+    left: -52px;
+    /* font-size: 2em; */
+    line-height: 1.5;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+    float: right;
+
+    animation: fadein 3s 1s;
   }
-  .anim{
-  animation: scale .3s ease;
-}
-@keyframes scale{
-  0%{
-    transform: scale(2,2);
-  }   
-  100%{
-    transform: scale(1,1);
+
+  .anim {
+    animation: scale .3s ease;
   }
-}
-@keyframes fadein {
-      100% {
-        opacity: 1;
-      }
+
+  @keyframes scale {
+    0% {
+      transform: scale(2, 2);
     }
-.loading-first{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: red;
-  z-index: 20;
+
+    100% {
+      transform: scale(1, 1);
+    }
+  }
+
+  @keyframes fadein {
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .loading-first {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: red;
+    z-index: 20;
     display: flex;
     justify-content: center;
     align-items: center;
-   color: #fff;
-}
-.index-title{
+    color: #fff;
+  }
 
-  font-size: 50px;
+  .index-title {
 
-   font-style: oblique;
-   position: absolute;
-   top: 2.3em;
-   width: 100%;
-   color: #fff;
+    font-size: 50px;
 
-   line-height: 1.5;
-   text-align: center;
-   opacity: 1;
-   animation: titleIn 1s both;
-}
-.foot{
-position: absolute;
-bottom: 10%;
-left: 50%;
-transform: translate(-50%,-50%);
+    font-style: oblique;
+    position: absolute;
+    top: 2.3em;
+    width: 100%;
+    color: #fff;
 
-}
-.foot i{
+    line-height: 1.5;
+    text-align: center;
+    opacity: 1;
+    animation: titleIn 1s both;
+  }
 
-}
-  </style>
-  <body>
-    <div class="loading-first">
-      <div style="font-size: 20px;">打开谷歌浏览器食用更佳</div>
-      <div class="index-title">音樂的力量</div>
-      <div class="foot"><i class="iconwangyiyunyinle iconfont1"></i>网易云音乐</div>
-      
-    </div>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+  .foot {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+  }
+
+  .foot i {}
+</style>
+
+<body>
+  <div class="loading-first">
+    <div style="font-size: 20px;">打开谷歌浏览器食用更佳</div>
+    <div class="index-title">音樂的力量</div>
+    <div class="foot"><i class="iconwangyiyunyinle iconfont1"></i>网易云音乐</div>
+
+  </div>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
 <script>
   const load = document.querySelectorAll('.loading-first')[0]
   console.log(load);
-  
+
   const body = document.querySelectorAll('body')[0]
   let data = sessionStorage.getItem('loading-first');
 
   if (!data) {
     setLoad(body, load)
-}
+  }
 
   function setLoad(body, load) {
     // body.style.overflow = 'hidden';
@@ -118,4 +126,5 @@ transform: translate(-50%,-50%);
 
   }
 </script>
+
 </html>

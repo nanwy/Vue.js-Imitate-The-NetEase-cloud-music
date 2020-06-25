@@ -17,11 +17,11 @@
       <div class="nav-right">
         <router-link to="/search" >搜索</router-link>
       </div>
-    </nav> -->
+    </nav>-->
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" @click.native="getSong"/> -->
 
     <keep-alive>
-    <router-view></router-view>
+      <router-view></router-view>
     </keep-alive>
     <bottom-bar></bottom-bar>
   </div>
@@ -29,22 +29,20 @@
 
 <script>
 import Main from 'views/Main'
- import Swipers from 'components/content/swiper.vue';
+import Swipers from 'components/content/swiper.vue'
 
 import BottomBar from 'components/content/player/BottomBar'
 export default {
- components:{
-
-   Swipers,
-   BottomBar
- },
+  components: {
+    Swipers,
+    BottomBar
+  }
 }
 </script>
 
 <style scoped>
-.tab-bar{
+.tab-bar {
   position: relative;
   top: -1px;
 }
-
 </style>

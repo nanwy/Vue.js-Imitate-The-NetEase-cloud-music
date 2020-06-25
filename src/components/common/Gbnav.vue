@@ -18,14 +18,14 @@ export default {
   methods: {
     backClick(flag) {
       if (flag) {
-        this.$router.back();
+        this.$router.back()
       }
-      console.log("后退了");
+      console.log('后退了')
 
-      this.$emit("hideFull");
+      this.$emit('hideFull')
     }
   }
-};
+}
 </script>
 
 <style scoped>

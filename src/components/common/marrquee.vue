@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "marquee",
+  name: 'marquee',
   props: {
     val: {
       type: String
@@ -23,7 +23,7 @@ export default {
     return {
       timer: null
       //  val:''
-    };
+    }
   },
   created() {
     // let timer = setTimeout(() => {
@@ -39,59 +39,59 @@ export default {
   },
   watch: {
     val(val) {
-      if (val == "歌单") {
-        this.$refs.copy.innerText = "";
+      if (val == '歌单') {
+        this.$refs.copy.innerText = ''
         // console.log(this.$refs.copy.$el);
         // this.gedan()
 
         //  clearInterval(this.timer)
 
-        clearTimeout(this.timer);
+        clearTimeout(this.timer)
         //  console.log(this.timer);
 
-        this.$refs.scroll.style.transform = "translateX(" + 0 + "px)";
+        this.$refs.scroll.style.transform = 'translateX(' + 0 + 'px)'
         // console.log(this.$refs.scroll);
       } else {
-        this.$refs.copy.innerText = this.val;
+        this.$refs.copy.innerText = this.val
         var timer = setTimeout(() => {
           if (this.isLong) {
-            return;
+            return
           }
-          this.move();
-          console.log("timer");
+          this.move()
+          console.log('timer')
           //  clearTimeout(timer)
-        }, 1000);
+        }, 1000)
       }
     }
   },
   methods: {
     move() {
-      let maxWidth = document.querySelector(".marquee-wrap").clientWidth;
-      let width = document.querySelector(".getWidth").scrollWidth;
-      if (width <= maxWidth * 0.4) return;
-      let scroll = document.querySelector(".scroll");
+      let maxWidth = document.querySelector('.marquee-wrap').clientWidth
+      let width = document.querySelector('.getWidth').scrollWidth
+      if (width <= maxWidth * 0.4) return
+      let scroll = document.querySelector('.scroll')
       //  let copy = document.querySelector('.copy')
       //  copy.innerText = this.val
-      console.log("this.val");
+      console.log('this.val')
 
-      let distance = 0;
+      let distance = 0
       this.timer = setInterval(() => {
-        distance -= 1;
+        distance -= 1
         if (-distance >= width) {
-          distance = 50;
+          distance = 50
         }
-        scroll.style.transform = "translateX(" + distance + "px)";
-      }, 20);
+        scroll.style.transform = 'translateX(' + distance + 'px)'
+      }, 20)
     },
     gedan() {
       // this.$refs.copy.$el.innerText =''
-      console.log(this.$refs.copy);
+      console.log(this.$refs.copy)
     }
   },
   beforeDestroy() {
-    clearInterval(this.timer);
+    clearInterval(this.timer)
   }
-};
+}
 </script>
 
 <style scoped>
@@ -107,7 +107,7 @@ p {
   word-break: keep-all;
   white-space: nowrap;
   font-size: 14px;
-  font-family: "微软雅黑 Light";
+  font-family: '微软雅黑 Light';
 }
 .scroll {
   display: flex;

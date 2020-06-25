@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,minimum-scale=0.9"><link rel=icon href=/favicon.ico><title>网易云音乐</title><link href=/css/chunk-0f4ee70e.e70208b1.css rel=prefetch><link href=/css/chunk-43af84c9.b28018bf.css rel=prefetch><link href=/css/chunk-5bb9b68a.58210101.css rel=prefetch><link href=/css/chunk-69200006.6fc828ab.css rel=prefetch><link href=/js/chunk-0f4ee70e.2688cc4f.js rel=prefetch><link href=/js/chunk-43af84c9.6d364a5a.js rel=prefetch><link href=/js/chunk-5bb9b68a.cc29f921.js rel=prefetch><link href=/js/chunk-69200006.224ee8cb.js rel=prefetch><link href=/css/app.17a7514e.css rel=preload as=style><link href=/js/app.21053121.js rel=preload as=script><link href=/js/chunk-vendors.1cfb93f7.js rel=preload as=script><link href=/css/app.17a7514e.css rel=stylesheet></head><style scoped>.iconfont1 {
+font-family:"iconfont" !important;      
+font-size:25px;
+font-style:normal;
+ color: #fff;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+/* padding: 0 5px; */
+opacity: 0;
+position: absolute;
+      bottom: -9px;
+      left: -52px;
+      /* font-size: 2em; */
+      line-height: 1.5;
+      width: 100%;
+      color: #fff;
+      text-align: center;
+      float: right;
+
+animation: fadein 3s 1s;
+  }
+  .anim{
+  animation: scale .3s ease;
+}
+@keyframes scale{
+  0%{
+    transform: scale(2,2);
+  }   
+  100%{
+    transform: scale(1,1);
+  }
+}
+@keyframes fadein {
+      100% {
+        opacity: 1;
+      }
+    }
+.loading-first{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: red;
+  z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   color: #fff;
+}
+.index-title{
+
+  font-size: 50px;
+
+   font-style: oblique;
+   position: absolute;
+   top: 2.3em;
+   width: 100%;
+   color: #fff;
+
+   line-height: 1.5;
+   text-align: center;
+   opacity: 1;
+   animation: titleIn 1s both;
+}
+.foot{
+position: absolute;
+bottom: 10%;
+left: 50%;
+transform: translate(-50%,-50%);
+
+}
+.foot i{
+
+}</style><body><div class=loading-first><div style="font-size: 20px;">打开谷歌浏览器食用更佳</div><div class=index-title>音樂的力量</div><div class=foot><i class="iconwangyiyunyinle iconfont1"></i>网易云音乐</div></div><div id=app></div><script src=/js/chunk-vendors.1cfb93f7.js></script><script src=/js/app.21053121.js></script></body><script>const load = document.querySelectorAll('.loading-first')[0]
+  console.log(load);
+  
+  const body = document.querySelectorAll('body')[0]
+  let data = sessionStorage.getItem('loading-first');
+
+  if (!data) {
+    setLoad(body, load)
+}
+
+  function setLoad(body, load) {
+    // body.style.overflow = 'hidden';
+    load.style.display = 'block';
+    sessionStorage.setItem('load', 1);
+    setTimeout(() => {
+      load.style.display = 'none'
+      // body.style.overflow = '';
+      body.setAttribute('class', 'anim')
+    }, 3000);
+
+  }</script></html>

@@ -23,7 +23,7 @@ export default {
     path: String,
     activeColor: {
       typr: String,
-      default: "12px"
+      default: '12px'
     }
   },
   data() {
@@ -31,31 +31,31 @@ export default {
       // isActive:true
       isTouch: false,
       isLeave: false
-    };
+    }
   },
   computed: {
     isActive() {
       // return this.$route.path.indexOf(this.path) !== -1
-      return this.$route.path == this.path;
+      return this.$route.path == this.path
     },
     activeStyle() {
-      return this.isActive ? { fontSize: this.activeColor } : {};
+      return this.isActive ? { fontSize: this.activeColor } : {}
     }
   },
   methods: {
     itemCilck() {
-      this.$router.push(this.path);
+      this.$router.push(this.path)
     },
     touch() {
-      this.isTouch = true;
-      this.isLeave = false;
+      this.isTouch = true
+      this.isLeave = false
     },
     touchEnd: function() {
-      this.isLeave = true;
-      this.isTouch = false;
+      this.isLeave = true
+      this.isTouch = false
     }
   }
-};
+}
 </script>
 
 <style scoped>

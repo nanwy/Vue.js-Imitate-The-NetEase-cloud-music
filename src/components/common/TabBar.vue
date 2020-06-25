@@ -6,12 +6,12 @@
 
 <script>
 export default {
-  name: "TabBar",
+  name: 'TabBar',
   components: {},
   data() {
-    return {};
+    return {}
   }
-};
+}
 </script>
 
 <style scoped>

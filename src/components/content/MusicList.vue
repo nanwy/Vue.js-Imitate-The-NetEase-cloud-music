@@ -20,11 +20,11 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations } from 'vuex'
 export default {
   computed: {
     ...mapGetters({
-      playList: "PLAY_LIST"
+      playList: 'PLAY_LIST'
     })
   },
   props: {
@@ -57,10 +57,10 @@ export default {
   methods: {
     startPlay() {
       //  console.log('dianji');
-      this.$emit("startPlay");
+      this.$emit('startPlay')
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -114,7 +114,7 @@ export default {
 }
 
 .iconfont {
-  font-family: "iconfont" !important;
+  font-family: 'iconfont' !important;
   font-size: 25px;
   font-style: normal;
   color: #ccc;

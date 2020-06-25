@@ -1,7 +1,7 @@
 <template>
   <transition name="slide">
     <div id="song">
-      <div class="title" v-show="!loading" :style="{backgroundImage:'url(' + background + ')'}">
+      <div class="title" :style="{backgroundImage:'url(' + background + ')'}">
         <gbnav class="nav iconfont" :flag="true">
           <div class="left">
             <span class="left-title">
@@ -33,7 +33,6 @@
         :probe-type="3"
         @scroll="contentscroll"
       >
-        <page-loading v-if="loading" style="height:5rem"></page-loading>
         <find-song-detail
           :songDetailId="songDetailId"
           :imgUrl="songDetail.coverImgUrl"
@@ -46,7 +45,6 @@
           :comment="songDetail.commentCount"
           :share="songDetail.shareCount"
           :playCount="songDetail.playCount"
-          v-show="!loading"
         ></find-song-detail>
         <song-tab-bar
           @startAllSong="startPlayAll(0)"
@@ -57,6 +55,7 @@
           ref="findsongdetail"
         ></song-tab-bar>
         <div class="music-list">
+          <page-loading v-if="loading" style="height:5rem"></page-loading>
           <music-list
             :maxbr="isSq[index]"
             v-for="(item,index) in songs"
@@ -83,29 +82,29 @@
 </template>
 
 <script>
-import FindSongDetail from "views/find/findChild/findDetail/FindSongDetail";
-import PageLoading from "./pageLoading";
-import MusicList from "components/content/MusicList";
-import SongTabBar from "components/content/SongTabBar";
-import marrquee from "./marrquee";
+import FindSongDetail from 'views/find/findChild/findDetail/FindSongDetail'
+import PageLoading from './pageLoading'
+import MusicList from 'components/content/MusicList'
+import SongTabBar from 'components/content/SongTabBar'
+import marrquee from './marrquee'
 // import {getSongDetail} from 'network/find'
-import { mapActions, mapGetters } from "vuex";
-import rgbaster from "rgbaster";
-import Gbnav from "components/common/Gbnav";
-import Scroll from "components/common/scroll/Scroll";
-import api from "network/index";
-let that;
+import { mapActions, mapGetters } from 'vuex'
+import rgbaster from 'rgbaster'
+import Gbnav from 'components/common/Gbnav'
+import Scroll from 'components/common/scroll/Scroll'
+import api from 'network/index'
+let that
 export default {
-  name: "Song",
+  name: 'Song',
   data() {
     return {
       songDetailId: 0,
       songDetail: [],
       songPeivileges: [],
-      title: "",
-      background: "",
-      background1: "",
-      img: require("assets/logo.png"),
+      title: '',
+      background: '',
+      background1: '',
+      img: require('assets/logo.png'),
       isSq: {},
       i: [],
       loading: true,
@@ -117,27 +116,27 @@ export default {
       showModal: false,
       ids: [],
       songs: []
-    };
+    }
   },
   beforeCreate() {
-    that = this;
+    that = this
   },
   filters: {
     description1(val) {
       if (!val) {
-        return "猜你喜欢";
+        return '猜你喜欢'
       }
-      return that.songDetail.description;
+      return that.songDetail.description
     }
   },
   computed: {
     ...mapGetters({
-      fullScreen: "FULL_SCREEN",
-      currentIndex: "CURRENT_INDEX",
-      playList: "PLAY_LIST"
+      fullScreen: 'FULL_SCREEN',
+      currentIndex: 'CURRENT_INDEX',
+      playList: 'PLAY_LIST'
     }),
     isPlayList() {
-      return this.playList.length ? true : false;
+      return this.playList.length ? true : false
     }
   },
   mounted() {
@@ -150,10 +149,10 @@ export default {
 
   created() {
     // this.$refs.scroll.scrollTo(0,50,5000)
-    let songDetailId = this.$route.params.songDetailId;
-    let newSongDeatilId = this.$route.params.newSongDeatilId;
-    this.songDetailId = songDetailId;
-    this.newSongDeatilId = newSongDeatilId;
+    let songDetailId = this.$route.params.songDetailId
+    let newSongDeatilId = this.$route.params.newSongDeatilId
+    this.songDetailId = songDetailId
+    this.newSongDeatilId = newSongDeatilId
     // console.log(this.songDetailId);
     // if(songDetailId){
     //   this.title = '歌单'
@@ -197,7 +196,7 @@ export default {
     if (songDetailId) {
       // console.log(this.songDetailId);
 
-      this.title = "歌单";
+      this.title = '歌单'
       // this.$refs.scroll.scrollTo(0,50,0)
       // http://localhost:3000/api/playlist/detail?id=4920881606
       api
@@ -205,39 +204,40 @@ export default {
         // 请求成功后返回数据
         .then(res => {
           // 接受数据
-          const data = res.data;
+          const data = res.data
           // console.log(res);
           // 查看返回数据的 code 状态，如果是 200 的话进行使用
           if (data.code === 200) {
             // 将请求回来的数据使用，将load 样式关闭
-            this.songDetail = data.playlist;
-            this.songPeivileges = data.privileges;
-            this._isSQ();
-            this.loading = false;
+            this.songDetail = data.playlist
+            this.songPeivileges = data.privileges
+            this._isSQ()
+
             for (let i = 0; i < data.playlist.trackIds.length; i++) {
-              this.ids.push(data.playlist.trackIds[i].id);
+              this.ids.push(data.playlist.trackIds[i].id)
             }
             // this.ids = data.playlist.trackIds
 
-            this.ids = this.ids.toString();
-            console.log(this.ids);
+            this.ids = this.ids.toString()
+            console.log(this.ids)
             // console.log(this.isSq);
             //  console.log(this.no);
             //  console.log(this.songDetail.name);
             //  console.log(this.songPeivileges[0].id);
             api.getAllSongDetail(this.ids).then(res => {
-              console.log(res);
-              this.songs = res.data.songs;
-            });
+              console.log(res)
+              this.songs = res.data.songs
+              this.loading = false
+            })
           }
         })
         .catch(error => {
-          console.log(error);
-        });
+          console.log(error)
+        })
     }
     this.$nextTick(() => {
-      console.log(this.ids);
-    });
+      console.log(this.ids)
+    })
     // if(songDetailId){
     //   this.title = '歌单'
     // api.albumDetailFn(this.songDetailId)
@@ -288,66 +288,66 @@ export default {
   methods: {
     contentscroll(position) {
       // console.log(-position.y);
-      this.tabOffsetTop = this.$refs.findsongdetail.$el.offsetTop;
+      this.tabOffsetTop = this.$refs.findsongdetail.$el.offsetTop
       // console.log(this.$refs.findsongdetail.$el.offsetTop);
 
       if (-position.y > 100) {
-        this.title = this.songDetail.name;
-        this.isTabFixed = -position.y + 50 > this.tabOffsetTop;
-        this.background = this.songDetail.coverImgUrl;
+        this.title = this.songDetail.name
+        this.isTabFixed = -position.y + 50 > this.tabOffsetTop
+        this.background = this.songDetail.coverImgUrl
         // console.log(this.background);
-        console.log(this.title);
+        console.log(this.title)
 
         // this.isNone = (-position.y + 110)> (this.tabOffsetTop)
       } else {
-        this.title = "歌单";
-        this.background = "transparent";
-        console.log(this.title);
+        this.title = '歌单'
+        this.background = 'transparent'
+        console.log(this.title)
       }
     },
 
     _isSQ() {
       // this.songDetail.id ==
-      let result = [];
-      let nobanquan = [];
+      let result = []
+      let nobanquan = []
       // console.log(this.songPeivileges);
       for (let k of this.songPeivileges) {
         // console.log(k.id);
-        result.push(k.maxbr);
-        nobanquan.push(k.st);
+        result.push(k.maxbr)
+        nobanquan.push(k.st)
         // console.log(k.maxbr)
         //  return k.maxbr > 100000
       }
       // console.log(result);
-      this.no = nobanquan;
+      this.no = nobanquan
       this.isSq = result.map(item => {
         if (item > 500000) {
-          return true;
+          return true
         } else {
-          return false;
+          return false
         }
-      });
+      })
       // console.log(...this.isSq);
     },
     startPlayAll(index) {
       if (this.no[index] === -200) {
         // console.log('暂无版权');
-        this.showModal = true;
-        return;
+        this.showModal = true
+        return
       }
-      console.log(this.songDetail.tracks);
+      console.log(this.songDetail.tracks)
 
       //  console.log('kjkj')
       this.setSongAll({
         list: this.songs,
 
         index
-      });
-      console.log(this.$store.state.currentIndex);
+      })
+      console.log(this.$store.state.currentIndex)
     },
-    ...mapActions(["setSongAll"])
+    ...mapActions(['setSongAll'])
   }
-};
+}
 </script>
 
 <style scoped>
@@ -446,7 +446,7 @@ export default {
   overflow: hidden;
 }
 .title:after {
-  content: "";
+  content: '';
   width: 100%;
   height: 150%;
   position: absolute;
@@ -512,7 +512,7 @@ export default {
   /* height: 59px; */
 }
 .iconfont {
-  font-family: "iconfont" !important;
+  font-family: 'iconfont' !important;
   font-size: 25px;
   font-style: normal;
   color: #fff;
