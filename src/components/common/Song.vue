@@ -115,7 +115,7 @@ export default {
       no: {},
       showModal: false,
       ids: [],
-      songs: []
+      songs: [],
     }
   },
   beforeCreate() {
@@ -127,17 +127,17 @@ export default {
         return '猜你喜欢'
       }
       return that.songDetail.description
-    }
+    },
   },
   computed: {
     ...mapGetters({
       fullScreen: 'FULL_SCREEN',
       currentIndex: 'CURRENT_INDEX',
-      playList: 'PLAY_LIST'
+      playList: 'PLAY_LIST',
     }),
     isPlayList() {
       return this.playList.length ? true : false
-    }
+    },
   },
   mounted() {
     //   setTimeout(() => {
@@ -148,6 +148,7 @@ export default {
   },
 
   created() {
+    // console.log('vuex', this.$store.state.currentIndex)
     // this.$refs.scroll.scrollTo(0,50,5000)
     let songDetailId = this.$route.params.songDetailId
     let newSongDeatilId = this.$route.params.newSongDeatilId
@@ -202,7 +203,7 @@ export default {
       api
         .getSongDetail(this.songDetailId)
         // 请求成功后返回数据
-        .then(res => {
+        .then((res) => {
           // 接受数据
           const data = res.data
           // console.log(res);
@@ -219,24 +220,24 @@ export default {
             // this.ids = data.playlist.trackIds
 
             this.ids = this.ids.toString()
-            console.log(this.ids)
+            // console.log(this.ids)
             // console.log(this.isSq);
             //  console.log(this.no);
             //  console.log(this.songDetail.name);
             //  console.log(this.songPeivileges[0].id);
-            api.getAllSongDetail(this.ids).then(res => {
-              console.log(res)
+            api.getAllSongDetail(this.ids).then((res) => {
+              // console.log(res)
               this.songs = res.data.songs
               this.loading = false
             })
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error)
         })
     }
     this.$nextTick(() => {
-      console.log(this.ids)
+      // console.log(this.ids)
     })
     // if(songDetailId){
     //   this.title = '歌单'
@@ -283,7 +284,7 @@ export default {
     Scroll,
     Gbnav,
     SongTabBar,
-    marrquee
+    marrquee,
   },
   methods: {
     contentscroll(position) {
@@ -320,7 +321,7 @@ export default {
       }
       // console.log(result);
       this.no = nobanquan
-      this.isSq = result.map(item => {
+      this.isSq = result.map((item) => {
         if (item > 500000) {
           return true
         } else {
@@ -341,12 +342,12 @@ export default {
       this.setSongAll({
         list: this.songs,
 
-        index
+        index,
       })
       console.log(this.$store.state.currentIndex)
     },
-    ...mapActions(['setSongAll'])
-  }
+    ...mapActions(['setSongAll']),
+  },
 }
 </script>
 

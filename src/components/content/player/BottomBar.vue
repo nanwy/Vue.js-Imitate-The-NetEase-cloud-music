@@ -169,7 +169,7 @@ export default {
       imgUrl: '',
       currentSongDt: 0,
       currentSongAr: [],
-      noLyric: false
+      noLyric: false,
     }
   },
   computed: {
@@ -196,15 +196,15 @@ export default {
       playing: 'PLAYING',
       currentIndex: 'CURRENT_INDEX',
       mode: 'MODE',
-      sequenceList: 'SEQUENCE_LIST'
-    })
+      sequenceList: 'SEQUENCE_LIST',
+    }),
   },
   components: {
     Gbnav,
     Timer,
     RoundCircle,
     TopTip,
-    Scroll
+    Scroll,
   },
   mounted() {},
   watch: {
@@ -256,7 +256,7 @@ export default {
       //   this.isLine = false
       // }, 4000);
       // }
-    }
+    },
   },
   methods: {
     hideFull() {
@@ -353,14 +353,14 @@ export default {
       setTogglePlaying: 'SET_PLAY_STATE',
       setCurrentIndex: 'SET_CURRENT_INDEX',
       setMode: 'SET_PLAY_MODE',
-      setPlayList: 'SET_PLAY_LIST'
+      setPlayList: 'SET_PLAY_LIST',
     }),
     _getSongPlay(id) {
       api
         .getSuccessSong(id)
-        .then(res => {
+        .then((res) => {
           if ((res.data.success = true)) {
-            api.getSongPlay(id).then(res => {
+            api.getSongPlay(id).then((res) => {
               console.log(res)
               const data = res.data
               if (data.code == 200) {
@@ -372,7 +372,7 @@ export default {
             })
           }
         })
-        .catch(err => {
+        .catch((err) => {
           this.songReady = true
           // if(currindex === )
           console.log(err)
@@ -383,7 +383,7 @@ export default {
     _getLyric(id) {
       api
         .getLyric(id)
-        .then(res => {
+        .then((res) => {
           // console.log(res);
           const data = res.data
 
@@ -547,29 +547,29 @@ export default {
       const { x, y, scale } = this._getPosAndSclae()
       let animation = {
         0: {
-          transform: `translate3d(${x}px,${y}px,0) scale(${scale})`
+          transform: `translate3d(${x}px,${y}px,0) scale(${scale})`,
         },
         60: {
-          transform: `translate3d(0,0,0) scale(1.1)`
+          transform: `translate3d(0,0,0) scale(1.1)`,
         },
         100: {
-          transform: `translate3d(0,0,0) scale(1)`
-        }
+          transform: `translate3d(0,0,0) scale(1)`,
+        },
       }
-      console.log(x, y)
+      // console.log(x, y)
 
       animations.registerAnimation({
         name: 'move',
         animation,
         presets: {
           duration: 300,
-          easing: 'Linear'
-        }
+          easing: 'Linear',
+        },
       })
 
       animations.runAnimation(this.$refs.round1, 'move', done)
 
-      console.log(this.$refs.round)
+      // console.log(this.$refs.round)
     },
     afterEnter() {
       // animations.unregisterAnimation('move')
@@ -607,13 +607,13 @@ export default {
       if (!this.fullScreen) {
         return
       }
-      console.log(this.isLyric)
+      // console.log(this.isLyric)
 
-      console.log(position)
+      // console.log(position)
       this.y = position.y
     },
     resetCurrentIndex(list) {
-      let index = list.findIndex(item => {
+      let index = list.findIndex((item) => {
         return item.id === this.currentSong.id
       })
       // console.log(this.currentSong.id);
@@ -631,10 +631,10 @@ export default {
       return {
         x,
         y,
-        scale
+        scale,
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

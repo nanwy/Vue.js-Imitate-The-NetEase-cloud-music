@@ -24,18 +24,18 @@ export default {
   },
   props: {
     percent: {
-      type: Number
+      type: Number,
     },
     currentTime: {
       type: Number,
-      default: 0
+      default: 0,
     },
     time: {
-      type: String
+      type: String,
     },
     duration: {
-      tyep: Number
-    }
+      tyep: Number,
+    },
   },
   updated() {
     // console.log(this.percent);
@@ -51,7 +51,7 @@ export default {
         this._offset(offsetWidth)
         // console.log(barWidth);
       }
-    }
+    },
   },
   methods: {
     pointTouchStart(e) {
@@ -85,7 +85,7 @@ export default {
       this._offset(offsetWidth)
       // console.log(e);
       this._triggerPercent()
-    }
+    },
   },
   filters: {
     setTime(val) {
@@ -99,8 +99,8 @@ export default {
       }
       val = `${min}:${sec}`
       return val
-    }
-  }
+    },
+  },
 }
 </script>
 

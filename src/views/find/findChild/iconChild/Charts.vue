@@ -2,6 +2,7 @@
   <div class="charts">
     <gbnav class="iconfont" :flag="true">
       <span>排行榜</span>
+      <input type="text" v-model="id" />
     </gbnav>
     <page-loading v-show="loading" style="height:5rem"></page-loading>
     <scroll
@@ -61,6 +62,7 @@
             class="text"
           ></recommend-songs-item>
         </div>
+        <input type="text" v-model="id" />
       </div>
     </scroll>
   </div>
@@ -80,30 +82,36 @@ export default {
       authoritySongs: [],
       recommendsongs: [],
       loading: true,
-      globalSongs: []
+      globalSongs: [],
+      id: 0,
     }
   },
   computed: {
     ...mapGetters({
-      playList: 'PLAY_LIST'
+      playList: 'PLAY_LIST',
     }),
     isPlayList() {
       return this.playList.length ? true : false
-    }
+    },
   },
   components: {
     Gbnav,
     RecommendSongsItem,
     PageLoading,
     ChartTop,
-    Scroll
+    Scroll,
   },
   created() {
     this._getTopListInfo()
   },
+  activated() {
+    // console.log('我来了')
+    this.id++
+    // console.log(this.id)
+  },
   methods: {
     _getTopListInfo() {
-      api.getTopList().then(res => {
+      api.getTopList().then((res) => {
         const data = res.data
         console.log(res)
         if (data.code === 200) {
@@ -122,13 +130,13 @@ export default {
       })
     },
     _getIdxInfo() {
-      api.getTopList().then(res => {
+      api.getTopList().then((res) => {
         const data = res.data
         console.log(res)
       })
     },
-    contentscroll() {}
-  }
+    contentscroll() {},
+  },
 }
 </script>
 

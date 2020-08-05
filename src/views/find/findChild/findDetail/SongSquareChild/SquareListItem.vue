@@ -18,13 +18,12 @@ import RecommendSongsItem from '../../RecommendSongsItem'
 export default {
   props: {
     Songs: {
-      type: Array
-    }
+      type: Array,
+    },
   },
-
   components: {
-    RecommendSongsItem
-  }
+    RecommendSongsItem,
+  },
 }
 </script>
 

@@ -118,7 +118,7 @@ export default {
         流行: { page: 18, list: [] },
         电子: { page: 18, list: [] },
         古风: { page: 18, list: [] },
-        民谣: { page: 18, list: [] }
+        民谣: { page: 18, list: [] },
       },
       banners: [],
       recommendSongs: [],
@@ -133,13 +133,13 @@ export default {
       page: 0,
       currentCat: '',
       currentType: '全部',
-      isLoad: false
+      isLoad: false,
     }
   },
   computed: {
     showSongs() {
       return this.Songs[this.currentType].list
-    }
+    },
   },
   created() {
     this._getSongListinfo()
@@ -147,14 +147,14 @@ export default {
   },
   methods: {
     _getSongListinfo(cat) {
-      api.getSongList(cat).then(res => {
-        console.log(res)
+      api.getSongList(cat).then((res) => {
+        // console.log(res)
         const data = res.data
         if (data.code === 200) {
           this.banners = data.playlists.splice(0, 3)
           this.Songs['全部'].list = data.playlists
           this.loading = false
-          console.log(this.banners)
+          // console.log(this.banners)
           // console.log(this.authoritySongs);
           setTimeout(() => {
             this.bannersc()
@@ -165,6 +165,7 @@ export default {
     },
     toDetail() {},
     async _getOtherSongListinfo(limit, order, cat, songs) {
+      this.loading = true
       const res = await api.getSongList(limit, order, cat)
       console.log(res)
       this.loading = false
@@ -196,19 +197,19 @@ export default {
         slidesPerView: 'auto',
         centeredSlides: true,
         loop: true,
-        loopedSlides: 5,
+        loopedSlides: 3,
         loopAdditionalSlides: 3,
 
         autoplay: {
           delay: 3000, //1秒切换一次
-          disableOnInteraction: false
+          disableOnInteraction: false,
         },
 
         on: {
           touchStart(e) {
             startX = e.touches[0].pageX
           },
-          progress: function(progress) {
+          progress: function (progress) {
             for (let i = 0; i < this.slides.length; i++) {
               var slide = this.slides.eq(i)
               var slideProgress = this.slides[i].progress
@@ -228,7 +229,7 @@ export default {
               }
             }
           },
-          setTransition: function(transition) {
+          setTransition: function (transition) {
             for (var i = 0; i < this.slides.length; i++) {
               var slide = this.slides.eq(i)
               slide.transition(transition)
@@ -247,8 +248,8 @@ export default {
             }
             let index = this.activeIndex % 3
             that.$router.push({ name: 'songsdetail', params: { songDetailId: that.banners[index].id } })
-          }
-        }
+          },
+        },
       })
     },
     loadMore() {
@@ -263,7 +264,7 @@ export default {
       // if(this.isLoad){
       //   return
       // }
-      api.getSongList(18, undefined, type, page).then(res => {
+      api.getSongList(18, undefined, type, page).then((res) => {
         console.log(res)
         this.Songs[type].list.push(...res.data.playlists)
         this.Songs[type].page += 27
@@ -271,7 +272,7 @@ export default {
         this.$refs.scroll.refresh()
         this.isLoad = true
       })
-    }
+    },
   },
   components: {
     SongBanners,
@@ -279,7 +280,7 @@ export default {
     Gbnav,
     Scroll,
     PageLoading,
-    SquareListItem
+    SquareListItem,
   },
   mounted() {
     // this.$nextTick(() => {
@@ -299,7 +300,7 @@ export default {
       slidesPerView: 6,
       freeMode: true,
       on: {
-        init: function() {
+        init: function () {
           bar = document.querySelectorAll('.bar')[0]
           navSlideWidth = bar.offsetWidth //导航字数需要统一,每个导航宽度一致
           // let bar = this.$el.find('.bar')
@@ -318,8 +319,8 @@ export default {
           // }
 
           topBar = document.querySelectorAll('#top')[0] //页头
-        }
-      }
+        },
+      },
     })
 
     let startX, startY, endX, endY
@@ -334,7 +335,7 @@ export default {
       observer: true,
       observerParents: true,
       lazy: {
-        loadPrevNext: true
+        loadPrevNext: true,
       },
       // lazyLoading:true,
       // autoHeight: true,
@@ -343,7 +344,7 @@ export default {
       //   loadOnTransitionStart: true,
       // },
       on: {
-        touchMove: function(e) {
+        touchMove: function (e) {
           progress = this.progress
           // bar.transition(0)
           // width1 = Math.abs(Math.abs(start) - Math.abs(e.touches[0].clientX) ) * 0.33
@@ -370,7 +371,7 @@ export default {
             }
           }
         },
-        transitionStart: function() {
+        transitionStart: function () {
           let activeIndex = this.activeIndex
           let activeSlidePosition = navSwiper.slides[activeIndex].offsetLeft
           //释放时导航粉色条移动过渡
@@ -380,14 +381,8 @@ export default {
 
           bar.style.transform = 'translateX(' + activeSlidePosition + 'px)'
           //释放时文字变色过渡
-          navSwiper.slides
-            .eq(activeIndex)
-            .find('span')
-            .transition(tSpeed)
-          navSwiper.slides
-            .eq(activeIndex)
-            .find('span')
-            .css('color', 'rgba(194,12,12)')
+          navSwiper.slides.eq(activeIndex).find('span').transition(tSpeed)
+          navSwiper.slides.eq(activeIndex).find('span').css('color', 'rgba(194,12,12)')
           if (activeIndex > 0) {
             navSwiper.slides
               .eq(activeIndex - 1)
@@ -427,7 +422,7 @@ export default {
 
         // },
 
-        slideChange: function() {
+        slideChange: function () {
           // setTimeout(() => {
           //   page.style.height = this.slides[this.activeIndex].offsetHeight
           //   self.$refs.scroll.refresh()
@@ -435,123 +430,149 @@ export default {
           // }, 5000);
           // console.log(page);
 
-          //    switch(this.activeIndex){
-          //     case 0:
+          switch (this.activeIndex) {
+            case 0:
+              self.currentType = '全部'
+              break
+            case 1:
+              self.currentType = '官方'
+              self.currentType = '华语'
+              self._getOtherSongListinfo(undefined, undefined, '官方').then((res) => {
+                self.Songs.官方.list = res
+                // console.log(self.Songs.官方.list)
+              })
+              break
+              break
+            case 2:
+              self.currentType = '华语'
+              self._getOtherSongListinfo(undefined, undefined, '华语').then((res) => {
+                self.Songs.华语.list = res
+                // console.log(self.Songs.官方.list)
+              })
+              break
+            case 3:
+              self.currentType = '华语'
+              self._getOtherSongListinfo(undefined, undefined, '华语').then((res) => {
+                self.Songs.华语.list = res
+                // console.log(self.Songs)
+              })
+              // console.log('huayu')
+              break
+            case 4:
+              self.currentType = '流行'
+              self._getOtherSongListinfo(undefined, undefined, '流行').then((res) => {
+                self.Songs.流行.list = res
+                // console.log(self.Songs.流行.list)
+              })
+              break
+            case 5:
+              self.currentType = '电子'
+              self._getOtherSongListinfo(undefined, undefined, '电子').then((res) => {
+                self.Songs.电子.list = res
+                // console.log(self.Songs.官方.list)
+              })
+              break
+            case 6:
+              self.currentType = '古风'
+              self._getOtherSongListinfo(undefined, undefined, '古风').then((res) => {
+                self.Songs.古风.list = res
+                // console.log(self.Songs.古风.list)
+              })
+              break
+            case 7:
+              self.currentType = '民谣'
+              break
+          }
+          //   if (this.activeIndex === 0) {
           //     self.currentType = '全部'
-          //     break
-          //     case 1:
+          //     if (self.Songs.全部.list.length > 0) {
+          //       return
+          //     }
+          //   }
+          //   if (this.activeIndex === 1) {
           //     self.currentType = '官方'
-          //     break
-          //     case 2:
-          //     self.currentType = '华语'
-          //     break
-          //     case 3:
-          //     self.currentType = '华语'
-          //     break
-          //     case 4:
+          //     if (self.Songs.官方.list.length > 0) {
+          //       return
+          //     }
+
+          //     self.loading = true
+          //     self._getOtherSongListinfo(undefined, undefined, '官方').then(res => {
+          //       self.Songs.官方.list = res
+          //     })
+          //   }
+          //   if (this.activeIndex === 2) {
           //     self.currentType = '流行'
-          //     break
-          //     case 5:
-          //     self.currentType = '电子'
-          //     break
-          //     case 6:
-          //     self.currentType = '古风'
-          //     break
-          //     case 7:
-          //     self.currentType = '民谣'
-          //     break
+          //     if (self.recommendSongs.length > 0) {
+          //       return
+          //     }
+          //     self._getOtherSongListinfo(undefined, undefined, '精品').then(res => {
+          //       self.recommendSongs = res
+          //     })
+          //   }
+          // if (this.activeIndex === 3) {
+          //   self.currentType = '华语'
+          //   if (self.Songs.华语.list.length > 0) {
+          //     return
+          //   }
 
+          //   self.loading = true
+          //   self._getOtherSongListinfo(undefined, undefined, '华语').then((res) => {
+          //     self.Songs.华语.list = res
+          //   })
           // }
-          if (this.activeIndex === 0) {
-            self.currentType = '全部'
-            if (self.Songs.全部.list.length > 0) {
-              return
-            }
-          }
-          if (this.activeIndex === 1) {
-            self.currentType = '官方'
-            if (self.Songs.官方.list.length > 0) {
-              return
-            }
+          //   if (this.activeIndex === 4) {
+          //     self.currentType = '流行'
+          //     if (self.Songs.流行.list.length > 0) {
+          //       return
+          //     }
 
-            self.loading = true
-            self._getOtherSongListinfo(undefined, undefined, '官方').then(res => {
-              self.Songs.官方.list = res
-            })
-          }
-          if (this.activeIndex === 2) {
-            self.currentType = '流行'
-            if (self.recommendSongs.length > 0) {
-              return
-            }
-            self._getOtherSongListinfo(undefined, undefined, '精品').then(res => {
-              self.recommendSongs = res
-            })
-          }
-          if (this.activeIndex === 3) {
-            self.currentType = '华语'
-            if (self.Songs.华语.list.length > 0) {
-              return
-            }
+          //     self.loading = true
+          //     self._getOtherSongListinfo(undefined, undefined, '流行').then(res => {
+          //       self.Songs.流行.list = res
+          //     })
+          //   }
+          //   if (this.activeIndex === 5) {
+          //     self.currentType = '电子'
+          //     if (self.Songs.电子.list.length > 0) {
+          //       return
+          //     }
 
-            self.loading = true
-            self._getOtherSongListinfo(undefined, undefined, '华语').then(res => {
-              self.Songs.华语.list = res
-            })
-          }
-          if (this.activeIndex === 4) {
-            self.currentType = '流行'
-            if (self.Songs.流行.list.length > 0) {
-              return
-            }
+          //     self.loading = true
+          //     self._getOtherSongListinfo(undefined, undefined, '电子').then(res => {
+          //       self.Songs.电子.list = res
+          //     })
+          //   }
+          //   if (this.activeIndex === 6) {
+          //     self.currentType = '古风'
+          //     if (self.Songs.古风.list.length > 0) {
+          //       return
+          //     }
 
-            self.loading = true
-            self._getOtherSongListinfo(undefined, undefined, '流行').then(res => {
-              self.Songs.流行.list = res
-            })
-          }
-          if (this.activeIndex === 5) {
-            self.currentType = '电子'
-            if (self.Songs.电子.list.length > 0) {
-              return
-            }
+          //     self.loading = true
+          //     self._getOtherSongListinfo(undefined, undefined, '古风').then(res => {
+          //       self.Songs.古风.list = res
+          //     })
+          //   }
+          //   if (this.activeIndex === 7) {
+          //     self.currentType = '民谣'
+          //     if (self.Songs.民谣.list.length > 0) {
+          //       return
+          //     }
 
-            self.loading = true
-            self._getOtherSongListinfo(undefined, undefined, '电子').then(res => {
-              self.Songs.电子.list = res
-            })
-          }
-          if (this.activeIndex === 6) {
-            self.currentType = '古风'
-            if (self.Songs.古风.list.length > 0) {
-              return
-            }
-
-            self.loading = true
-            self._getOtherSongListinfo(undefined, undefined, '古风').then(res => {
-              self.Songs.古风.list = res
-            })
-          }
-          if (this.activeIndex === 7) {
-            self.currentType = '民谣'
-            if (self.Songs.民谣.list.length > 0) {
-              return
-            }
-
-            self.loading = true
-            self._getOtherSongListinfo(undefined, undefined, '民谣').then(res => {
-              self.Songs.民谣.list = res
-            })
-          }
-          self.$refs.scroll.refresh()
-        }
-      }
+          //     self.loading = true
+          //     self._getOtherSongListinfo(undefined, undefined, '民谣').then(res => {
+          //       self.Songs.民谣.list = res
+          //     })
+          //   }
+          //   self.$refs.scroll.refresh()
+        },
+      },
     })
 
-    navSwiper.$el.on('touchstart', function(e) {
+    navSwiper.$el.on('touchstart', function (e) {
       e.preventDefault() //去掉按压阴影
     })
-    navSwiper.on('tap', function(e) {
+    navSwiper.on('tap', function (e) {
       let clickIndex = this.clickedIndex
       let clickSlide = this.slides.eq(clickIndex)
       pageSwiper.slideTo(clickIndex, 0)
@@ -569,12 +590,12 @@ export default {
       pagination: {
         el: '.swiper-pagination',
         type: 'fraction',
-        renderFraction: function(currentClass, totalClass) {
+        renderFraction: function (currentClass, totalClass) {
           return '<span class="' + currentClass + '"></span>' + '/' + '<span class="' + totalClass + '"></span>'
-        }
-      }
+        },
+      },
     })
-  }
+  },
 }
 </script>
 
